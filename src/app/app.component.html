@@ -1,37 +1,111 @@
-<div class="c-blue">
-  <div class="d-flex justify-content-center">
+<header class="p-3 mb-3 border-bottom" style="margin-left: 16%;">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+      </a>
 
-    <h5 class="tituloTop text-center" id="TopModalLabel">Ranking de ventas {{Titulos.Asesores}}</h5>
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+   
+      </ul>
+
+      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+        <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+      </form>
+
+ <!--      <div class="dropdown text-end">
+        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+          <li><a class="dropdown-item" href="#">New project...</a></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="#">Profile</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Sign out</a></li>
+        </ul>
+      </div> -->
+    </div>
   </div>
-    <div class="podio" >
-        <div class="row justify-content-center  align-items-center">
-          <div class="col-4 col-md-2 position-relative dos" style="margin-top: 5%;">
-            <img src="https://fibraxinversiones.mx/asesores/assets/topAsesores/aroplata.png" alt="" class="aro" />
+</header>
 
-            <div class="circulo"
-              style="background-image: url(https://fibraxinversiones.mx/newDesign/assets/images/imgPerfil/{{top[1].Foto}})">
-              <p class="text-center plata"  >{{top[1].Asesor}}</p>
-            </div>
-          </div>
-          <div class="col-4 col-md-3 position-relative uno">
-            <img src="https://fibraxinversiones.mx/asesores/assets/topAsesores/arooro.png" alt=""
-              class="arooro aro" />
-            <div class="circulo"
-              style="background-image: url(https://fibraxinversiones.mx/newDesign/assets/images/imgPerfil/{{top[0].Foto}})">
-              <p class="text-center oro"  style="">{{top[0].Asesor}}</p>
-            </div>
-          </div>
-          <div class="col-4 col-md-2 position-relative tres" style="margin-top: 8%;">
-            <img src="https://fibraxinversiones.mx/asesores/assets/topAsesores/arobronce.png" alt="" class="aro" />
-            <div class="circulo"
-              style="background-image: url(https://fibraxinversiones.mx/newDesign/assets/images/imgPerfil/{{top[2].Foto}})">
-               <p class="text-center bronce" >{{top[2].Asesor}}</p>
-            </div>
-          </div>
-          <div class="col-md-8 position-relative">
-            <img class="sombras" src="https://fibraxinversiones.mx/asesores/assets/topAsesores/podiofinal.jpg" alt=""
-              srcset="">
-          </div>
-        </div>
+<div class="flex-shrink-0 p-3 " style=" width: 16vw;
+display: flex;
+position: absolute;
+top: 0;
+height: 100%;
+flex-direction: column;
+background: rgb(124, 151, 124);
+ ">
+ <div class="d-flex justify-content-center">
+   <img width="100%" src="https://rainforestadventure.com/wp-content/uploads/2020/12/logo2x.png" alt="">
+ </div>
+  <ul class="list-unstyled ps-0" style="margin-top: 20%;">
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+        Home
+      </button>
+      <div class="collapse show" id="home-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a href="#" class="link-dark rounded">Overview</a></li>
+          <li><a href="#" class="link-dark rounded">Updates</a></li>
+          <li><a href="#" class="link-dark rounded">Reports</a></li>
+        </ul>
       </div>
+    </li>
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+        Dashboard
+      </button>
+      <div class="collapse" id="dashboard-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a href="#" class="link-dark rounded">Overview</a></li>
+          <li><a href="#" class="link-dark rounded">Weekly</a></li>
+          <li><a href="#" class="link-dark rounded">Monthly</a></li>
+          <li><a href="#" class="link-dark rounded">Annually</a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+        Orders
+      </button>
+      <div class="collapse" id="orders-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a href="#" class="link-dark rounded">New</a></li>
+          <li><a href="#" class="link-dark rounded">Processed</a></li>
+          <li><a href="#" class="link-dark rounded">Shipped</a></li>
+          <li><a href="#" class="link-dark rounded">Returned</a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="border-top my-3"></li>
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+        Account
+      </button>
+      <div class="collapse" id="account-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li><a href="#" class="link-dark rounded">New...</a></li>
+          <li><a href="#" class="link-dark rounded">Profile</a></li>
+          <li><a href="#" class="link-dark rounded">Settings</a></li>
+          <li><a href="#" class="link-dark rounded">Sign out</a></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+
+
+</div>
+
+<div class="containes" style="    margin-left: 17%;">
+  <div class="col-12">
+    <iframe title="HR informacion" style="    width: 100%;
+    height: 90vh;" src="https://app.powerbi.com/view?r=eyJrIjoiYTYzZmZiMzUtYWI0YS00NzkyLTgwMmUtNmY1MTA5NmMzZDhkIiwidCI6ImM5YzM4Nzk5LTkzZGUtNDFhMy1hMmE1LTIzMThkZmZhNzgyYSJ9&embedImagePlaceholder=true&pageName=ReportSection" frameborder="0" allowFullScreen="true"></iframe>
+  </div>
+  <div class="col-12">
+    <iframe title="HR informacion" style="    width: 100%;
+    height: 90vh;" src="https://app.powerbi.com/view?r=eyJrIjoiYTYzZmZiMzUtYWI0YS00NzkyLTgwMmUtNmY1MTA5NmMzZDhkIiwidCI6ImM5YzM4Nzk5LTkzZGUtNDFhMy1hMmE1LTIzMThkZmZhNzgyYSJ9&embedImagePlaceholder=true&pageName=ReportSection" frameborder="0" allowFullScreen="true"></iframe>
+  </div>
+
 </div>
