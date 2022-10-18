@@ -1,0 +1,139 @@
+<div
+  class="page-container"
+  [ngClass]="{
+    sidebar_is_full: app.sidebarState,
+    sidebar_is_small: !app.sidebarState
+  }"
+>
+  <!-- Content Wrapper START -->
+  <div class="main-content">
+    <app-data-reclu
+      [dataList]="promos"
+      [config]="configDataTable"
+    ></app-data-reclu>
+    <button
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+      type="button"
+      class="btn btn-primary agregar"
+    >
+      <i class="fas fa-plus"></i>
+    </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Nueva promoción</h5>
+            <button
+              type="button"
+              id="cerrar"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <label for="">Titulo promoción</label>
+            <input
+              type="text"
+              class="form-control mb-3"
+              [(ngModel)]="promo.Nombre"
+            />
+            <mat-form-field style="width: 100%" appearance="legacy">
+              <mat-label>Vigencia de la promoción</mat-label>
+              <mat-date-range-input
+                [rangePicker]="picker"
+                [formGroup]="dateRange"
+              >
+                <input
+                  matStartDate
+                  formControlName="start"
+                  placeholder="Start Date"
+                />
+                <input
+                  matEndDate
+                  formControlName="end"
+                  placeholder="End Date"
+                  (dateChange)="dateRangeChange()"
+                />
+              </mat-date-range-input>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-date-range-picker
+                style="z-index: 5000 !important"
+                #picker
+              ></mat-date-range-picker>
+            </mat-form-field>
+            <label for="">Subir imagen promoción</label>
+            <input
+              class="ImgPerfilInputElement form-control mb-4"
+              type="file"
+              #foto
+              name="imgPerfil"
+              id="imagenPerfilInput"
+              (change)="subirFoto(foto.files)"
+            />
+            <label for="">URL(opcional)</label>
+            <input
+              type="text"
+              class="form-control mb-3"
+              [(ngModel)]="promo.urlw"
+            />
+            <label *ngIf="promo.urlw != null && promo.urlw != '' && promo.urlw != undefined" for="">Texto URL(opcional)</label>
+            <input
+             *ngIf="promo.urlw != null && promo.urlw != '' && promo.urlw != undefined"
+              type="text"
+              class="form-control mb-3"
+              [(ngModel)]="promo.urlt"
+              placeholder="Click para acceder"
+            />
+            <span class="fw-bold mt-3">Opciones</span>
+            <div class="form-check form-switch">
+              <input
+                [(ngModel)]="promo.MNombre"
+                class="form-check-input"
+                type="checkbox"
+                id="flexSwitchCheckDefault"
+              />
+              <label class="form-check-label" for="flexSwitchCheckDefault"
+                >Visibilidad Nombre</label
+              >
+            </div>
+            <div class="form-check form-switch">
+              <input
+                [(ngModel)]="promo.MVigencia"
+                class="form-check-input"
+                type="checkbox"
+                id="flexSwitchCheckDefault"
+              />
+              <label class="form-check-label" for="flexSwitchCheckDefault"
+                >Visibilidad Vigencia</label
+              >
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              [ngClass]="{ disabled: !promo.Arte || !promo.Nombre }"
+              type="button"
+              data-bs-dismiss="modal"
+              (click)="nueva()"
+              class="btn btn-primary"
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

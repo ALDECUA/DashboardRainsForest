@@ -1,0 +1,158 @@
+<div class="page-container" [ngClass]="{'sidebar_is_full': app.sidebarState, 'sidebar_is_small': !app.sidebarState}">
+    <!-- Content Wrapper START -->
+    <div class="main-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card mb-3">
+                        <div class="card-header d-flex justify-content-between">Prospectos
+                            <small>
+                                <span class="user-icon">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                <div class="spinner-border spinner-border-sm" role="status" *ngIf="loader">
+                                    <span class="visually-hidden">Loading...</span>
+                                  </div>
+                                  
+                                {{count.prospectos}}
+                            </small>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-center" *ngIf="loader">
+                                <div class="spinner-border" role="status">
+                                  <span class="visually-hidden">Loading...</span>
+                                </div>
+                              </div>
+                            <ul class="list-group">
+                                <li class="list-group-item prospecto" *ngFor="let item of prospecto">
+                                    <a href="#" class="list-group-item list-group-item-action" (click)="verDatos(item,1)" aria-current="true" data-bs-toggle="offcanvas" href="#offcanvasRight" role="button" aria-controls="offcanvasRight">
+                                        
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <div class="icon">
+                                                <i class="fas fa-user-circle fa-2x"></i>
+                                            </div>
+                                            <div class="text-name">
+                                                <h6 class="mb-1">{{item.Fullname}}</h6>
+                                            </div>
+                                            <small><i class="far fa-hand-peace "></i></small>
+                                        </div>
+                                      </a>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card mb-3">
+                        <div class="card-header d-flex justify-content-between">Asignados
+                            <small>
+                                <span class="user-icon">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                <div class="spinner-border spinner-border-sm" role="status" *ngIf="loader">
+                                    <span class="visually-hidden">Loading...</span>
+                                  </div>
+                                  
+                                {{count.asignado}}
+                            </small>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-center" *ngIf="loader">
+                                <div class="spinner-border" role="status">
+                                  <span class="visually-hidden">Loading...</span>
+                                </div>
+                              </div>
+                            <ul class="list-group">
+                                <li class="list-group-item asignado" *ngFor="let item of asignado">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <div class="icon">
+                                            <i class="fas fa-user-circle fa-2x"></i>
+                                        </div>
+                                        <div class="text-name">
+                                            <h6 class="mb-1">{{item.Fullname}}</h6>
+                                        </div>
+                                        <small><i class="far fa-hand-peace "></i></small>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card mb-3">
+                        <div class="card-header d-flex justify-content-between">Conectados
+                            <small>
+                                <span class="user-icon">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                <div class="spinner-border spinner-border-sm" role="status" *ngIf="loader">
+                                    <span class="visually-hidden">Loading...</span>
+                                  </div>
+                                  
+                                {{count.conectado}}
+                            </small>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-center" *ngIf="loader">
+                                <div class="spinner-border" role="status">
+                                  <span class="visually-hidden">Loading...</span>
+                                </div>
+                              </div>
+                            <ul class="list-group">
+                                <li class="list-group-item conectados" *ngFor="let item of conectado">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <div class="icon">
+                                            <i class="fas fa-user-circle fa-2x"></i>
+                                        </div>
+                                        <div class="text-name">
+                                            <h6 class="mb-1">{{item.Fullname}}</h6>
+                                        </div>
+                                        <small><i class="far fa-hand-peace "></i></small>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card mb-3">
+                        <div class="card-header d-flex justify-content-between">Cierre
+                            <small>
+                                <span class="user-icon">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                <div class="spinner-border spinner-border-sm" role="status" *ngIf="loader">
+                                    <span class="visually-hidden">Loading...</span>
+                                  </div>
+                                  
+                                {{count.cierre}}
+                            </small>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-center" *ngIf="loader">
+                                <div class="spinner-border" role="status">
+                                  <span class="visually-hidden">Loading...</span>
+                                </div>
+                              </div>
+                            <ul class="list-group">
+                                <li class="list-group-item success" *ngFor="let item of cierre">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <div class="icon">
+                                            <i class="fas fa-user-circle fa-2x"></i>
+                                        </div>
+                                        <div class="text-name">
+                                            <h6 class="mb-1">{{item.Fullname}}</h6>
+                                        </div>
+                                        <small><i class="far fa-hand-peace "></i></small>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-pasos></app-pasos>

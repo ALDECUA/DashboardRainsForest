@@ -1,0 +1,25 @@
+/* margin y paddings*/
+.moneda-select, .status-select, .custom-select{
+    padding: .55rem 1rem;
+}
+.Tables_paginate .pagination{
+    margin-bottom: 0;
+}
+/* alings */
+.text-right{
+    text-align: right;
+}
+/*select*/
+.Table_custom{
+    margin-left: 15px;
+    margin-right: 15px;
+    width: auto;
+}
+/*flex-box*/
+.table-search{
+    justify-content: flex-end;
+}
+.text-registros, .paginacion-button{
+    justify-content: center;
+    align-items: center;
+}

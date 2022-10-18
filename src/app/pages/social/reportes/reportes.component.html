@@ -1,0 +1,112 @@
+<div class="page-container" [ngClass]="{'sidebar_is_full': app.sidebarState, 'sidebar_is_small': !app.sidebarState}">
+    <!-- Content Wrapper START -->
+    <div class="main-content">
+        <div class="container">
+            <app-navbar></app-navbar>
+            <div class="row">
+                <div class="col-lg-12 mt-3 d-flex flex-wrap activities-card-report">
+                    <div class="card card-actividades text-dark bg-info mb-3 me-3" style="max-width: 18rem;">
+                        <div class="card-header text-center bk-card">Bitacora</div>
+                        <div class="card-body text-center">
+                            <button type="button" class="btn btn-card-item-activities">
+                                <i class="fas fa-book fa-3x"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card card-actividades bg-success mb-3 me-3" style="max-width: 18rem;">
+                        <div class="card-header bk-card text-center">Periodo</div>
+                        <div class="card-body text-center">
+                            <button type="button" class="btn btn-card-item-activities">
+                                <i class="fas fa-calendar fa-3x"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card card-actividades bg-danger mb-3 me-3" style="max-width: 18rem;">
+                        <div class="card-header bk-card text-center">Producción</div>
+                        <div class="card-body text-center">
+                            <button type="button" class="btn btn-card-item-activities">
+                                <i class="fas fa-tasks fa-3x"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card card-actividades bg-warning mb-3 me-3" style="max-width: 18rem;">
+                        <div class="card-header bk-card text-center">Descartados</div>
+                        <div class="card-body text-center">
+                            <button type="button" class="btn btn-card-item-activities">
+                                <i class="fas fa-ban fa-3x"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div class="col-md-12 mt-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Objetivos</h2>
+                        </div>
+                        <div class="card-body">
+                            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                <div class="container-fluid">
+                                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                  </button>
+                                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="Periodo" class="form-label">Periodo</label>
+                                                <select id="Periodo" class="form-select">
+                                                <option selected>Mes actual</option>
+                                                <option>Quincena altual</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <label for="metas" class="form-label">Metas</label>
+                                                <select id="metas" class="form-select">
+                                                <option selected>Todos</option>
+                                                <option>Conteo de citas</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <label for="mostrar" class="form-label">Mostrar</label>
+                                                <select id="mostrar" class="form-select">
+                                                <option selected>Todos</option>
+                                                <option>Grupales</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </nav>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Responsable</th>
+                                            <th scope="col">Avance</th>
+                                            <th scope="col">Periodo</th>
+                                            <th scope="col">Metas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Mark</td>
+                                            <td>mes actual</td>
+                                            <td>avance</td>
+                                            <td>ya casi</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-outline-success" type="button"><i class="fas fa-plus"></i> <span class="ms-2">Agregar</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>

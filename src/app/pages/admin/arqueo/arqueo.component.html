@@ -1,0 +1,93 @@
+<div
+  class="page-container"
+  [ngClass]="{
+    sidebar_is_full: app.sidebarState,
+    sidebar_is_small: !app.sidebarState
+  }"
+>
+  <!-- Content Wrapper START -->
+  <div class="main-content">
+    <div class="card">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-6"><h6>Fondo Inicial</h6></div>
+            <div class="col-md-6">
+              <input type="text" [(ngModel)]="arqueo.FondoInicial" class="form-control" disabled />
+            </div>
+            <div class="col-md-6"><h6>Saldo Actual</h6></div>
+            <div class="col-md-6">
+              <input type="text" [(ngModel)]="arqueo.SaldoActual" class="form-control" disabled />
+            </div>
+          </div>
+          <div class="row mt-5 centros">
+            <div class="col-md-3"></div>
+            <div class="col-md-3"><b>DENOMINACIÓN</b></div>
+            <div class="col-md-3"><b>UNIDADES</b></div>
+            <div class="col-md-3"><b>TOTAL</b></div>
+            <div class="col-md-3">BILLETE</div>
+            <div class="col-md-3"><b>$ 1,000 </b></div>
+            <div class="col-md-3"><b><input type="number" [(ngModel)]="arqueo.Desgloce.D1000" class="form-control"></b></div>
+            <div class="col-md-3"><b> $ {{ humanizeNumber((arqueo.Desgloce.D1000 * 1000)) }}</b></div>
+            <div class="col-md-3">BILLETE</div>
+            <div class="col-md-3"><b>$ 500 </b></div>
+            <div class="col-md-3"><b><input type="number" [(ngModel)]="arqueo.Desgloce.D500" class="form-control"></b></div>
+            <div class="col-md-3"><b> $ {{ humanizeNumber((arqueo.Desgloce.D500 * 500)) }}</b></div>
+            <div class="col-md-3">BILLETE</div>
+            <div class="col-md-3"><b>$ 200 </b></div>
+            <div class="col-md-3"><b><input type="number" [(ngModel)]="arqueo.Desgloce.D200" class="form-control"></b></div>
+            <div class="col-md-3"><b> $ {{ humanizeNumber((arqueo.Desgloce.D200 * 200)) }}</b></div>
+            <div class="col-md-3">BILLETE</div>
+            <div class="col-md-3"><b>$ 100 </b></div>
+            <div class="col-md-3"><b><input type="number" [(ngModel)]="arqueo.Desgloce.D100" class="form-control"></b></div>
+            <div class="col-md-3"><b> $ {{ humanizeNumber((arqueo.Desgloce.D100 * 100)) }}</b></div>
+            <div class="col-md-3">BILLETE</div>
+            <div class="col-md-3"><b>$ 50 </b></div>
+            <div class="col-md-3"><b><input type="number" [(ngModel)]="arqueo.Desgloce.D50" class="form-control"></b></div>
+            <div class="col-md-3"><b> $ {{ humanizeNumber((arqueo.Desgloce.D50 * 50)) }}</b></div>
+            <div class="col-md-3">BILLETE</div>
+            <div class="col-md-3"><b>$ 20 </b></div>
+            <div class="col-md-3"><b><input type="number" [(ngModel)]="arqueo.Desgloce.D201" class="form-control"></b></div>
+            <div class="col-md-3"><b> $ {{ humanizeNumber((arqueo.Desgloce.D201 * 20)) }}</b></div>
+
+            <!-- monedas -->
+            <div class="col-md-3 mt-3">MONEDA</div>
+            <div class="col-md-3 mt-3"><b>$ 20 </b></div>
+            <div class="col-md-3 mt-3"><b><input type="number" [(ngModel)]="arqueo.Desgloce.D20" class="form-control"></b></div>
+            <div class="col-md-3 mt-3"><b> $ {{ humanizeNumber((arqueo.Desgloce.D20 * 20)) }}</b></div>
+            <div class="col-md-3">MONEDA</div>
+            <div class="col-md-3"><b>$ 10 </b></div>
+            <div class="col-md-3"><b><input type="number" [(ngModel)]="arqueo.Desgloce.D10" class="form-control"></b></div>
+            <div class="col-md-3"><b> $ {{ humanizeNumber((arqueo.Desgloce.D10 * 10)) }}</b></div>
+            <div class="col-md-3">MONEDA</div>
+            <div class="col-md-3"><b>$ 5 </b></div>
+            <div class="col-md-3"><b><input type="number" [(ngModel)]="arqueo.Desgloce.D5" class="form-control"></b></div>
+            <div class="col-md-3"><b> $ {{ humanizeNumber((arqueo.Desgloce.D5 * 5)) }}</b></div>
+            <div class="col-md-3">MONEDA</div>
+            <div class="col-md-3"><b>$ 2 </b></div>
+            <div class="col-md-3"><b><input type="number" [(ngModel)]="arqueo.Desgloce.D2" class="form-control"></b></div>
+            <div class="col-md-3"><b> $ {{ humanizeNumber((arqueo.Desgloce.D2 * 2)) }}</b></div>
+            <div class="col-md-3">MONEDA</div>
+            <div class="col-md-3"><b>$ 1 </b></div>
+            <div class="col-md-3"><b><input type="number" [(ngModel)]="arqueo.Desgloce.D1" class="form-control"></b></div>
+            <div class="col-md-3"><b> $ {{ humanizeNumber((arqueo.Desgloce.D1 * 1)) }}</b></div>
+            <div class="col-md-3">MONEDA</div>
+            <div class="col-md-3"><b>$ 0.50 </b></div>
+            <div class="col-md-3"><b><input type="number" [(ngModel)]="arqueo.Desgloce.centavos" class="form-control"></b></div>
+            <div class="col-md-3"><b> $ {{ humanizeNumber((arqueo.Desgloce.centavos * 0.50)) }}</b></div>
+          </div>
+          <div class="row mt-4">
+            <div class="col-md-3"></div>
+            <div class="col-md-3"><b>TOTAL</b></div>
+           
+            <div class="col-md-6">
+              <input type="text" class="form-control text-center" disabled value="$ {{   humanizeNumber(calcular()) }}">
+              <input type="text" [ngClass]="calcular() - arqueo.SaldoActual < 0  ? 'rojo' : 'verde'" class="form-control text-center" disabled value="$ {{   humanizeNumber(calcular() - arqueo.SaldoActual) }}">
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

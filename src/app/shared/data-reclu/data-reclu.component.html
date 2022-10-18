@@ -1,0 +1,465 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row mb-4">
+      <div class="col-lg-8">
+        <div class="d-md-flex">
+          <div class="mb-2">
+            <select
+              *ngIf="config.filtroA"
+              class="status-select form-control form-control-sm form-select"
+              (change)="filterAChange($event)"
+            >
+              <option value="" selected="">Todos</option>
+              <option
+                *ngFor="let item of config.filtroA.data"
+                value="{{ item.value }}"
+              >
+                {{ item.texto }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <label class="d-flex align-items-center"
+          >Mostrar
+          <select
+            name="Table_0_length"
+            aria-controls="Table_0"
+            class="form-select Table_custom"
+            [(ngModel)]="limit"
+            (change)="createPagination()"
+          >
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          registros</label
+        >
+      </div>
+      <div class="col-sm-12 col-md-6 d-flex table-search">
+        <div class="col-lg-6 col-md-12">
+          <input
+            type="search"
+            class="form-control me-2"
+            placeholder="Buscar"
+            aria-controls="Search Table_0"
+            [(ngModel)]="searched"
+            (keyup)="searchFilter()"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover e-commerce-table">
+        <thead>
+          <tr style="user-select: none">
+            <ng-container *ngFor="let field of config.fields">
+              <th
+                *ngIf="!field.invisible"
+                class="sorting"
+                style="width: 297.75px"
+                [appSort]="dataList"
+                data-order="desc"
+                [attr.data-name]="field.value"
+              >
+                {{ field.text }}
+              </th>
+            </ng-container>
+
+            <th *ngIf="config.editable"></th>
+            <th style="text-align: center" *ngIf="config.imagen">Imagen</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="searched === ''; else searchResults">
+            <ng-container *ngFor="let dato of dataList; let i = index">
+              <ng-container>
+                <tr
+                  role="row"
+                  class="odd"
+                  *ngIf="i + 1 <= limit * page && i + 1 > limit * (page - 1)"
+                >
+                  <ng-container *ngFor="let fd of config.fields">
+                    <td
+                      align="center"
+                      valign="center"
+                      *ngIf="!fd.invisible"
+                      (click)="showElem(dato)"
+                    >
+                      <div
+                        *ngIf="!fd.invisible"
+                        class="d-flex align-items-center"
+                      >
+                        <div
+                          class="avatar avatar-image avatar-sm me-3"
+                          *ngIf="fd.hasImage"
+                        >
+                          <img
+                            *ngIf="dato[config.fotoField] === null"
+                            src="{{
+                              app.dominio
+                            }}pruebas_dwit/admin/Content/img/admins/avatar.png"
+                            alt="avatar"
+                            width="40px"
+                            height="40px"
+                          />
+
+                          <img
+                            *ngIf="dato[config.fotoField] !== null"
+                            src="{{ config.urlMedia + dato[config.fotoField] }}"
+                            alt="avatar"
+                            width="40px"
+                            height="40px"
+                          />
+                        </div>
+                        <h6 class="mb-0">{{ dato[fd.value] }}</h6>
+                      </div>
+                    </td>
+                  </ng-container>
+
+                  <td
+                    *ngIf="config.editable"
+                    style="cursor: pointer"
+                    align="center"
+                    valign="center"
+                  >
+                    <a
+                      *ngIf="config.idField3 === undefined"
+                      [routerLink]="config.urlEdit + dato[config.idField]"
+                      ><i class="far fa-edit"></i
+                    ></a>
+                    <a
+                      *ngIf="config.idField3 !== undefined"
+                      [routerLink]="
+                        config.urlEdit +
+                        dato[config.idField] +
+                        '/' +
+                        dato[config.idField2] +
+                        '/' +
+                        dato[config.idField3]
+                      "
+                      ><i class="far fa-edit"></i
+                    ></a>
+                  </td>
+                  <td class="chiquito" *ngIf="config.imagen">
+                    <i
+                      (click)="verImagen(dato[config.img])"
+                      class="far fa-eye"
+                    ></i>
+                  </td>
+                </tr>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+
+          <ng-template #searchResults>
+            <ng-container *ngFor="let dato of filteredList; let i = index">
+              <ng-container>
+                <tr
+                  role="row"
+                  class="odd"
+                  *ngIf="i + 1 <= limit * page && i + 1 > limit * (page - 1)"
+                >
+                  <ng-container *ngFor="let fd of config.fields">
+                    <td
+                      align="center"
+                      valign="center"
+                      *ngIf="!fd.invisible"
+                      (click)="showElem(dato)"
+                    >
+                      <div class="d-flex align-items-center">
+                        <div
+                          class="avatar avatar-image avatar-sm me-3"
+                          *ngIf="fd.hasImage"
+                        >
+                          <img
+                            *ngIf="dato[config.fotoField] === null"
+                            src="{{
+                              app.dominio
+                            }}pruebas_dwit/admin/Content/img/admins/avatar.png"
+                            alt="avatar"
+                            width="40px"
+                            height="40px"
+                          />
+
+                          <img
+                            *ngIf="dato[config.fotoField] !== null"
+                            src="{{ config.urlMedia + dato[config.fotoField] }}"
+                            alt="avatar"
+                            width="40px"
+                            height="40px"
+                          />
+                        </div>
+                        <h6 class="mb-0">{{ dato[fd.value] }}</h6>
+                      </div>
+                    </td>
+                  </ng-container>
+
+                  <td
+                    *ngIf="config.editable"
+                    style="cursor: pointer"
+                    align="center"
+                    valign="center"
+                  >
+                    <a
+                      *ngIf="config.idField3 === undefined"
+                      [routerLink]="config.urlEdit + dato[config.idField]"
+                      ><i class="far fa-edit"></i
+                    ></a>
+                    <a
+                      *ngIf="config.idField3 !== undefined"
+                      [routerLink]="
+                        config.urlEdit +
+                        dato[config.idField] +
+                        '/' +
+                        dato[config.idField2] +
+                        '/' +
+                        dato[config.idField3]
+                      "
+                      ><i class="far fa-edit"></i
+                    ></a>
+                  </td>
+                  <td class="chiquito" *ngIf="config.imagen">
+                    <i
+                      (click)="verImagen(dato[config.img])"
+                      class="far fa-eye"
+                    ></i>
+                  </td>
+                </tr>
+              </ng-container>
+            </ng-container>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-center" *ngIf="loading">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-5 d-flex text-registros">
+        <div class="Tables_info" role="status" aria-live="polite">
+          Mostrando registros del {{ limit * (page - 1) + 1 }} al
+          {{ limit * page }} de un total de {{ dataList.length }} registros
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-7 d-flex paginacion-button">
+        <div class="Tables_paginate">
+          <ul class="pagination">
+            <li
+              class="paginate_button page-item previous disabled"
+              (click)="prevPage()"
+              id="DataTables_Table_0_previous"
+            >
+              <a
+                aria-controls="DataTables_Table_0"
+                data-dt-idx="0"
+                tabindex="0"
+                class="page-link"
+                >Anterior</a
+              >
+            </li>
+
+            <ng-container *ngFor="let pg of pages">
+              <li
+                *ngIf="pg > page - 2 && pg < page + 2"
+                class="paginate_button page-item"
+                [ngClass]="{ active: page === pg }"
+                (click)="selectPage(pg)"
+              >
+                <a
+                  aria-controls="DataTables_Table_0"
+                  data-dt-idx="1"
+                  tabindex="0"
+                  class="page-link"
+                  >{{ pg }}</a
+                >
+              </li>
+            </ng-container>
+
+            <li
+              class="paginate_button page-item disabled"
+              id="DataTables_Table_0_ellipsis"
+            >
+              <a
+                aria-controls="DataTables_Table_0"
+                data-dt-idx="6"
+                tabindex="0"
+                class="page-link"
+                >…</a
+              >
+            </li>
+            <li class="paginate_button page-item">
+              <a
+                aria-controls="DataTables_Table_0"
+                data-dt-idx="7"
+                tabindex="0"
+                (click)="selectPage(pages.length)"
+                class="page-link"
+                >{{ pages.length }}</a
+              >
+            </li>
+            <li
+              class="paginate_button page-item next"
+              id="DataTables_Table_0_next"
+              (click)="nextPage()"
+            >
+              <a
+                aria-controls="DataTables_Table_0"
+                data-dt-idx="8"
+                tabindex="0"
+                class="page-link"
+                >Siguiente</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<button
+  type="button"
+  id="modificarmodal"
+  class="btn btn-primary d-none"
+  data-bs-toggle="modal"
+  data-bs-target="#modalmodificar"
+>
+  Launch demo modal
+</button>
+<div
+  class="modal fade"
+  id="modalmodificar"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modificar promoción</h5>
+        <button
+          type="button"
+          id="cerrar"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <label for="">Titulo promoción</label>
+        <input
+          type="text"
+          class="form-control mb-3"
+          [(ngModel)]="promo.Nombre"
+        />
+        <mat-form-field style="width: 100%" appearance="legacy">
+          <mat-label>Vigencia de la promoción</mat-label>
+          <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRange">
+            <input
+              matStartDate
+              formControlName="start"
+              placeholder="Start Date"
+            />
+            <input
+              matEndDate
+              formControlName="end"
+              placeholder="End Date"
+              (dateChange)="dateRangeChange()"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker
+            style="z-index: 5000 !important"
+            #picker
+          ></mat-date-range-picker>
+        </mat-form-field>
+        <label for="">Subir imagen promoción</label>
+        <div class="position-relative">
+          <div class="position-absolute imagen">
+            <p *ngIf="imagen != ''">{{ imagen }}</p>
+            <p *ngIf="imagen == ''">Click para modificar imagen</p>
+          </div>
+          <input
+            style="opacity: 0"
+            class="ImgPerfilInputElement form-control"
+            type="file"
+            #foto
+            name="imgPerfil"
+            id="imagenPerfilInput"
+            (change)="subirFoto(foto.files)"
+          />
+        </div>
+        <label for="">URL(opcional)</label>
+        <input type="text" class="form-control mb-3" [(ngModel)]="promo.urlw" />
+        <label
+          *ngIf="
+            promo.urlw != null && promo.urlw != '' && promo.urlw != undefined
+          "
+          for=""
+          >Texto URL(opcional)</label
+        >
+        <input
+          *ngIf="
+            promo.urlw != null && promo.urlw != '' && promo.urlw != undefined
+          "
+          type="text"
+          class="form-control mb-3"
+          [(ngModel)]="promo.urlt"
+          placeholder="Click para acceder"
+        />
+        <span class="fw-bold mt-3">Opciones</span>
+        <div class="form-check form-switch">
+          <input
+            [(ngModel)]="promo.MNombre"
+            class="form-check-input"
+            type="checkbox"
+            id="flexSwitchCheckDefault"
+          />
+          <label class="form-check-label" for="flexSwitchCheckDefault"
+            >Visibilidad Nombre</label
+          >
+        </div>
+        <div class="form-check form-switch">
+          <input
+            [(ngModel)]="promo.MVigencia"
+            class="form-check-input"
+            type="checkbox"
+            id="flexSwitchCheckDefault"
+          />
+          <label class="form-check-label" for="flexSwitchCheckDefault"
+            >Visibilidad Vigencia</label
+          >
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="actualizar(0)" class="btn btn-danger">
+          <label *ngIf="!loaders.eliminar" for="">Eliminar</label>
+
+          <div *ngIf="loaders.eliminar" class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </button>
+        <button type="button" (click)="actualizar(1)" class="btn btn-primary">
+          <label *ngIf="!loaders.editar" for="">Guardar</label>
+
+          <div *ngIf="loaders.editar" class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

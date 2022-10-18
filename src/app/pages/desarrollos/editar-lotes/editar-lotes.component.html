@@ -1,0 +1,221 @@
+<div
+  class="page-container"
+  [ngClass]="{
+    sidebar_is_full: app.sidebarState,
+    sidebar_is_small: !app.sidebarState
+  }"
+>
+  <!-- Content Wrapper START -->
+  <div class="main-content">
+    <div class="page-header no-gutters has-tab">
+      <div class="d-md-flex m-b-15 align-items-center justify-content-between">
+        <div class="media align-items-center m-b-15">
+          <div class="m-l-15"></div>
+        </div>
+        <div class="m-b-15">
+          <button
+            id="actualizarBtnLote"
+            class="btn btn-warning me-1"
+            [routerLink]="['/crm/desarrollos']"
+          >
+            <i class="fas fa-long-arrow-alt-left"></i> &nbsp;
+            <span>Volver</span>
+          </button>
+          <button
+            id="actualizarBtnLote"
+            class="btn btn-primary"
+            (click)="updateLoteActual()"
+          >
+            <i class="far fa-save"></i> &nbsp;
+            <span>Guardar</span>
+          </button>
+        </div>
+      </div>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#"
+            >Información Basica</a
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="tab-content m-t-15">
+      <div class="tab-pane fade show active" id="#">
+        <div class="card">
+          <div class="card-body">
+            <div class="container">
+              <div class="row g-3">
+                <div
+                  class="d-flex justify-content-center loader"
+                  *ngIf="loading"
+                >
+                  <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="nombreLote" class="form-label"
+                    >Nombre del lote</label
+                  >
+                  <input
+                    [(ngModel)]="lote.nombre"
+                    type="text"
+                    class="form-control"
+                    name="nombreLote"
+                    placeholder="Nombre del lote"
+                  />
+                  <div id="feedbacknombreLote" class="invalid-feedback"></div>
+                </div>
+                <div class="col-md-6">
+                  <label for="select_etapa" class="form-label">Estatus</label>
+                  <select
+                    class="form-select"
+                    aria-label="Etapa"
+                    [(ngModel)]="lote.Activo"
+                  >
+                    <option value="" selected disabled>
+                      Selecciona una opción
+                    </option>
+                    <option value="1">Disponible</option>
+                    <option value="2">Apartado</option>
+                    <option value="3">Vendido</option>
+                    <option value="4">Secreto</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="base" class="form-label">Base</label>
+                  <input
+                    [(ngModel)]="lote.Base"
+                    type="text"
+                    class="form-control"
+                    name="base"
+                    placeholder="Base"
+                  />
+                  <div id="feedbackbase" class="invalid-feedback"></div>
+                </div>
+                <div class="col-md-6">
+                  <label for="altura" class="form-label">Altura</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="altura"
+                    placeholder="Altura"
+                    [(ngModel)]="lote.Altura"
+                  />
+                  <div id="feedbackaltura" class="invalid-feedback"></div>
+                </div>
+                <div class="col-md-6">
+                  <label for="m2" class="form-label">M<sup>2</sup></label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="m2"
+                    placeholder="m2"
+                    [(ngModel)]="lote.m2"
+                  />
+                  <div id="feedbackm2" class="invalid-feedback"></div>
+                </div>
+                <div class="col-md-6">
+                  <label for="precio" class="form-label"
+                    >Precio por M<sup>2</sup></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="precio"
+                    placeholder="Precio"
+                    [(ngModel)]="lote.Precio_m2"
+                  />
+                  <div id="feedbackprecio" class="invalid-feedback"></div>
+                </div>
+                <div class="col-md-6">
+                  <label for="PrecioTotal" class="form-label"
+                    >Precio Total</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="PrecioTotal"
+                    placeholder="Precio Total"
+                    [(ngModel)]="lote.Precio_Total"
+                  />
+                  <div id="feedbackPrecioTotal" class="invalid-feedback"></div>
+                </div>
+                <div class="col-md-6">
+                  <label for="Numtablaje" class="form-label">Num Tablaje</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="Numtablaje"
+                    placeholder="Numtablaje"
+                    [(ngModel)]="lote.NumTablaje"
+                  />
+                  <div id="feedbackNumtablaje" class="invalid-feedback"></div>
+                </div>
+                <div class="col-12">
+                  <label for="clausula1" class="form-label">Clausula 1</label>
+                  <ckeditor
+                    *ngIf="lote.Clausula1 !== undefined"
+                    [data]="lote.Clausula1"
+                    name="Clausula1"
+                    debounce="300"
+                    [editor]="test"
+                    (change)="onChange($event, 0, 'Clausula1')"
+                  ></ckeditor>
+                  <!-- <div style="height:180px;margin-bottom: 50px;">
+                                        <quill-editor [(ngModel)]="lote.Clausula1" theme="snow" [style]="{'height':'320px'}"></quill-editor>
+                                    </div> -->
+                </div>
+                <div class="col-12">
+                  <label for="clausula2" class="form-label">Clausula 2</label>
+                  <ckeditor
+                    *ngIf="lote.Clausula2 !== undefined"
+                    [data]="lote.Clausula2"
+                    name="Clausula2"
+                    debounce="300"
+                    [editor]="test"
+                    (change)="onChange($event, 0, 'Clausula2')"
+                  ></ckeditor>
+                  <!-- <div style="height:180px;margin-bottom: 50px;">
+                                        <quill-editor [(ngModel)]="lote.Clausula2" theme="snow" [style]="{'height':'320px'}"
+                                        (onEditorChanged)="logChange($event);"></quill-editor>
+                                    </div> -->
+                </div>
+                <div class="col-12">
+                  <label for="Notas" class="form-label">Notas</label>
+                  <ckeditor
+                    *ngIf="lote.Notas !== undefined"
+                    [data]="lote.Notas"
+                    name="Notas"
+                    debounce="300"
+                    [editor]="test"
+                    (change)="onChange($event, 0, 'Notas')"
+                  ></ckeditor>
+                  <!-- <div style="height:180px;margin-bottom: 50px;">
+                                        <quill-editor [(ngModel)]="lote.Clausula2" theme="snow" [style]="{'height':'320px'}"
+                                        (onEditorChanged)="logChange($event);"></quill-editor>
+                                    </div> -->
+                </div>
+                <input
+                  type="hidden"
+                  name="idDesarrollo"
+                  id="idDesarrollo"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Content Wrapper END -->
+
+  <!-- Footer START -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p class="mb-0"> </p>
+    </div>
+  </footer>
+  <!-- Footer END -->
+</div>

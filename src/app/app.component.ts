@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppService } from './services/app.service';
 
 @Component({
@@ -7,27 +8,10 @@ import { AppService } from './services/app.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ranking';
-  loading: boolean=true;
-  top: any;
-  public Titulos:any ={
-    Asesores:'Asesores',
-    InversionistaLider:'Promotores',
-    SocioComercial:'Socio Comercial',
-  };
-  
-  constructor(public app: AppService){
-  }
-  ngOnInit(): void {
-    this.getdocumentos() 
-  }
-  getdocumentos() {
-
-     this.loading = true;
-    this.app.getDocuementos().subscribe((res: any) => {
-
-      this.top = res.TopAsesores;
-    });
-
+  title = 'CRM Fibrax';
+  constructor(
+    public app: AppService,
+    public router: Router
+  ) {
   }
 }

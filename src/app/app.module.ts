@@ -1,25 +1,44 @@
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PagesComponent } from './pages/pages.component';
-import { ComponentsComponent } from './pages/components/components.component';
-import { SidebarComponent } from './pages/components/sidebar/sidebar.component';
+import { ComponentsModule } from './pages/components/components.module';
+import { ToastrModule } from 'ngx-toastr';
+import { AuthInterceptor } from './auth.interceptor';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
+import { DatePipe } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+
+
 
 @NgModule({
   declarations: [
-    AppComponent,
-    PagesComponent,
-    ComponentsComponent,
-    SidebarComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ComponentsModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), // ToastrModule added
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    NgbModule,
+
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

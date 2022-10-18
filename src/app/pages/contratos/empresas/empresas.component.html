@@ -1,0 +1,118 @@
+<div class="page-container" [ngClass]="{'sidebar_is_full': app.sidebarState, 'sidebar_is_small': !app.sidebarState}">
+
+    <!-- Content Wrapper START -->
+    <div class="main-content container">
+
+        <div class="text-end">
+            <button class="btn btn-outline-primary" data-bs-toggle="collapse" href="#empresaCrear" role="button"
+                aria-expanded="false" aria-controls="empresaCrear">
+                <i class="fa fa-plus"></i> Agregar empresa</button>
+        </div>
+
+        <div class="collapse mt-3" id="empresaCrear">
+            <div class="card">
+                <app-add-empresa (onSaveEmpresa)="pushEmpresa($event)"></app-add-empresa>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-md-4 border container p-4">
+
+                <h5>Lista de empresas</h5><br>
+                <!-- <ul class="list-group">
+                    <li class="list-group-item">An item</li>
+                    <li class="list-group-item">A second item</li>
+                    <li class="list-group-item">A third item</li>
+                    <li class="list-group-item">A fourth item</li>
+                    <li class="list-group-item">And a fifth one</li>
+                </ul> -->
+                <div class="row">
+                    <div class="list-group" id="list-tab" role="tablist">
+                        <a *ngFor="let empresa of empresas" class="list-group-item list-group-item-action"
+                            id="list-home-list{{empresa.IdEmpresaDes}}" data-bs-toggle="list"
+                            href="#list-home{{empresa.IdEmpresaDes}}" role="tab"
+                            aria-controls="list-home">{{empresa.RazonSocial}}</a>
+                            <div class="d-flex justify-content-center" *ngIf="isLoading">
+                                <div class="spinner-border" role="status">
+                                  <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 border container p-4">
+                <h5>Información de la empresa</h5><br>
+                <div class="tab-content" id="nav-tabContent">
+                    <div *ngFor="let empresa of empresas"  class="tab-pane fade" id="list-home{{empresa.IdEmpresaDes}}"
+                        role="tabpanel" [attr.aria-labelledby]="'list-home-list'+empresa.IdEmpresaDes">
+                        <div class="card">
+                            <div class="row align-items-center mb-3">
+                                <label for="inputrazons{{empresa.IdEmpresaDes}}" class="col-sm-3 col-form-label">
+                                    <b>Razon social</b>
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="inputrazons{{empresa.IdEmpresaDes}}" class="form-control"
+                                        style="width:300px" [(ngModel)]="empresa.RazonSocial"
+                                        [disabled]="!empresa.editable">
+                                </div>
+                            </div>
+                            <div class="row align-items-center mb-3">
+                                    <label for="apoderado{{empresa.IdEmpresaDes}}" class="col-sm-3 col-form-label">
+                                        <b>Apoderado legal</b>
+                                    </label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="apoderado{{empresa.IdEmpresaDes}}" class="form-control"
+                                        style="width:300px" [(ngModel)]="empresa.Apoderado"
+                                        [disabled]="!empresa.editable">
+                                </div>
+                            </div>
+                            <div class="row align-items-center mb-3">
+                                    <label for="mandatario{{empresa.IdEmpresaDes}}" class="col-sm-3 col-form-label">
+                                        <b>Mandatario</b>
+                                    </label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="mandatario{{empresa.IdEmpresaDes}}" class="form-control"
+                                        style="width:300px" [(ngModel)]="empresa.Mandatario"
+                                        [disabled]="!empresa.editable">
+                                </div>
+                            </div>
+
+                            <div class="form-floating mt-2">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                    style="height: 150px" [(ngModel)]="empresa.GeneralesApoderado"
+                                    [disabled]="!empresa.editable"></textarea>
+                                <label for="floatingTextarea2">Apoderado General</label>
+                            </div>
+
+                            <div style="width:100%; display:flex; justify-content:flex-end;" class="mt-2">
+                                <button class="btn btn-outline-info" *ngIf="!empresa.editable"
+                                    (click)="empresa.editable=true">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+
+                                <button class="btn btn-outline-success me-1"
+                                    *ngIf="empresa.editable && empresa.editable !== undefined"
+                                    (click)="editarEmpresa(empresa)" [disabled]="saving">
+                                    <i class="far fa-save"></i> &nbsp;
+                                    Guardar
+                                </button>
+                                <button class="btn btn-outline-info" *ngIf="empresa.editable"
+                                    (click)="empresa.editable=false">
+                                    <i class="far fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <!-- Content Wrapper END -->
+
+    <!-- Footer START -->
+    <app-footer></app-footer>
+    <!-- Footer END -->
+
+</div>

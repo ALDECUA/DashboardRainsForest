@@ -1,0 +1,42 @@
+<div class="container-fluid p-h-0 p-v-20 bg full-height d-flex"
+  style="background-image: url('assets/img/fondo.jpg');    background-size: cover;">
+  <div class="d-flex flex-column justify-content-between w-100">
+    <div class="container d-flex h-100" style="justify-content: center;">
+      <div class="row align-items-center w-100 formul">
+        <div class="card shadow-lg">
+          <div class="card-body">
+            <div class="d-flex align-items-center flex-column ustify-content-between m-b-30">
+              <img class="img-fluid" width="50%" alt=""
+                src="assets/img/x-logo.png">
+              <h2 class="m-b-0">Login</h2>
+            </div>
+            <form name="login" id="login">
+              <div class="form-group">
+                <label class="font-weight-semibold" for="userName">Correo:</label>
+                <div class="input-affix">
+                  <i class="prefix-icon anticon anticon-user"></i>
+                  <input type="text" class="form-control" id="correo" name="correo" placeholder="Correo" required [(ngModel)]="loginData.Correo">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="font-weight-semibold" for="password">Contraseña:</label>
+
+                <div class="input-affix m-b-10">
+                  <i class="prefix-icon anticon anticon-lock"></i>
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" [(ngModel)]="loginData.Pwd"
+                    required="">
+                </div>
+              </div>
+              <div class="form-group mt-2">
+                <div class="d-flex align-items-center justify-content-end">
+                  <button id="form-send" class="btn " style="background-color: #d38842;color:white;" (click)="login()">Entrar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>

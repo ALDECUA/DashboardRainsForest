@@ -1,1 +1,354 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@200;300;400;600;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial','Titillium', sans-serif;
+}
+img{
+  max-width: 100%;
+}
+
+body {
+    font-family: "Poppins",-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    background-color: #f9fbfd !important;
+    color: #53535f;
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+.page-container {
+    min-height: 100vh;
+    transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+  }
+  
+  .sidebar_is_small {
+    padding-left: 80px;
+  }
+  
+  .sidebar_is_full {
+    padding-left: 230px;
+  }
+  
+  .page-container .main-content {
+    padding: calc(70px + 25px) 25px 25px;
+    min-height: calc(100vh - 70px);
+  }
+  
+  .page-container .page-header.no-gutters {
+    background-color: #fff;
+    border-bottom: 1px solid #edf2f9;
+    padding: 25px 30px;
+    margin-top: -25px;
+    margin-left: -25px;
+    margin-right: -25px;
+    margin-bottom: 25px;
+  }
+  
+  .m-v-10 {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+  }
+  
+  .align-items-center {
+    align-items: center !important;
+  }
+  .media {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .align-items-center {
+    align-items: center !important;
+  }
+  
+  .avatar-lg {
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+  }
+  
+  .avatar {
+    font-size: .875rem;
+    text-align: center;
+    background: #f1f2f3;
+    color: #fff;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  
+  .m-l-15 {
+    margin-left: 15px !important;
+  }
+  
+  .media-body {
+    flex: 1;
+  }
+  
+  .m-b-0 {
+    margin-bottom: 0 !important;
+  }
+  
+  h4, .h4 {
+    font-size: 19px;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: #2a2a2a;
+    font-weight: normal;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  
+  .text-gray {
+    color: #72849a !important;
+  }
+  
+  .avatar>img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .avatar-lg>* {
+    line-height: 48px;
+  }
+  img {
+    vertical-align: middle;
+    border-style: none;
+  }
+  
+  .m-r-40 {
+    margin-right: 40px !important;
+  }
+  
+  .m-v-5 {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+  }
+  .align-items-center {
+    align-items: center !important;
+  }
+  .media {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .font-size-27 {
+    font-size: 27px !important;
+  }
+  
+  .font-weight-bold {
+    font-weight: 700 !important;
+  }
+  
+  .font-weight-bold {
+    font-weight: 700 !important;
+  }
+
+  /* frame image */
+  .frame{
+    background: url('assets/img/frame.png') no-repeat;
+    background-size: cover;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    z-index: 999;
+    top: 0;
+  }
+  .frame2{
+    width: 80px;
+    height: 80px;
+  }
+  .img-profile-sup{
+    z-index: 99;
+  }
+
+  
+  @media screen and (min-width: 768px) {
+    .d-md-flex {
+        display: flex !important;
+    }
+  }
+  
+  @media screen and (min-width: 768px) {
+    .align-items-md-center {
+        align-items: center !important;
+    }
+  }
+  
+  .justify-content-between {
+    justify-content: space-between !important;
+  }
+  @media screen and (min-width: 768px) {
+    .d-md-flex {
+        display: flex !important;
+    }
+  }
+  
+  
+  .footer {
+    padding: 0px 25px;
+    font-size: 90%;
+  }
+  
+  @media only screen and (min-width: 767px)
+  {
+    .footer .footer-content {
+        justify-content: space-between;
+    }
+  }
+  
+  .footer .footer-content {
+    display: flex;
+    height: 65px;
+    align-items: center;
+    border-top: 1px solid #edf2f9;
+  }
+  
+  .btn.btn-rounded {
+    border-radius: 50px;
+}
+
+@import '~quill/dist/quill.core.css';
+ @import '~quill/dist/quill.bubble.css';
+ @import '~quill/dist/quill.snow.css';
+
+/*
+estilos propios CRM
+*/
+/* Botones*/
+/* a.btn {
+  line-height: 1.25;
+} */
+/* .btn{
+    font-size: .875rem;
+    padding: .65rem 1.25rem;
+    line-height: 1.25;
+    height: auto;
+} */
+.btn-primary.btn-tone {
+  background-color: rgba(63,135,245,0.1) !important;
+  border-color: transparent;
+  color: #3f87f5;
+  font-weight: 500;
+}
+.btn-icon {
+  padding: 0px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+}
+.btn-icon.btn-sm {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+}
+/*Listas*/
+/* .list-group-item{
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+} */
+/*Tablas*/
+.desarrollo-table > tbody > tr > td{
+  vertical-align: middle;
+}
+tbody, td, tfoot, th, thead, tr {
+  padding: 15px !important;
+}
+/* activos */
+.btn-group>.btn.btn-default.active {
+  border-color: #3f87f5;
+  color: #3f87f5;
+}
+/* hovers */
+.btn-hover:hover, .btn-hover:focus, .btn-hover.active {
+  background-color: rgba(63,135,245,0.1);
+  color: #3f87f5;
+  border-color: transparent;
+}
+/*letras font size*/
+.font-size-12{
+  font-size: 12px;
+}
+.font-size-13{
+  font-size: 13px;
+}
+.font-size-14{
+  font-size: 14px;
+}
+.font-size-16{
+  font-size: 16px;
+}
+/*Decoraciones*/
+.decoration{
+  text-decoration:none;
+}
+
+/*Colores*/
+.badgecyan{
+  color : #00c9a7;
+  background: rgba(0,201,167,0.1);
+}
+/*card*/
+.card{
+  padding: 1.5rem;
+}
+
+/* medias querys */
+/* @media only screen and (max-width: 992px){
+  .sidebar_is_full, .sidebar_is_small {
+      padding-left: 0px;
+  }
+}
+@media only screen and (max-width: 992px){
+  .is-folded .side-nav {
+      left: -280px;
+  }
+}
+@media only screen and (max-width: 992px){
+  .is-expand .side-nav {
+      left: 0;
+  }
+} */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.accordion-header {
+  margin: 0!important;
+}
+h6{
+  font-size: 1rem!important;
+}
+h4{
+  font-size: 19px!important;
+}
+
+.h5, h5 {
+  font-size: 1.25rem!important;
+}
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* #agregarinv {
+  z-index: 3000;
+  background-color: rgba(0, 0, 0, 0.384);
+}
+ */

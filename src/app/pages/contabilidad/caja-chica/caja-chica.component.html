@@ -1,0 +1,587 @@
+<div
+  class="page-container"
+  [ngClass]="{
+    sidebar_is_full: app.sidebarState,
+    sidebar_is_small: !app.sidebarState
+  }"
+>
+  <!-- Content Wrapper START -->
+
+  <div class="bod">
+    <div class="panel d-flex justify-content-between align-items-center">
+      <ul class="nav nav-pills" id="pills-tab" role="tablist">
+        <!--   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ExcelModal">
+          Launch demo modal
+        </button> -->
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="nav-home-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-home"
+            type="button"
+            role="tab"
+            aria-controls="nav-home"
+            aria-selected="true"
+            (click)="moneda = 'MXN'"
+          >
+            MXN
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="nav-profile-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-profile"
+            type="button"
+            role="tab"
+            aria-controls="nav-profile"
+            aria-selected="false"
+            (click)="moneda = 'USD'"
+          >
+            USD
+          </button>
+        </li>
+      </ul>
+      <div class="col-md-3">
+        <mat-form-field style="width: 100%" appearance="legacy">
+          <mat-label>Escoge un rango</mat-label>
+          <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRange">
+            <input
+              matStartDate
+              formControlName="start"
+              placeholder="Start Date"
+            />
+            <input
+              matEndDate
+              formControlName="end"
+              placeholder="End Date"
+              (dateChange)="dateRangeChange()"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3 d-flex text-end">
+        <div class="position-relative">
+          <input
+            class="file-oculto"
+            type="file"
+            name=""
+            (change)="onFileChange($event)"
+            id=""
+            [(ngModel)]="archivo"
+            accept=".csv,.xls,.xlsx"
+          />
+          <button type="button" class="btn btn-secondary">Excel</button>
+        </div>
+        <div class="position-relative ms-1">
+          <button
+            class="btn btn-success me-1"
+            (click)="nuevomovimiento(1)"
+            data-bs-toggle="modal"
+            data-bs-target="#MovimientoModal"
+          >
+            Ingreso
+          </button>
+          <button
+            class="btn btn-secondary"
+            (click)="nuevomovimiento(2)"
+            data-bs-toggle="modal"
+            data-bs-target="#MovimientoModal"
+          >
+            Egreso
+          </button>
+        </div>
+      </div>
+      <div class="d-flex align-items-center justify-content-between">
+        <h3 class="mb-0 me-2">Saldo</h3>
+
+        <div
+          *ngIf="!info.saldo && info.saldo != 0"
+          class="d-flex justify-content-center"
+        >
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        <input
+          *ngIf="info.saldo >= 0 && moneda == 'MXN'"
+          type="text"
+          [value]="'$ ' + humanizeNumber(info.saldo)"
+          class="form-control text-center"
+          disabled
+        />
+        <input
+          *ngIf="info.saldo >= 0 && moneda == 'USD'"
+          type="text"
+          [value]="'$ ' + humanizeNumber(info.saldoUSD)"
+          class="form-control text-center"
+          disabled
+        />
+      </div>
+    </div>
+    <div class="card p-0">
+      <div class="tab-content" id="nav-tabContent">
+        <div
+          class="tab-pane fade show active"
+          id="nav-home"
+          role="tabpanel"
+          aria-labelledby="nav-home-tab"
+        >
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover table-sm">
+              <thead>
+                <th scope="col">#</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Descripción/Concepto</th>
+                <th scope="col">Ingresos</th>
+                <th scope="col">Gastos</th>
+                <th scope="col">Saldo</th>
+                <th scope="col">Comprobante</th>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let movimiento of info.movimientos">
+                  <tr>
+                    <th scope="col">{{ movimiento.IdMovimiento }}</th>
+                    <td
+                      (click)="seleccionarmovimiento(movimiento)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#MovimientoModal"
+                    >
+                      {{ movimiento.FHora }}
+                    </td>
+                    <td
+                      (click)="seleccionarmovimiento(movimiento)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#MovimientoModal"
+                    >
+                      {{ movimiento.Descripcion }}
+                    </td>
+                    <td
+                      (click)="seleccionarmovimiento(movimiento)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#MovimientoModal"
+                    >
+                      <ng-container *ngIf="movimiento.Egreso == 1"
+                        >${{ humanizeNumber(movimiento.Cantidad) }}
+                      </ng-container>
+                    </td>
+                    <td
+                      (click)="seleccionarmovimiento(movimiento)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#MovimientoModal"
+                    >
+                      <ng-container *ngIf="movimiento.Egreso == 2"
+                        >${{ humanizeNumber(movimiento.Cantidad) }}
+                      </ng-container>
+                    </td>
+                    <td
+                      (click)="seleccionarmovimiento(movimiento)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#MovimientoModal"
+                    >
+                      ${{ humanizeNumber(movimiento.Saldo) }}
+                    </td>
+                    <td>
+                      <button
+                        *ngIf="movimiento.Img_Comprobante"
+                        (click)="verRecibo(movimiento.Img_Comprobante)"
+                        class="btn btn-primary"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+            <div
+              *ngIf="!info.movimientos"
+              class="d-flex justify-content-center"
+            >
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+            <p
+              *ngIf="info.movimientos && info.movimientos.length == 0"
+              class="text-center"
+            >
+              <i class="fas fa-info-circle me-2"></i>Sin movimientos
+            </p>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="nav-profile"
+          role="tabpanel"
+          aria-labelledby="nav-profile-tab"
+        >
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover table-sm">
+              <thead>
+                <th scope="col">#</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Descripción/Concepto</th>
+                <th scope="col">Ingresos</th>
+                <th scope="col">Gastos</th>
+                <th scope="col">Saldo</th>
+                <th scope="col">Comprobante</th>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let movimiento of info.movimientosUSD">
+                  <tr>
+                    <th scope="col">{{ movimiento.IdMovimiento }}</th>
+                    <td
+                      (click)="seleccionarmovimiento(movimiento)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#MovimientoModal"
+                    >
+                      {{ movimiento.FHora }}
+                    </td>
+                    <td
+                      (click)="seleccionarmovimiento(movimiento)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#MovimientoModal"
+                    >
+                      {{ movimiento.Descripcion }}
+                    </td>
+                    <td
+                      (click)="seleccionarmovimiento(movimiento)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#MovimientoModal"
+                    >
+                      <ng-container *ngIf="movimiento.Egreso == 1"
+                        >${{ humanizeNumber(movimiento.Cantidad) }}
+                      </ng-container>
+                    </td>
+                    <td
+                      (click)="seleccionarmovimiento(movimiento)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#MovimientoModal"
+                    >
+                      <ng-container *ngIf="movimiento.Egreso == 2"
+                        >${{ humanizeNumber(movimiento.Cantidad) }}
+                      </ng-container>
+                    </td>
+                    <td
+                      (click)="seleccionarmovimiento(movimiento)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#MovimientoModal"
+                    >
+                      ${{ humanizeNumber(movimiento.Saldo) }}
+                    </td>
+                    <td>
+                      <button
+                        *ngIf="movimiento.Img_Comprobante"
+                        (click)="verRecibo(movimiento.Img_Comprobante)"
+                        class="btn btn-primary"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+            <div
+              *ngIf="!info.movimientos"
+              class="d-flex justify-content-center"
+            >
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+            <p
+              *ngIf="info.movimientosUSD && info.movimientosUSD.length == 0"
+              class="text-center"
+            >
+              <i class="fas fa-info-circle me-2"></i>Sin movimientos
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="MovimientoModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Registro de movimiento
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          id="cerrar"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <label for="">Fecha movimiento:</label>
+        <input
+          id="fechaMov"
+          [(ngModel)]="movimiento.Fecha"
+          type="date"
+          class="form-control mt-1"
+        />
+        <label for="">Descripción/Concepto:</label>
+        <input
+          [(ngModel)]="movimiento.Descripcion"
+          type="text"
+          class="form-control mt-1"
+        />
+        <label class="mt-3" for="">Tipo de movimiento</label>
+        <select
+          *ngIf="!movimiento.IdMovimiento"
+          [(ngModel)]="movimiento.TipoMovimiento"
+          name=""
+          class="form-control mt-1"
+          id=""
+          disabled
+        >
+          <option value="1">Ingreso</option>
+          <option value="2">Egreso</option>
+        </select>
+        <select
+          *ngIf="movimiento.IdMovimiento"
+          [(ngModel)]="movimiento.Egreso"
+          name=""
+          class="form-control mt-1"
+          id=""
+        >
+          <option [value]="1">Ingreso</option>
+          <option [value]="2">Egreso</option>
+        </select>
+        <label class="mt-3" for="">Moneda</label>
+        <input
+          type="text"
+          class="form-control mt-1"
+          value="{{ moneda }}"
+          disabled
+        />
+        <label class="mt-3" for="">Cantidad</label>
+        <div class="position-relative">
+          <label name="" class="position-absolute signo">$</label>
+          <input
+            [(ngModel)]="movimiento.Cantidad"
+            type="number"
+            class="form-control mt-1 ps-4"
+          />
+          <label
+            [ngClass]="{
+              verde: +info.saldo >= +movimiento.Cantidad,
+              rojo: +info.saldo < +movimiento.Cantidad
+            }"
+            *ngIf="
+              moneda == 'MXN' &&
+              movimiento.TipoMovimiento == 2 &&
+              movimiento.Cantidad
+            "
+            for=""
+            >Con este movimiento quedara disponible $
+            {{ humanizeNumber(+info.saldo - +movimiento.Cantidad) }}
+          </label>
+          <label
+            [ngClass]="{
+              verde: +info.saldoUSD >= +movimiento.Cantidad,
+              rojo: +info.saldoUSD < +movimiento.Cantidad
+            }"
+            *ngIf="
+              moneda == 'USD' &&
+              movimiento.TipoMovimiento == 2 &&
+              movimiento.Cantidad
+            "
+            for=""
+            >Con este movimiento quedara disponible $
+            {{ humanizeNumber(+info.saldoUSD - +movimiento.Cantidad) }}
+          </label>
+        </div>
+        <label class="mt-3" for="">Sube imagen del comprobante</label>
+        <div class="position-relative">
+          <div class="position-absolute archivo">
+            <label for="" *ngIf="!loading && !movimiento.Img_Comprobante">
+              <i class="fas fa-upload"></i> Subir archivo</label
+            >
+            <div *ngIf="loading" class="d-flex justify-content-center">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+            <label for="" *ngIf="movimiento.archivo">
+              {{ movimiento.archivo }}</label
+            >
+          </div>
+          <input
+            class="form-control mt-1"
+            type="file"
+            name=""
+            id=""
+            (change)="subirImagen(imagen.files)"
+            name="imagen"
+            #imagen
+          />
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button data-bs-dismiss="modal" *ngIf="movimiento.IdMovimiento" class="btn btn-danger" (click)="eliminarMov(movimiento.IdMovimiento)">Eliminar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button
+          *ngIf="!movimiento.IdMovimiento"
+          (click)="guardarMovimiento()"
+          type="button"
+          class="btn btn-primary"
+          [ngClass]="{
+            disabled: !movimiento.Cantidad || !movimiento.Descripcion
+          }"
+        >
+          <label *ngIf="!loadingcarga" for="">Guardar movimiento</label>
+          <div *ngIf="loadingcarga" class="d-flex justify-content-center">
+            <div class="spinner-border text-light" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </button>
+        <button
+          *ngIf="movimiento.IdMovimiento"
+          (click)="modificarMovimiento()"
+          type="button"
+          class="btn btn-primary"
+          [ngClass]="{
+            disabled: !movimiento.Cantidad || !movimiento.Descripcion
+          }"
+        >
+          <label *ngIf="!loadingcarga" for="">Guardar cambios</label>
+          <div *ngIf="loadingcarga" class="d-flex justify-content-center">
+            <div class="spinner-border text-light" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="ExcelModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="div">
+          <h5 class="modal-title mb-2" id="exampleModalLabel">
+            Vista previa movimientos
+          </h5>
+          <h3 class="mb-0">Moneda: {{ moneda }}</h3>
+        </div>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <table class="table vistaPrevia">
+          <thead>
+            <tr>
+              <th><input type="checkbox" (change)="todos($event)" ></th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Descripción/Concepto</th>
+              <th scope="col">Ingresos</th>
+              <th scope="col">Egresos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let movimiento of excel; let i = index">
+              <tr>
+                <td class="text-center">
+                  <input (change)="checar($event)" type="checkbox" [(ngModel)]="movimiento.Checked" name="movimientos[]" value="{{i}}">
+                </td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="date"
+                    name=""
+                    [(ngModel)]="movimiento.Fecha"
+                    id=""
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    [(ngModel)]="movimiento.Descripcion"
+                    class="form-control"
+                    name=""
+                    id=""
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    (keyup)="ajustar(movimiento, 1, $event)"
+                    (focus)="numero($event)"
+                    (focusout)="texto($event)"
+                    class="form-control"
+                    [(ngModel)]="movimiento.Ingresos"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    (keyup)="ajustar(movimiento, 2, $event)"
+                    (focus)="numero($event)"
+                    (focusout)="texto($event)"
+                    class="form-control"
+                    [(ngModel)]="movimiento.Gastos"
+                  />
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button  *ngIf="contador > 0" (click)="eliminar()" class="btn btn-danger">Eliminar seleccionados</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" (click)="subirExcel()" class="btn btn-primary">
+          Guardar movimientos
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<button
+  *ngIf="info.movimientos && info.movimientos.length"
+  type="button"
+  (click)="reporte()"
+  class="btn btn-primary position-fixed descarga"
+>
+  <i class="fas fa-file-download"></i>
+</button>
+<app-full-loader message="{{ mensaje }}" *ngIf="subiendo"></app-full-loader>

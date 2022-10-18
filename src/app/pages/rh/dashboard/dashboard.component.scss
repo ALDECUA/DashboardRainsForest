@@ -1,0 +1,160 @@
+.avatar-lg.avatar-icon {
+  font-size: 24px;
+}
+
+.avatar-blue {
+  color: #3f87f5;
+  background: rgba(63, 135, 245, 0.1);
+}
+
+.avatar-cyan {
+  color: #00c9a7;
+  background: rgba(0, 201, 167, 0.1);
+}
+
+.avatar-gold {
+  color: #ffc107;
+  background: rgba(255, 193, 7, 0.1);
+}
+
+.avatar-purple {
+  color: #886cff;
+  background: rgba(136, 108, 255, 0.1);
+}
+
+.avatar-lg {
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+}
+.avatar {
+  font-size: 0.875rem;
+  text-align: center;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.media {
+  display: flex;
+  align-items: flex-start;
+}
+
+.badge.badge-dot:empty {
+  display: inline-block;
+}
+.badge.badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50px;
+  padding: 0px;
+}
+
+.badge-success {
+  background-color: #00c9a7;
+  color: #fff;
+}
+
+.badge-secondary {
+  background-color: #886cff;
+  color: #fff;
+}
+
+.badge-danger {
+  background-color: #de4436;
+  color: #fff;
+}
+
+.badge-info {
+  background-color: #02d3ef;
+  color: #fff;
+}
+
+/* Chart.js */
+@keyframes chartjs-render-animation {
+  from {
+    opacity: 0.99;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.chartjs-render-monitor {
+  animation: chartjs-render-animation 1ms;
+}
+.chartjs-size-monitor,
+.chartjs-size-monitor-expand,
+.chartjs-size-monitor-shrink {
+  position: absolute;
+  direction: ltr;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: -1;
+}
+.chartjs-size-monitor-expand > div {
+  position: absolute;
+  width: 1000000px;
+  height: 1000000px;
+  left: 0;
+  top: 0;
+}
+.chartjs-size-monitor-shrink > div {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  left: 0;
+  top: 0;
+}
+
+/*Tables*/
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
+  padding: 15px !important;
+}
+.sc {
+  transition: box-shadow 0.3s;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+}
+.sc:hover {
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+}
+
+.socios {
+  transition: box-shadow 0.3s;
+  background: #fff;
+  cursor: pointer;
+}
+.socios:hover {
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  background-color: rgba(63, 135, 245, 0.15);
+  color: #3f87f5 !important;
+}
+.socios h3 {
+  margin: 0;
+}
+.socios p {
+  margin: 0;
+  opacity: 0;
+}
+
+.socios:hover p {
+  transition: opacity 1s;
+  opacity: 1; // set opacity property to 1, completely visible
+}

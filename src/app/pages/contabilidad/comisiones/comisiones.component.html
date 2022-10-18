@@ -1,0 +1,139 @@
+<div
+  class="page-container"
+  [ngClass]="{
+    sidebar_is_full: app.sidebarState,
+    sidebar_is_small: !app.sidebarState
+  }"
+>
+  <!-- Content Wrapper START -->
+  <div class="main-content">
+    <div class="card">
+      <div class="row mb-5">
+        <div class="col-md-3">
+          <mat-form-field style="width: 100%" appearance="legacy">
+            <mat-label>Escoge un rango</mat-label>
+            <mat-date-range-input
+              [rangePicker]="picker"
+              [formGroup]="dateRange"
+            >
+              <input
+                matStartDate
+                formControlName="start"
+                placeholder="Start Date"
+              />
+              <input
+                matEndDate
+                formControlName="end"
+                placeholder="End Date"
+                (dateChange)="dateRangeChange()"
+              />
+            </mat-date-range-input>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field *ngIf="backupPersonas.length !=0" style="width: 100%;">
+            <input matInput type="text" [(ngModel)]="buscar" (keyup)="filtrarPersona()" placeholder="Buscar asesor">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Colaborador</th>
+              <th scope="col">Nivel</th>
+              <th scope="col">Volumen Venta</th>
+              <th scope="col">Comisión</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let persona of personas; let i = index">
+              
+              <tr
+                [ngClass]="{ resaltar: persona.ver }"
+                (click)="detalles(persona)"
+              >
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ persona.Nombre_Colaborador }}</td>
+                <td>{{ persona.Nivel }}</td>
+                <td>${{ persona.VolumenVenta }}</td>
+                <td >${{ persona.ComisionPorPagar }}</td>
+              </tr>
+
+              <td style="padding: 0 !important" colspan="5">
+                <div
+                  *ngIf="persona.loading && hrs == []"
+                  class="d-flex justify-content-center"
+                >
+                  <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+                <div
+                  class="detalles"
+                  [ngClass]="{ abierto: persona.ver, cerrado: !persona.ver }"
+                >
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Inversionista</th>
+                        <th scope="col">Lote</th>
+                        <th scope="col">Financiamiento</th>
+                        <th scope="col">Fecha HR</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Comisión por lote</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of hrs; let y = index">
+                        <td>{{ y + 1 }}</td>
+                        <td>{{ item.Inversionista }}</td>
+                        <td>
+                          {{ item.Desarrollo }}
+                          <span *ngIf="item.IdFase == 130"> Zenica</span>
+                          <span *ngIf="item.IdFase != 130">
+                            Etapa {{ item.Fase }}
+                          </span>
+                          {{ item.nombre }}
+                        </td>
+                        <td>
+                          <span *ngIf="item.Mensualidades == 0">Contado</span>
+                          <span *ngIf="item.Mensualidades != 0">
+                            {{ item.Mensualidades }} meses</span
+                          >
+                        </td>
+                        <td>{{ item.Fch }}</td>
+                        <td>${{ item.Precio_Final }}</td>
+                        <td class="fw-bold">${{ item.ComisionPorPagar }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </td>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <label *ngIf="personas.length == 0 && busqueda ==0 && !loading" for="">Elige un rango de fechas para comenzar</label>
+      <div *ngIf="loading" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      <label *ngIf="personas.length == 0 && busqueda >0 && !loading" for="">Sin resultados</label>
+    </div>
+  </div>
+  <!-- Content Wrapper END -->
+
+  <!-- Footer START -->
+  <app-footer></app-footer>
+  <!-- Footer END -->
+</div>

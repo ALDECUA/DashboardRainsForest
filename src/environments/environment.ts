@@ -4,10 +4,9 @@
 
 export const environment = {
   production: false,
-   // api:'http://localhost:8081/',
-   api:'https://crm-fx.herokuapp.com/',
-  dominio: 'https://fibraxinversiones.mx/'
-
+ api: 'http://localhost:8081/',
+    // api: 'https://apirainsforest.herokuapp.com/',
+  dominio: 'https://fibraxinversiones.mx/',
 };
 
 /*

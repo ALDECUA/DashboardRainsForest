@@ -1,0 +1,600 @@
+<div class="page-container" [ngClass]="{'sidebar_is_full': app.sidebarState, 'sidebar_is_small': !app.sidebarState}">
+
+    <!-- Content Wrapper START -->
+
+    <div class="main-content">
+        <div class="page-header no-gutters">
+            <!-- header tabs -->
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                        aria-selected="true">Cuenta</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                        aria-selected="false">Archivos</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact"
+                        aria-selected="false">Banco</button>
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+            <!-- cuerpo tabs -->
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Información Basica</h4>
+                        </div>
+                        <div class="card-body">
+                            <form class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="nivel" class="form-label">Nivel</label>
+                                    <select [(ngModel)]="persona.IdNivel" name="nivel" class="form-select"
+                                        aria-label="Selecciona nivel">
+                                        <option selected disabled>Seleccionar nivel</option>
+                                        <option [value]="null">No definido</option>
+                                        <option value="1">Socio comercial</option>
+                                        <option value="2">Asociado</option>
+                                        <option value="3">Inversionista Lider</option>
+                                        <option value="4">Inversionista Senior</option>
+                                        <option value="5">Promotor</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="status" class="form-label">Status</label>
+                                    <select [(ngModel)]="persona.EstatusGeneral" name="status" class="form-select"
+                                        aria-label="Selecciona nivel">
+                                        <option [value]="null" disabled>Seleccionar Opcion</option>
+                                        <option value="1">Activo</option>
+                                        <option value="2">Proceso</option>
+                                        <option value="3">Inactivo</option>
+                                        <option value="4">Revisado</option>
+                                        <option value="5">Desactivado</option>
+                                        <option value="6">Baja</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input [(ngModel)]="persona.Nombre" type="text" class="form-control" name="nombre"
+                                        placeholder="Nombre">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="segundonombre" class="form-label">Segundo Nombre</label>
+                                    <input [(ngModel)]="persona.Nombre_S" type="text" class="form-control"
+                                        name="segundonombre" placeholder="Segundo Nombre">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="apellidopaterno" class="form-label">Apellido Paterno</label>
+                                    <input [(ngModel)]="persona.Apellido_P" type="text" class="form-control"
+                                        name="apellidopaterno" placeholder="Apellido Paterno">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="apellidomaterno" class="form-label">Apellido Materno</label>
+                                    <input [(ngModel)]="persona.Apellido_M" type="text" class="form-control"
+                                        name="apellidomaterno" placeholder="Apellido Materno">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="sexo" class="form-label">Sexo</label>
+                                    <select [(ngModel)]="persona.IdSexo" name="sexo" class="form-select"
+                                        aria-label="Selecciona una opcion">
+                                        <option [value]="null" disabled>Selecciona una opcion</option>
+                                        <option value="1">Hombre</option>
+                                        <option value="2">Mujer</option>
+                                        <option value="3">Otro</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="pais" class="form-label">Nacionalidad</label>
+                                    <select [(ngModel)]="persona.IdNacionalidad" name="pais" id="pais"
+                                        class="form-select">
+                                        <option [value]="null">Selecciona una opcion</option>
+                                        <option [value]="pais.Id_Nacionalidad" *ngFor="let pais of paises">
+                                            {{pais.Pais}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="fechanacimiento" class="form-label">Fecha de nacimiento</label>
+                                    <input [(ngModel)]="persona.Fch_Nacimiento" type="date" class="form-control"
+                                        name="fechanacimiento" placeholder="Fecha de nacimiento">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="edad" class="form-label">Edad</label>
+                                    <input [(ngModel)]="persona.Edad" (keypress)="restrictNumeric($event)" type="text" class="form-control" name="edad"
+                                        placeholder="Edad">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="estadocivil" class="form-label">Estado Civil</label>
+                                    <select [(ngModel)]="persona.IdEstadoCivil" name="estadocivil" class="form-select"
+                                        aria-label="Estado Civil">
+                                        <option value="1" selected="selected">Casado</option>
+                                        <option value="2">Soltero</option>
+                                        <option value="3">Viudo</option>
+                                        <option value="4">Divorciado</option>
+                                        <option value="5">Union Libre</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="nohijos" class="form-label">Hijos</label>
+                                    <select [(ngModel)]="persona.N_Hijos" name="hijos" class="form-select"
+                                        aria-label="Hijos">
+                                        <option disabled>Selecciona una opcion</option>
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="rfc" class="form-label">RFC</label>
+                                    <input [(ngModel)]="persona.RFC" type="text" class="form-control" name="rfc"
+                                        placeholder="RFC">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="curp" class="form-label">Curp</label>
+                                    <input [(ngModel)]="persona.CURP" maxlength="18" type="text" class="form-control" name="curp"
+                                        placeholder="Curp">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input [(ngModel)]="persona.Email" type="email" class="form-control" name="email"
+                                        placeholder="Email">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="celular" class="form-label">Celular</label>
+                                    <input [(ngModel)]="persona.Num_Cel" maxlength="10" (keypress)="restrictNumeric($event)" type="tel" class="form-control" name="celular"
+                                        placeholder="Celular">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="telefono" class="form-label">Telefono</label>
+                                    <input [(ngModel)]="persona.Num_Tel" (keypress)="restrictNumeric($event)" type="tel" class="form-control"
+                                        name="telefono" placeholder="Telefono">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="direccion" class="form-label">Direccion</label>
+                                    <input [(ngModel)]="persona.Direccion" type="text" class="form-control"
+                                        name="direccion" placeholder="Direccion">
+                                </div>
+                                <div class="col-12 row mt-3">
+                                    <div class="col-md-6">
+                                        <button type="submit" class="btn btn-primary me-2"
+                                            (click)="guardarDatosPersona()">Actualizar</button>
+                                            <button name="btnEliminarRec" class="btn btn-danger"
+                                                (click)="eliminarReclu()">Eliminar</button>
+                                    </div>
+                                    <div class="col-md-6 d-flex justify-content-end">
+                                        <button id="actualizarBtnDesarrollo" class="btn btn-warning me-1"  [routerLink]="['/crm/rh/reclutamiento']">
+                                            <i class="fas fa-long-arrow-alt-left"></i> &nbsp;
+                                            <span>Volver</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card mt-1">
+                        <div class="card-header">
+                            <h4 class="card-title">Organigrama Fibrax</h4>
+                        </div>
+                        <div class="card-body">
+                            <form class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="sociocomercial" class="form-label">Socio Comercial</label>
+                                    <select class="form-select" name="sociocomercial" id="dsdsd"
+                                        [(ngModel)]="persona.IdSCom" (change)="loadIls()">
+                                        <option [value]="null" disabled>Selecciona una opción</option>
+                                        <option [value]="sc.IdPersona" *ngFor="let sc of scs"> {{ sc.Nombre_completo}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lider" class="form-label">Inversionista lider</label>
+                                    <select class="form-select" name="invlider" id="sdsdds"
+                                        [(ngModel)]="persona.IdILider" (change)="loadscoms()">
+                                        <option [value]="null" disabled>Selecciona una opción</option>
+                                        <option [value]="il.IdPersona" *ngFor="let il of ilr"> {{ il.Nombre_completo}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="sr" class="form-label">Inversionista sr</label>
+                                    <select class="form-select" name="invsenior" id="fdfgfdds"
+                                        [(ngModel)]="persona.IdISenior">
+                                        <option [value]="null" disabled>Selecciona una opción</option>
+                                        <option [value]="is.IdPersona" *ngFor="let is of isr"> {{ is.Nombre_completo}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-12" *ngIf="archivos.INE_F">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title text-center">INE</h4>
+                                </div>
+                                <div class="card-body">
+                                    <img src="{{app.dominio}}pruebas_dwit/admin/Content/img/rh/ine-default.jpg"
+                                        class="img-fluid abrirarchivo pointer w-100" alt="ine" data-bs-toggle="modal"
+                                        data-bs-target="#archivosModal"
+                                        (click)="cargarArchivo('INE_F/'+archivos.INE_F.Img_Archivo)">
+                                    <span class="badge-files" [ngClass]="{'correct-badge': +archivos.INE_F.EstatusGeneral === 1, 
+                                        'incorrect-badge': +archivos.INE_F.EstatusGeneral === 2}"></span>
+                                </div>
+                                <div class="card-footer">
+
+                                    <!--Es incorrecto-->
+                                    <div class="text-center buttons-area" *ngIf="+archivos.INE_F.EstatusGeneral !== 1">
+                                        <button class="btn btn-files btn-success me-1"
+                                            *ngIf="archivos.INE_F.write === undefined"
+                                            (click)="archivos.INE_F.write = false;archivos.INE_F.EstatusGeneral = 1;"
+                                            data-file="inef">Correcto</button>
+                                        <button class="btn btn-files btn-danger" data-file="inef"
+                                            *ngIf="archivos.INE_F.write === undefined"
+                                            (click)="archivos.INE_F.write = true;archivos.INE_F.EstatusGeneral = 2;">Incorrecto</button>
+                                        <input class="form-control" *ngIf="archivos.INE_F.write" type="search"
+                                            placeholder="Escribe un motivo" [(ngModel)]="archivos.INE_F.Notas"
+                                            name="notaarchivo">
+                                    </div>
+
+                                    <!--Es correcto-->
+                                    <div class="text-center buttons-area" *ngIf="+archivos.INE_F.EstatusGeneral === 1">
+                                        <button class="btn btn-files btn-danger" data-file="inef"
+                                            *ngIf="archivos.INE_F.write === undefined"
+                                            (click)="archivos.INE_F.write = true;archivos.INE_F.EstatusGeneral = 2;">Incorrecto</button>
+                                        <input class="form-control" *ngIf="archivos.INE_F.write" type="search"
+                                            placeholder="Escribe un motivo" [(ngModel)]="archivos.INE_F.Notas"
+                                            name="notaarchivo">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12" *ngIf="archivos.INE_R">
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title text-center">INE Reverso</h4>
+                                </div>
+                                <div class="card-body">
+                                    <img src="{{app.dominio}}pruebas_dwit/admin/Content/img/rh/ine-vuelta-default.jpg"
+                                        class="img-fluid abrirarchivo pointer w-100" alt="ine inverso"
+                                        data-bs-toggle="modal" data-bs-target="#archivosModal"
+                                        (click)="cargarArchivo('INE_R/'+archivos.INE_R.Img_Archivo)">
+                                    <span class="badge-files" [ngClass]="{'correct-badge': +archivos.INE_R.EstatusGeneral === 1, 
+                                        'incorrect-badge': +archivos.INE_R.EstatusGeneral === 2}"></span>
+                                </div>
+                                <div class="card-footer">
+                                    <!--Es incorrecto-->
+                                    <div class="text-center buttons-area" *ngIf="+archivos.INE_R.EstatusGeneral !== 1">
+                                        <button class="btn btn-files btn-success me-1"
+                                            *ngIf="archivos.INE_R.write === undefined"
+                                            (click)="archivos.INE_R.write = false;archivos.INE_R.EstatusGeneral = 1;"
+                                            data-file="inef">Correcto</button>
+                                        <button class="btn btn-files btn-danger" data-file="inef"
+                                            *ngIf="archivos.INE_R.write === undefined"
+                                            (click)="archivos.INE_R.write = true;archivos.INE_R.EstatusGeneral = 2;">Incorrecto</button>
+                                        <input class="form-control" *ngIf="archivos.INE_R.write" type="search"
+                                            placeholder="Escribe un motivo" [(ngModel)]="archivos.INE_R.Notas"
+                                            name="notaarchivo">
+                                    </div>
+
+                                    <!--Es correcto-->
+                                    <div class="text-center buttons-area" *ngIf="+archivos.INE_R.EstatusGeneral === 1">
+                                        <button class="btn btn-files btn-danger" data-file="inef"
+                                            *ngIf="archivos.INE_R.write === undefined"
+                                            (click)="archivos.INE_R.write = true;archivos.INE_R.EstatusGeneral = 2;">Incorrecto</button>
+                                        <input class="form-control" *ngIf="archivos.INE_R.write" type="search"
+                                            placeholder="Escribe un motivo" [(ngModel)]="archivos.INE_R.Notas"
+                                            name="notaarchivo">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-sm-12" *ngIf="archivos.SELFIE">
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title text-center">SELFIE</h4>
+                                </div>
+                                <div class="card-body">
+                                    <img src="{{app.dominio}}pruebas_dwit/admin/Content/img/rh/ine-vuelta-default.jpg"
+                                        class="img-fluid abrirarchivo pointer w-100" alt="ine inverso"
+                                        data-bs-toggle="modal" data-bs-target="#archivosModal"
+                                        (click)="cargarArchivo('SELFIE/'+archivos.SELFIE.Img_Archivo)">
+                                    <span class="badge-files" [ngClass]="{'correct-badge': +archivos.SELFIE.EstatusGeneral === 1, 
+                                        'incorrect-badge': +archivos.SELFIE.EstatusGeneral === 2}"></span>
+                                </div>
+                                <div class="card-footer">
+                                    <!--Es incorrecto-->
+                                    <div class="text-center buttons-area" *ngIf="+archivos.SELFIE.EstatusGeneral !== 1">
+                                        <button class="btn btn-files btn-success me-1"
+                                            *ngIf="archivos.SELFIE.write === undefined"
+                                            (click)="archivos.SELFIE.write = false;archivos.SELFIE.EstatusGeneral = 1;"
+                                            data-file="inef">Correcto</button>
+                                        <button class="btn btn-files btn-danger" data-file="inef"
+                                            *ngIf="archivos.SELFIE.write === undefined"
+                                            (click)="archivos.SELFIE.write = true;archivos.SELFIE.EstatusGeneral = 2;">Incorrecto</button>
+                                        <input class="form-control" *ngIf="archivos.SELFIE.write" type="search"
+                                            placeholder="Escribe un motivo" [(ngModel)]="archivos.SELFIE.Notas"
+                                            name="notaarchivo">
+                                    </div>
+
+                                    <!--Es correcto-->
+                                    <div class="text-center buttons-area" *ngIf="+archivos.SELFIE.EstatusGeneral === 1">
+                                        <button class="btn btn-files btn-danger" data-file="inef"
+                                            *ngIf="archivos.SELFIE.write === undefined"
+                                            (click)="archivos.SELFIE.write = true;archivos.SELFIE.EstatusGeneral = 2;">Incorrecto</button>
+                                        <input class="form-control" *ngIf="archivos.SELFIE.write" type="search"
+                                            placeholder="Escribe un motivo" [(ngModel)]="archivos.SELFIE.Notas"
+                                            name="notaarchivo">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-sm-12" *ngIf="archivos.COMP_DOMICILIO">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title text-center">Comprobante domicilio</h4>
+                                </div>
+                                <div class="card-body">
+                                    <img src="{{app.dominio}}pruebas_dwit/admin/Content/img/rh/comprobante-default.jpg"
+                                        class="img-fluid abrirarchivo pointer w-100" alt="comprobante"
+                                        data-bs-toggle="modal" data-bs-target="#archivosModal"
+                                        (click)="cargarArchivo('COMP_DOMICILIO/'+archivos.COMP_DOMICILIO.Img_Archivo)">
+                                    <span class="badge-files" [ngClass]="{'correct-badge': +archivos.COMP_DOMICILIO.EstatusGeneral === 1, 
+                                        'incorrect-badge': +archivos.COMP_DOMICILIO.EstatusGeneral === 2}"></span>
+                                </div>
+                                <div class="card-footer">
+                                    <!--Es incorrecto-->
+                                    <div class="text-center buttons-area"
+                                        *ngIf="+archivos.COMP_DOMICILIO.EstatusGeneral !== 1">
+                                        <button class="btn btn-files btn-success me-1"
+                                            *ngIf="archivos.COMP_DOMICILIO.write === undefined"
+                                            (click)="archivos.COMP_DOMICILIO.write = false;archivos.COMP_DOMICILIO.EstatusGeneral = 1;"
+                                            data-file="inef">Correcto</button>
+                                        <button class="btn btn-files btn-danger" data-file="inef"
+                                            *ngIf="archivos.COMP_DOMICILIO.write === undefined"
+                                            (click)="archivos.COMP_DOMICILIO.write = true;archivos.COMP_DOMICILIO.EstatusGeneral = 2;">Incorrecto</button>
+                                        <input class="form-control" *ngIf="archivos.COMP_DOMICILIO.write" type="search"
+                                            placeholder="Escribe un motivo" [(ngModel)]="archivos.COMP_DOMICILIO.Notas"
+                                            name="notaarchivo">
+                                    </div>
+
+                                    <!--Es correcto-->
+                                    <div class="text-center buttons-area"
+                                        *ngIf="+archivos.COMP_DOMICILIO.EstatusGeneral === 1">
+                                        <button class="btn btn-files btn-danger" data-file="inef"
+                                            *ngIf="archivos.COMP_DOMICILIO.write === undefined"
+                                            (click)="archivos.COMP_DOMICILIO.write = true;archivos.COMP_DOMICILIO.EstatusGeneral = 2;">Incorrecto</button>
+                                        <input class="form-control" *ngIf="archivos.COMP_DOMICILIO.write" type="search"
+                                            placeholder="Escribe un motivo" [(ngModel)]="archivos.COMP_DOMICILIO.Notas"
+                                            name="notaarchivo">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 mt-1" *ngIf="archivos.CURP">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title text-center">CURP</h4>
+                                </div>
+                                <div class="card-body">
+                                    <img src="{{app.dominio}}pruebas_dwit/admin/Content/img/rh/curp-default.jpg"
+                                        class="img-fluid abrirarchivo pointer w-100" alt="curp" data-bs-toggle="modal"
+                                        data-bs-target="#archivosModal"
+                                        (click)="cargarArchivo('CURP/'+archivos.CURP.Img_Archivo)">
+                                    <span class="badge-files" [ngClass]="{'correct-badge': +archivos.CURP.EstatusGeneral === 1, 
+                                        'incorrect-badge': +archivos.CURP.EstatusGeneral === 2}"></span>
+                                </div>
+                                <div class="card-footer">
+                                    <!--Es incorrecto-->
+                                    <div class="text-center buttons-area" *ngIf="+archivos.CURP.EstatusGeneral !== 1">
+                                        <button class="btn btn-files btn-success me-1"
+                                            *ngIf="archivos.CURP.write === undefined"
+                                            (click)="archivos.CURP.write = false;archivos.CURP.EstatusGeneral = 1;"
+                                            data-file="inef">Correcto</button>
+                                        <button class="btn btn-files btn-danger" data-file="inef"
+                                            *ngIf="archivos.CURP.write === undefined"
+                                            (click)="archivos.CURP.write = true;archivos.CURP.EstatusGeneral = 2;">Incorrecto</button>
+                                        <input class="form-control" *ngIf="archivos.CURP.write" type="search"
+                                            placeholder="Escribe un motivo" [(ngModel)]="archivos.CURP.Notas"
+                                            name="notaarchivo">
+                                    </div>
+
+                                    <!--Es correcto-->
+                                    <div class="text-center buttons-area" *ngIf="+archivos.CURP.EstatusGeneral === 1">
+                                        <button class="btn btn-files btn-danger" data-file="inef"
+                                            *ngIf="archivos.CURP.write === undefined"
+                                            (click)="archivos.CURP.write = true;archivos.CURP.EstatusGeneral = 2;">Incorrecto</button>
+                                        <input class="form-control" *ngIf="archivos.CURP.write" type="search"
+                                            placeholder="Escribe un motivo" [(ngModel)]="archivos.CURP.Notas"
+                                            name="notaarchivo">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 mt-1" *ngIf="archivos.RFC">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title text-center">RFC</h4>
+                                </div>
+                                <div class="card-body">
+                                    <img src="{{app.dominio}}pruebas_dwit/admin/Content/img/rh/rfc-default.jpg"
+                                        data-bs-toggle="modal" data-bs-target="#archivosModal"
+                                        class="img-fluid abrirarchivo pointer w-100"
+                                        (click)="cargarArchivo('RFC/'+archivos.RFC.Img_Archivo)" alt="rfc">
+                                    <span class="badge-files" [ngClass]="{'correct-badge': +archivos.RFC.EstatusGeneral === 1, 
+                                        'incorrect-badge': +archivos.RFC.EstatusGeneral === 2}"></span>
+                                </div>
+                                <div class="card-footer">
+                                    <!--Es incorrecto-->
+                                    <div class="text-center buttons-area" *ngIf="+archivos.RFC.EstatusGeneral !== 1">
+                                        <button class="btn btn-files btn-success me-1"
+                                            *ngIf="archivos.RFC.write === undefined"
+                                            (click)="archivos.RFC.write = false;archivos.RFC.EstatusGeneral = 1;"
+                                            data-file="inef">Correcto</button>
+                                        <button class="btn btn-files btn-danger" data-file="inef"
+                                            *ngIf="archivos.RFC.write === undefined"
+                                            (click)="archivos.RFC.write = true;archivos.RFC.EstatusGeneral = 2;">Incorrecto</button>
+                                        <input class="form-control" *ngIf="archivos.RFC.write" type="search"
+                                            placeholder="Escribe un motivo" [(ngModel)]="archivos.RFC.Notas"
+                                            name="notaarchivo">
+                                    </div>
+
+                                    <!--Es correcto-->
+                                    <div class="text-center buttons-area" *ngIf="+archivos.RFC.EstatusGeneral === 1">
+                                        <button class="btn btn-files btn-danger" data-file="inef"
+                                            *ngIf="archivos.RFC.write === undefined"
+                                            (click)="archivos.RFC.write = true;archivos.RFC.EstatusGeneral = 2;">Incorrecto</button>
+                                        <input class="form-control" *ngIf="archivos.RFC.write" type="search"
+                                            placeholder="Escribe un motivo" [(ngModel)]="archivos.RFC.Notas"
+                                            name="notaarchivo">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 mt-1" *ngIf="archivos.EDO_CUENTA">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title text-center">Estado de Cuenta</h4>
+                                </div>
+                                <div class="card-body">
+                                    <img src="{{app.dominio}}pruebas_dwit/admin/Content/img/rh/ine-default.jpg"
+                                        class="img-fluid abrirarchivo pointer w-100" alt="ine" data-bs-toggle="modal"
+                                        data-bs-target="#archivosModal"
+                                        (click)="cargarArchivo('EDO_CUENTA/'+archivos.EDO_CUENTA.Img_Archivo)">
+                                    <span class="badge-files" [ngClass]="{'correct-badge': +archivos.EDO_CUENTA.EstatusGeneral === 1, 
+                                        'incorrect-badge': +archivos.EDO_CUENTA.EstatusGeneral === 2}"></span>
+                                </div>
+                                <div class="card-footer">
+                                    <!--Es incorrecto-->
+                                    <div class="text-center buttons-area"
+                                        *ngIf="+archivos.EDO_CUENTA.EstatusGeneral !== 1">
+                                        <button class="btn btn-files btn-success me-1"
+                                            *ngIf="archivos.EDO_CUENTA.write === undefined"
+                                            (click)="archivos.EDO_CUENTA.write = false;archivos.EDO_CUENTA.EstatusGeneral = 1;"
+                                            data-file="inef">Correcto</button>
+                                        <button class="btn btn-files btn-danger" data-file="inef"
+                                            *ngIf="archivos.EDO_CUENTA.write === undefined"
+                                            (click)="archivos.EDO_CUENTA.write = true;archivos.EDO_CUENTA.EstatusGeneral = 2;">Incorrecto</button>
+                                        <input class="form-control" *ngIf="archivos.EDO_CUENTA.write" type="search"
+                                            placeholder="Escribe un motivo" [(ngModel)]="archivos.EDO_CUENTA.Notas"
+                                            name="notaarchivo">
+                                    </div>
+
+                                    <!--Es correcto-->
+                                    <div class="text-center buttons-area"
+                                        *ngIf="+archivos.EDO_CUENTA.EstatusGeneral === 1">
+                                        <button class="btn btn-files btn-danger" data-file="inef"
+                                            *ngIf="archivos.EDO_CUENTA.write === undefined"
+                                            (click)="archivos.EDO_CUENTA.write = true;archivos.EDO_CUENTA.EstatusGeneral = 2;">Incorrecto</button>
+                                        <input class="form-control" *ngIf="archivos.EDO_CUENTA.write" type="search"
+                                            placeholder="Escribe un motivo" [(ngModel)]="archivos.EDO_CUENTA.Notas"
+                                            name="notaarchivo">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title text-center">Guardar</h4>
+                                </div>
+                                <div class="card-body">
+                                    <span>Al dar click en actualizar archivos se guardaran los nuevos status de cada
+                                        archivo, si desea que se notifique al usuario con un correo, seleccione el
+                                        cuadro de "Enviar Correo" </span><br><br>
+                                    <input class="me-1" type="checkbox" name="enviar_correo" name="enviar_correo"
+                                        value="enviar_correo" [(ngModel)]="notify">
+                                    <label for="enviar_correo">Enviar correo</label><br><br>
+                                    <button name="btnDatosArchivos" class="btn btn-primary"
+                                        (click)="cambiarStatusArchivos()">Actualizar Archivos</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="banco" class="form-label">Banco</label>
+                                    <input type="text" class="form-control" name="banco" placeholder="Banco"
+                                        [(ngModel)]="persona.Banco">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="clabe" class="form-label">Clabe</label>
+                                    <input type="text" class="form-control" name="clabe" placeholder="Clabe"
+                                        [(ngModel)]="persona.CLABE">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="titular" class="form-label">Titular</label>
+                                    <input type="text" class="form-control" name="titular" placeholder="Titular"
+                                        [(ngModel)]="persona.Titular_Banco">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="swift" class="form-label">Swift(opcional)</label>
+                                    <input type="text" class="form-control" name="swift" placeholder="swift"
+                                        [(ngModel)]="persona.SWIFT">
+                                </div>
+                                <div class="col-md-12">
+                                    <button name="btnDatosBancarios" class="btn btn-primary"
+                                        (click)="guardarDatosBancarios()">Actualizar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Content Wrapper END -->
+
+
+    <div class="modal fade" id="archivosModal" tabindex="-1" aria-labelledby="archivosModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="archivosModalLabel">Preview archivo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img [src]="currentFile" alt="Archivo formato imagen" width="100%"
+                        *ngIf="!currentFile.includes('.pdf')">
+                    <iframe *ngIf="currentFile.includes('.pdf')" [src]="fileSanitized" width="100%" height="500px">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer START -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="m-b-0">  </p>
+        </div>
+    </footer>
+    <!-- Footer END -->
+
+</div>

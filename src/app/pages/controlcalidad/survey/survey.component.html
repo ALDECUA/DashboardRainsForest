@@ -1,0 +1,505 @@
+<div
+  class="page-container"
+  [ngClass]="{
+    sidebar_is_full: app.sidebarState,
+    sidebar_is_small: !app.sidebarState
+  }"
+>
+  <!-- Content Wrapper START -->
+  <div class="main-content">
+    <div class="card">
+      <div class="d-flex justify-content-between">
+        <div class="col-7">
+          <div class="d-flex">
+            <input
+              type="text"
+              id="buscador"
+              class="form-control"
+              (keyup)="filtro($event)"
+              placeholder="Buscar por nombre"
+            />
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Busqueda">
+              <i class="fas fa-plus"></i>
+            </button>
+            <select (change)="filtro()" style="margin-left: 20px;" name="" id="SelectMes"  class="form-control">
+              <option value="0">Todos</option>
+              <option value="01">Enero</option>
+              <option value="02">Febrero</option>
+              <option value="03">Marzo</option>
+              <option value="04">Abril</option>
+              <option value="05">Mayo</option>
+              <option value="06">Junio</option>
+              <option value="07">Julio</option>
+              <option value="08">Agosto</option>
+              <option value="09">Septiembre</option>
+              <option value="10">Octubre</option>
+              <option value="11">Noviembre</option>
+              <option value="12">Diciembre</option>
+            </select>
+          </div>
+        </div>
+        <div class="d-flex justify-content-sm-end">
+          <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+                type="button" role="tab" aria-controls="pills-home" aria-selected="true" (click)="limpiar()">
+                Pendientes
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
+                type="button" role="tab" aria-controls="pills-profile" aria-selected="false" (click)="limpiar()">
+                Historico
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
+                type="button" role="tab" aria-controls="pills-contact" aria-selected="false" (click)="limpiar()">
+                Encuestas
+              </button>
+            </li>
+            <button type="button" class="btn btn-outline-success" (click)="ImprimirReporteEncuestas()">
+              Reporte General Encuestas<i class="ms-3 fas fa-print"></i>
+            </button>
+          </ul>
+
+        </div>
+      </div>
+
+      <div class="tab-content" id="pills-tabContent">
+        <div
+          class="tab-pane fade show active"
+          id="pills-home"
+          role="tabpanel"
+          aria-labelledby="pills-home-tab"
+        >
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Inversionista</th>
+                  <th scope="col">Fecha a encuestar</th>
+                  <th scope="col">Correo</th>
+                  <th scope="col">Celular</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let encuesta of entrevistas">
+                  <tr>
+                    <td (click)="seleccionar(encuesta)">
+                      {{ encuesta.Inversionista }}
+                    </td>
+                    <td
+                      [ngClass]="{ '1': 'pasado', '2': 'hoy' }[encuesta.tiempo]"
+                      (click)="seleccionar(encuesta)"
+                    >
+                      {{ encuesta.FechaHR }}
+                    </td>
+                    <td>
+                      <div class="d-flex justify-content-between">
+                        {{ encuesta.Email }}
+                      <a
+                        class="btn btn-primary"
+                        href="mailto: {{ encuesta.Email }}"
+                        ><i class="fas fa-envelope"></i
+                      ></a>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex justify-content-between">
+                        {{ encuesta.Num_Cel }}
+                      <a  class="btn btn-primary" href="tel:+{{encuesta.Num_Cel}}">
+                        <i class="fas fa-phone"></i
+                          >
+                      </a>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="pills-profile"
+          role="tabpanel"
+          aria-labelledby="pills-profile-tab"
+        >
+          <app-historico [historico]="historico"></app-historico>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="pills-contact"
+          role="tabpanel"
+          aria-labelledby="pills-contact-tab"
+        >
+          <app-encuestas></app-encuestas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button
+    class="btn btn-primary"
+    type="button"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#offcanvasRight"
+    aria-controls="offcanvasRight"
+    style="display: none"
+    id="boton"
+  ></button>
+</div>
+
+<div
+  class="offcanvas offcanvas-end"
+  tabindex="-1"
+  id="offcanvasRight"
+  aria-labelledby="offcanvasRightLabel"
+>
+  <div class="offcanvas-header">
+    <h5 id="offcanvasRightLabel">Encuesta</h5>
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+      id="cerrarcanvas"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button
+          class="nav-link active"
+          id="nav-home-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-home"
+          type="button"
+          role="tab"
+          aria-controls="nav-home"
+          aria-selected="true"
+        >
+          Realizar encuesta
+        </button>
+        <button
+          class="nav-link"
+          id="nav-profile-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-profile"
+          type="button"
+          role="tab"
+          aria-controls="nav-profile"
+          aria-selected="false"
+        >
+          Reagendar encuesta
+        </button>
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <div
+        class="tab-pane fade show active pt-4"
+        id="nav-home"
+        role="tabpanel"
+        aria-labelledby="nav-home-tab"
+      >
+        <div class="row">
+          <div class="col-md-7">
+            <select
+              id="selectEncuesta"
+              (change)="encuesta($event)"
+              class="form-control"
+            >
+              <option value="0" disabled selected>
+                Selecciona un tipo de entrevista
+              </option>
+              <ng-container *ngFor="let encuesta of encuestas; let i = index">
+                <option *ngIf="encuesta.IdStatus == 1" [value]="i">
+                  {{ encuesta.NombreEncuesta }}
+                </option>
+              </ng-container>
+            </select>
+            <div class="preguntas">
+              <ng-container
+                *ngFor="
+                  let pregunta of encuesta_seleccionada.preguntas;
+                  let y = index;
+                  trackBy: trackByIndex
+                "
+              >
+                <div class="pregunta">
+                  <h6> <b>{{y+1}}.-</b>  {{ pregunta.pregunta }}</h6>
+                  <div [ngSwitch]="pregunta.tipo">
+                    <div *ngSwitchCase="1">
+                      <textarea
+                        class="form-control"
+                        [(ngModel)]="respuestas.respuestas[y].valor"
+                        cols="30"
+                        rows="3"
+                      ></textarea>
+                    </div>
+                    <div class="d-flex flex-wrap" *ngSwitchCase="2">
+                      <ng-container
+                        *ngFor="let opcion of pregunta.opciones; let i = index"
+                      >
+                        <div class="opcion">
+                          <input
+                            type="radio"
+                            class="btn-check"
+                            name="pregunta{{ y }}{{ i }}"
+                            [(ngModel)]="respuestas.respuestas[y].valor"
+                            value="{{ opcion.valor }}"
+                            id="pregunta{{ y }}option{{ i }}"
+                            autocomplete="off"
+                          />
+                          <label
+                            class="btn btn-secondary"
+                            for="pregunta{{ y }}option{{ i }}"
+                            >{{ opcion.valor }}
+                          </label>
+                        </div>
+                      </ng-container>
+                      <div
+                        *ngIf="pregunta.Otro"
+                        class="opcion"
+                        [ngClass]="{
+                          'w-100': respuestas.respuestas[y].valor == 'Otro'
+                        }"
+                      >
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="pregunta{{ y }}Otro"
+                          [(ngModel)]="respuestas.respuestas[y].valor"
+                          value="Otro"
+                          id="pregunta{{ y }}optionOtro"
+                          autocomplete="off"
+                        />
+                        <label
+                          class="btn btn-secondary d-flex align-items-center"
+                          for="pregunta{{ y }}optionOtro"
+                          >Otro
+                          <input
+                            type="text"
+                            class="form-otro ms-2"
+                            [(ngModel)]="respuestas.respuestas[y].Otro"
+                            placeholder="Especifique"
+                            *ngIf="respuestas.respuestas[y].valor == 'Otro'"
+                          />
+                        </label>
+                      </div>
+                    </div>
+                    <div class="d-flex flex-wrap" *ngSwitchCase="3">
+                      <ng-container
+                        *ngFor="let opcion of pregunta.opciones; let i = index"
+                      >
+                        <div class="opcion">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            name="pregunta{{ y }}[]"
+                            value="{{ opcion.valor }}"
+                            id="pregunta{{ y }}option{{ i }}"
+                            autocomplete="off"
+                          />
+                          <label
+                            class="btn btn-secondary"
+                            for="pregunta{{ y }}option{{ i }}"
+                            >{{ opcion.valor }}
+                          </label>
+                        </div>
+                      </ng-container>
+                      <div *ngIf="pregunta.Otro" class="opcion w-100">
+                        <input
+                          type="checkbox"
+                          class="btn-check"
+                          name="pregunta{{ y }}[]"
+                          value="Otro"
+                          id="pregunta{{ y }}optionOtro"
+                          autocomplete="off"
+                        />
+                        <label
+                          class="btn btn-secondary d-flex align-items-center"
+                          for="pregunta{{ y }}optionOtro"
+                          >Otro
+                          <input
+                            type="text"
+                            id="otro{{ y }}"
+                            class="ms-2 form-control"
+                            placeholder="Especifique"
+                          />
+                        </label>
+                      </div>
+                    </div>
+                    <div *ngSwitchDefault>output2</div>
+                  </div>
+                </div>
+              </ng-container>
+              <button class="btn btn-primary" (click)="mo()">
+                Guardar respuestas
+              </button>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <p class="fw-bold">Información {{ persona.Inversionista }}</p>
+            <p>Lotes</p>
+            <h6
+              *ngIf="!respuestas.IdHR"
+              [ngClass]="{ 'text-danger': respuestas.IdHR == 0 }"
+            >
+              Selecciona el lote para el cual aplica la encuesta
+            </h6>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Lote</th>
+                    <th scope="col">Finalización HR</th>
+                    <th scope="col">Encuesta</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let hr of persona.HRS; let i = index">
+                    <tr
+                      (click)="seleccionarHR(hr.IdHR)"
+                      [ngClass]="{ loteSe: respuestas.IdHR == hr.IdHR }"
+                    >
+                      <th scope="row">{{ i + 1 }}</th>
+                      <td>{{ hr.Lote }}</td>
+                      <td>{{ hr.Fecha }}</td>
+                      <td>{{hr.Encuesta}}</td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+       <!--      <p>Encuestas aplicadas</p>
+            <h6
+              *ngIf="!respuestas.IdHR"
+              [ngClass]="{ 'text-danger': respuestas.IdHR == 0 }"
+            >
+              Selecciona el lote para el cual aplica la encuesta
+            </h6>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Lote</th>
+                    <th scope="col">Finalización HR</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let hr of persona.HRS; let i = index">
+                    <tr
+                      (click)="seleccionarHR(hr.IdHR)"
+                      [ngClass]="{ loteSe: respuestas.IdHR == hr.IdHR }"
+                    >
+                      <th scope="row">{{ i + 1 }}</th>
+                      <td>{{ hr.Lote }}</td>
+                      <td>{{ hr.Fecha }}</td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="nav-profile"
+        role="tabpanel"
+        aria-labelledby="nav-profile-tab"
+      >
+        <p class="mt-4">Inversionista:</p>
+        <input
+          disabled
+          type="text"
+          class="form-control"
+          [(ngModel)]="persona.Inversionista"
+        />
+        <p class="mt-4">Fecha próximo contacto</p>
+        <input
+          [(ngModel)]="seleccionado.next"
+          type="date"
+          name=""
+          id=""
+          class="form-control"
+        />
+        <button (click)="reagendar()" class="btn btn-primary mt-3">
+          <span *ngIf="!loading">Reagendar</span>
+          <div *ngIf="loading" class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="Busqueda"
+  tabindex="-1"
+  aria-labelledby="BusquedaLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="BusquedaLabel">Busqueda</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex">
+          <input
+            type="text"
+            class="form-control"
+            (keyup.enter)="buscar()"
+            (keyup)="filtrar()"
+            [(ngModel)]="inversionistas.buscador"
+            placeholder="Buscar por nombre"
+          />
+          <button type="button" class="btn btn-primary" (click)="buscar()">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <table class="table table-hover">
+          <thead>
+            <th scope="col">Inversionista</th>
+            <th scope="col">Email</th>
+            <th scope="col">Telefono</th>
+          </thead>
+          <tbody>
+            <ng-container
+              *ngFor="let inversionista of inversionistas.filtrados"
+            >
+              <tr (click)="seleccionarInv(inversionista)">
+                <td>{{ inversionista.Inversionista }}</td>
+                <td>{{ inversionista.Email }}</td>
+                <td>{{ inversionista.Num_Cel }}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          id="cerrarmodal"
+          data-bs-dismiss="modal"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <app-full-loader></app-full-loader> -->

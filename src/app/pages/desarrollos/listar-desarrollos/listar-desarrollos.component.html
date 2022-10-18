@@ -1,0 +1,73 @@
+
+<div class="row m-b-30 m-t-30">
+    <div class="col-lg-8">
+        <div class="d-md-flex">
+            <h1>Administrador de desarrollos</h1>
+        </div>
+    </div>
+    <div class="col-lg-4 text-right">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#desarrolloModal">
+            <i class="fas fa-plus-circle m-r-5"></i>
+            Agregar Desarrollo
+        </button>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover e-commerce-table desarrollo-table">
+        <thead>
+            <tr>
+                <th scope="col">Empresa</th>
+                <th scope="col">Desarrollo</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let desarrollo of desarrollos">
+                <td>{{desarrollo.RazonSocial}}</td>
+                <td>{{desarrollo.Desarrollo}}</td>
+                <td>
+                    <a [routerLink]="'editardesarrollo/'+desarrollo.IdDesarrollo"
+                        class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="spinner-grow" role="status" *ngIf="desarrollos.length < 1">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="desarrolloModal" tabindex="-1" aria-labelledby="desarrolloModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="desarrolloModalLabel">Nuevo Desarrollo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="mb-3">
+                            <label for="nombreDesarrollo" class="form-label">Nombre del Desarrollo</label>
+                            <input type="text" class="form-control" id="nombreDesarrollo" placeholder="Nombre del desarrollo">
+                            <div id="feedbackNombreDesarrollo" class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="select_empresa">Empresa</label>
+                            <select class="form-select" aria-label="Empresa">
+                                <option value="" selected disabled>Selecciona una opción</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="isLoading">Crear</button>
+            </div>
+        </div>
+    </div>
+</div>

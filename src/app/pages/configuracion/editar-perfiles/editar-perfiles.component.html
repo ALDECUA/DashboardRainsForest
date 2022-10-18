@@ -1,0 +1,240 @@
+<div
+  class="page-container"
+  [ngClass]="{
+    sidebar_is_full: app.sidebarState,
+    sidebar_is_small: !app.sidebarState
+  }"
+>
+  <!-- Content Wrapper START -->
+  <div class="main-content">
+    <div class="page-header no-gutters">
+      <!-- header tabs -->
+      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="pills-home-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#pills-home"
+            type="button"
+            role="tab"
+            aria-controls="pills-home"
+            aria-selected="true"
+          >
+            Perfil
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="pills-profile-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#pills-profile"
+            type="button"
+            role="tab"
+            aria-controls="pills-profile"
+            aria-selected="false"
+          >
+            Permisos
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="container">
+      <!-- cuerpo tabs -->
+      <div class="tab-content" id="pills-tabContent">
+        <div
+          class="tab-pane fade show active"
+          id="pills-home"
+          role="tabpanel"
+          aria-labelledby="pills-home-tab"
+        >
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Información Perfil</h4>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="nombre" class="form-label">Nombre</label>
+                  <input
+                    type="text"
+                    [(ngModel)]="persona.Nombre"
+                    class="form-control"
+                    name="nombre"
+                    placeholder="Nombre"
+                  />
+                </div>
+                <div class="col-12">
+                  <div class="form-check form-switch">
+                    <input
+                      (change)="status()"
+                      class="form-check-input"
+                      type="checkbox"
+                      id="flexSwitchCheckChecked"
+                      [(ngModel)]="persona.IdStatus"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="flexSwitchCheckChecked"
+                    >
+                      {{ label }}</label
+                    >
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button
+                    (click)="ActualizarUsuario()"
+                    type="submit"
+                    class="btn btn-primary"
+                  >
+                    Actualizar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="pills-profile"
+          role="tabpanel"
+          aria-labelledby="pills-profile-tab"
+        >
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Permisos Perfil</h4>
+            </div>
+            <div class="card-body">
+              <table>
+                <ng-container *ngFor="let row of menus; let i = index">
+                  <tr [ngClass]="{ seccion: row.IdParent == row.IdMenu }">
+                    <td [ngClass]="{ 'ps-5': row.IdParent != row.IdMenu}">
+                      {{ row.Texto }}
+                    </td>
+                    <td>
+                      <div
+                        class="form-check form-switch"
+                        *ngIf="row.Leer == 1; else sino"
+                      >
+                        <input
+                          (change)="Leer(i)"
+                          class="form-check-input"
+                          type="checkbox"
+                          id="flexSwitchCheckChecked"
+                          checked
+                        />
+                        <label
+                          class="form-check-label"
+                          for="flexSwitchCheckChecked"
+                        >
+                          Ver</label
+                        >
+                      </div>
+                      <ng-template #sino>
+                        <div class="form-check form-switch">
+                          <input
+                            (change)="Leer(i)"
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexSwitchCheckChecked"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexSwitchCheckChecked"
+                          >
+                            Ver</label
+                          >
+                        </div>
+                      </ng-template>
+                    </td>
+                    <td>
+                      <div
+                        class="form-check form-switch"
+                        *ngIf="row.Editar == 1; else sinoE"
+                      >
+                        <input
+                          class="form-check-input"
+                          (change)="Editar(i)"
+                          type="checkbox"
+                          id="row.IdMenu"
+                          checked
+                        />
+                        <label
+                          class="form-check-label"
+                          for="flexSwitchCheckChecked"
+                        >
+                          Editar</label
+                        >
+                      </div>
+                      <ng-template #sinoE>
+                        <div class="form-check form-switch">
+                          <input
+                            (change)="Editar(i)"
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexSwitchCheckChecked"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexSwitchCheckChecked"
+                          >
+                            Editar</label
+                          >
+                        </div>
+                      </ng-template>
+                    </td>
+                    <td>
+                      <div
+                        class="form-check form-switch"
+                        *ngIf="row.Eliminar == 1; else sinoEli"
+                      >
+                        <input
+                          (change)="Eliminar(i)"
+                          class="form-check-input"
+                          type="checkbox"
+                          id="flexSwitchCheckChecked"
+                          checked
+                        />
+                        <label
+                          class="form-check-label"
+                          for="flexSwitchCheckChecked"
+                        >
+                          Eliminar</label
+                        >
+                      </div>
+                      <ng-template #sinoEli>
+                        <div class="form-check form-switch">
+                          <input
+                            (change)="Eliminar(i)"
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexSwitchCheckChecked"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexSwitchCheckChecked"
+                          >
+                            Eliminar</label
+                          >
+                        </div>
+                      </ng-template>
+                    </td>
+                  </tr>
+                </ng-container>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Content Wrapper END -->
+  <!-- Footer START -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p class="m-b-0">  </p>
+    </div>
+  </footer>
+  <!-- Footer END -->
+</div>

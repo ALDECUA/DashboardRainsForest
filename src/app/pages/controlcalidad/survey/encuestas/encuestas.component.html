@@ -1,0 +1,168 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Encuesta</th>
+      <th scope="col">Ultima modificación</th>
+      <th scope="col">Estatus</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let encuesta of encuestas; let i = index">
+      <tr data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+      (click)="seleccionar(encuesta)">
+        <th scope="col">{{ i + 1 }}</th>
+        <td>{{ encuesta.NombreEncuesta }}</td>
+        <td>{{ encuesta.UltimaModificacion }}</td>
+        <td>{{ encuesta.Estatus }}</td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+<div
+  *ngIf="empty == false && encuestas.length == 0"
+  class="d-flex justify-content-center"
+>
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+<p *ngIf="empty" class="text-center fw-bold">
+  <i class="fas fa-info-circle"></i> Sin encuestas,
+  <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"
+    >crear nueva encuesta</a
+  >
+</p>
+<button
+  type="button"
+  class="btn btn-primary"
+  data-bs-toggle="modal"
+  data-bs-target="#exampleModal"
+  (click)="seleccionar(0)"
+>
+  Nueva encuesta
+</button>
+<!-- Modal encuestas-->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <input
+          type="text"
+          class="form-control titulo"
+          placeholder="Nombre encuesta"
+          [(ngModel)]="encuesta.NombreEncuesta"
+        />
+        <button
+          type="button"
+          class="btn-close"
+
+          (click)="cerrar()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <ng-container
+          *ngFor="let pregunta of encuesta.preguntas; let i = index"
+        >
+          <div class="pregunta">
+            <button (click)="eliminarP(pregunta, i, 1)" class="btn eliminar">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+            <label class="numero" for="
+            ">{{i+1}}.-</label>
+
+            <input
+              [(ngModel)]="pregunta.pregunta"
+              class="form-control preguntat"
+              placeholder="Pregunta {{ i + 1 }}"
+              type="text"
+            />
+            <select
+              [(ngModel)]="pregunta.tipo"
+              (change)="tipopregunta(pregunta)"
+              class="form-control mt-2"
+              name=""
+              id=""
+            >
+              <option disabled value="0">Selecciona una opción</option>
+              <option value="1">Abierta</option>
+              <option value="2">Opciones</option>
+              <option value="3">Opciones Multiples</option>
+            </select>
+
+            <ng-container *ngIf="pregunta.opciones">
+              <h5 class="mt-1">Opciones</h5>
+              <div class="form-check">
+                <input [(ngModel)]="pregunta.Otro" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                  Agregar campo "Otro"
+                </label>
+              </div>
+              <ng-container
+                *ngFor="let opcion of pregunta.opciones; let io = index"
+              >
+                <div class="position-relative">
+                  <button
+                    (click)="eliminarP(pregunta, io, 2)"
+                    class="btn eliminar"
+                  >
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                  <input
+                    placeholder="Opción {{ io + 1 }}"
+                    [(ngModel)]="pregunta.opciones[io].valor"
+                    type="text"
+                    class="form-control mb-1 titulo"
+                  />
+                </div>
+              </ng-container>
+              <input
+                    (keydown.Enter)="escribir($event, pregunta)"
+                    placeholder="Opción {{pregunta.opciones.length +1 }}"
+                    [(ngModel)]="pregunta.nopcion"
+                    type="text"
+                    class="form-control mb-1"
+                  />
+            </ng-container>
+            <p class="text-center">
+              <button
+                (click)="opcionnueva(pregunta)"
+                *ngIf="+pregunta.tipo > 1"
+                class="btn btn-secondary redondo"
+              >
+                <i class="fas fa-plus"></i>
+              </button>
+            </p>
+          </div>
+        </ng-container>
+        <button (click)="preguntanueva()" class="btn btn-secondary">
+          Agregar pregunta
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="encuesta.IdEncuesta && encuesta.IdStatus == 1" (click)="borrar(0)" type="button" class="btn btn-danger" >
+          Eliminar encuesta
+        </button>
+        <button *ngIf="encuesta.IdEncuesta && encuesta.IdStatus == 0" (click)="borrar(1)" type="button" class="btn btn-success" >
+          Recuperar encuesta
+        </button>
+        <button
+          type="button"
+          (click)="guardarencuesta()"
+          class="btn btn-primary"
+        >
+          Guardar encuesta
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="row align-items-center mb-3">
+    <label for="dinputrazonssa" class="col-sm-3 col-form-label">
+        <b>Razon social</b>
+    </label>
+    <div class="col-sm-9">
+        <input type="text" id="dinputrazonssa" class="form-control" style="width:300px"
+            [(ngModel)]="empresa.RazonSocial">
+    </div>
+</div>
+<div class="row align-items-center mb-3">
+    <label for="fapoderados" class="col-sm-3 col-form-label">
+        <b>Apoderado legal</b>
+    </label>
+    <div class="col-sm-9">
+        <input type="text" id="fapoderados" class="form-control" style="width:300px" [(ngModel)]="empresa.Apoderado">
+    </div>
+</div>
+<div class="row align-items-center mb-3">
+    <label for="mandatarioss" class="col-sm-3 col-form-label">
+        <b>Mandatario</b>
+    </label>
+    <div class="col-sm-9">
+        <input type="text" id="mandatarioss" class="form-control" style="width:300px" [(ngModel)]="empresa.Mandatario">
+    </div>
+</div>
+
+<div class="form-floating mt-2">
+    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 150px"
+        [(ngModel)]="empresa.GeneralesApoderado"></textarea>
+    <label for="floatingTextarea2">Apoderado General</label>
+</div>
+
+<div style="width:100%; display:flex; justify-content:flex-end;" class="mt-2">
+
+    <button class="btn btn-outline-success me-1" (click)="guardarEmpresa()" [disabled]="saving">
+        <i class="far fa-save"></i> &nbsp;
+        Guardar
+    </button>
+
+    <button class="btn btn-outline-danger" data-bs-toggle="collapse" href="#empresaCrear" role="button"
+        aria-expanded="false" aria-controls="empresaCrear">
+        <i class="fa fa-times"></i> Cerrar</button>
+</div>

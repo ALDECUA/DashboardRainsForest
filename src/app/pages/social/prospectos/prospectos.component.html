@@ -1,0 +1,72 @@
+<div class="page-container" [ngClass]="{'sidebar_is_full': app.sidebarState, 'sidebar_is_small': !app.sidebarState}">
+    <!-- Content Wrapper START -->
+    <div class="main-content">
+        <div class="container">
+            <app-navbar></app-navbar>
+            <div class="row">
+                <div class="col-md-12 d-flex flex-wrap">
+                    <div class="col-md-6">
+                        <h1>Prospectos</h1>
+                    </div>
+                    <div class="col-md-6 d-flex">
+                        <button class="agregar-mas btn ms-auto" type="button"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-5">
+                    <div class="card">
+                        
+                        <div class="card-body">
+                            
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover prospect">
+                                    <thead class="sticky-top">
+                                        <tr>
+                                            <th scope="col" class="numeration">#</th>
+                                            <th class="name">Prospecto</th>
+                                            <th>Email</th>
+                                            <th>Telefono</th>
+                                            <th>Fecha</th>
+                                            <th>Plataforma</th>
+                                            <th><i class="fas fa-cog"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="table-secondary" *ngFor="let item of Prospectos;">
+                                            <th scope="row" class="numeration" *ngIf="item.IdStatusCrm === 2">{{item.Idlead}}</th>
+                                            <td class="name" *ngIf="item.IdStatusCrm === 2">{{ item.Fullname }}</td>
+                                            <td *ngIf="item.IdStatusCrm === 2">{{ item.Email }}</td>
+                                            <td *ngIf="item.IdStatusCrm === 2">{{ item.Telefono }}</td>
+                                            <td *ngIf="item.IdStatusCrm === 2">{{ item.Tiempo }}</td>
+                                            <td *ngIf="item.IdStatusCrm === 2"></td>
+                                            <td *ngIf="item.IdStatusCrm === 2">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-secondary table-btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                        <li>
+                                                            <a class="dropdown-item" id="{{ item.Idlead }}" (click)="seguimiento(item)" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                                                Agregar seguimiento
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                                                Reasignar
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-modal></app-modal>
+    </div>
+</div>

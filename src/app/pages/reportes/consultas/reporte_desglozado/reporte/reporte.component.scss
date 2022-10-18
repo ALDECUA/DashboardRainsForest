@@ -1,0 +1,47 @@
+.img-cons{
+    width: 43%;
+}
+
+.line-bottom{
+    border: none;
+    border-bottom: 1px solid #000;
+    border-radius: 0px;
+}
+.form-select{
+    border:none;
+    border-radius: 0;
+    border-bottom: 1px solid #000;
+}
+.btnObtener{
+    display: flex;
+    height: auto;
+    width: auto;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: flex-end;
+}
+.btngeneral{
+
+    margin-left: 2px;
+}
+.Disponible{
+    background-color: rgb(30, 255, 0);
+}
+.Apartado{
+    background-color: rgb(255, 247, 0);
+}
+.Vendido{
+    background-color: rgb(255, 75, 75);
+}
+.Secreto{
+    background-color: rgb(179, 190, 243);
+}
+.btnbusqueda{
+    margin-right: 5px;
+
+}
+.datos{
+
+    width:  100%;
+
+}

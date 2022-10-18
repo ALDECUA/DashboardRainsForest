@@ -1,0 +1,67 @@
+<div class="page-container" [ngClass]="{'sidebar_is_full': app.sidebarState, 'sidebar_is_small': !app.sidebarState}">
+
+    <!-- Content Wrapper START -->
+    <div class="main-content">
+        <div class="page-header no-gutters has-tab">
+            <div class="d-md-flex m-b-15 align-items-center justify-content-between">
+                <div class="media align-items-center m-b-15">
+                    <div class="m-l-15"></div>
+                </div>
+                <div class="m-b-15">
+                    <button id="actualizarBtnEtapas" class="btn btn-warning me-1" [routerLink]="['/crm/desarrollos']">
+                        <i class="fas fa-long-arrow-alt-left"></i> &nbsp;
+                        <span>Volver</span>
+                    </button>
+                    <button id="actualizarBtnEtapas" class="btn btn-primary" (click)="updateEtapaActual()">
+                    <i class="far fa-save"></i> &nbsp;
+                        <span>Guardar</span>
+                    </button>
+                </div>
+            </div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                   <a class="nav-link active" data-toggle="tab" href="#">Información Basica</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content m-t-15">
+            <div class="tab-pane fade show active" id="#">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="mb-3">
+                                    <label for="etapas" class="form-label">Numero de la etapa</label>
+                                    <input [(ngModel)]="etapa.nombre" type="text" class="form-control" name="nombre">
+                                    <!--
+                                    <input type="hidden" id="idUsuario" name="idUsuario" value="Ulises"> -->
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="SelIdDesarrollo">Desarrollos</label>
+                                    <select [(ngModel)]="etapa.IdDes" class="form-select" aria-label="Desarrollos">
+                                        <option value="" selected disabled>Selecciona una opción</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Content Wrapper END -->
+  
+    <!-- Footer START -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="mb-0"> </p>
+        </div>
+    </footer>
+    <!-- Footer END -->
+  
+</div>
+  

@@ -1,0 +1,14 @@
+<div class="page-container" [ngClass]="{'sidebar_is_full': app.sidebarState, 'sidebar_is_small': !app.sidebarState}">
+
+    <div class="main-content">
+        <a href="crm/fxcoins/agregarproducto" class="btn btn-primary " role="button" style="margin-bottom: 10px;" aria-disabled="true">Agregar producto</a>
+        <app-datatable [dataList]="productos" [config]="configDataTable" [loading]="loading"></app-datatable>
+    </div>
+    <!-- modal -->
+    <app-ver-producto-modal></app-ver-producto-modal>
+    <!-- modal end -->
+    <!-- Footer START -->
+    <app-footer></app-footer>
+    <!-- Footer END -->
+
+</div>

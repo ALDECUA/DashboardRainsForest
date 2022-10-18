@@ -1,0 +1,129 @@
+
+<div class="row m-b-30 m-t-30">
+    <div class="col-lg-8">
+        <div class="d-md-flex">
+            <h1>Administrador de Lotes</h1>
+        </div>
+    </div>
+    <div class="col-lg-4 text-right">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#lotesModal">
+            <i class="fas fa-plus-circle m-r-5"></i>
+            Agregar Lote
+        </button>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover e-commerce-table desarrollo-table">
+        <thead>
+            <tr>
+                <th scope="col">Desarrollo</th>
+                <th scope="col">Etapa</th>
+                <th scope="col">Lote</th>
+                <th scope="col">Base</th>
+                <th scope="col">Altura</th>
+                <th scope="col"> M<sup>2</sup></th>
+                <th scope="col">Precio</th>
+                <th scope="col">Precio Total</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let lote of lotes">
+                <td>{{lote.Desarrollo}}</td>
+                <td>{{lote.Fase}}</td>
+                <td>{{lote.nombre}}</td>
+                <td>{{lote.Base}}</td>
+                <td>{{lote.Altura}}</td>
+                <td>{{lote.m2}}</td>
+                <td>{{lote.Precio_m2|money}}</td>
+                <td>{{lote.Precio_Total|money}}</td>
+                <td>
+                    <a [routerLink]="'editarlote/'+lote.IdEmpresa"
+                        class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="spinner-grow" role="status" *ngIf="lotes.length < 1">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="lotesModal" tabindex="-1" aria-labelledby="lotesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lotesModalLabel">Nuevo Lote</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="nombreLote" class="form-label">Nombre del lote</label>
+                            <input type="text" class="form-control" id="nombreLote" placeholder="Nombre del lote">
+                            <div id="feedbacknombreLote" class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="select_etapa" class="form-label">Etapas</label>
+                            <select class="form-select" aria-label="Etapa">
+                                <option value="" selected disabled>Selecciona una opción</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="base" class="form-label">Base</label>
+                            <input type="text" class="form-control" id="base" placeholder="Base">
+                            <div id="feedbackbase" class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="altura" class="form-label">Altura</label>
+                            <input type="text" class="form-control" id="altura" placeholder="Altura">
+                            <div id="feedbackaltura" class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="m2" class="form-label">M<sup>2</sup></label>
+                            <input type="text" class="form-control" id="m2" placeholder="m2">
+                            <div id="feedbackm2" class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="precio" class="form-label">Precio</label>
+                            <input type="text" class="form-control" id="precio" placeholder="Precio">
+                            <div id="feedbackprecio" class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="PrecioTotal" class="form-label">Precio Total</label>
+                            <input type="text" class="form-control" id="PrecioTotal" placeholder="Precio Total">
+                            <div id="feedbackPrecioTotal" class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="Numtablaje" class="form-label">Num Tablaje</label>
+                            <input type="text" class="form-control" id="Numtablaje" placeholder="Numtablaje">
+                            <div id="feedbackNumtablaje" class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-12">
+                            <label for="clausula1" class="form-label">Clausula 1</label>
+                            <div style="height:180px;margin-bottom: 50px;">
+                                <quill-editor theme="snow" [style]="{'height':'320px'}"></quill-editor>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label for="clausula2" class="form-label">Clausula 2</label>
+                            <div style="height:180px;margin-bottom: 50px;">
+                                <quill-editor theme="snow" [style]="{'height':'320px'}"></quill-editor>
+                            </div>
+                        </div>
+                        <input type="hidden" name="idDesarrollo" id="idDesarrollo" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    [disabled]="isLoading">Crear</button>
+            </div>
+        </div>
+    </div>
+</div>

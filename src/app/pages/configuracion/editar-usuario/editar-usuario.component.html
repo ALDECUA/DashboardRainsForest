@@ -1,0 +1,78 @@
+<div class="page-container" [ngClass]="{'sidebar_is_full': app.sidebarState, 'sidebar_is_small': !app.sidebarState}">
+
+  <!-- Content Wrapper START -->
+  <div class="main-content">
+    <div class="page-header no-gutters">
+      <!-- header tabs -->
+      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+            type="button" role="tab" aria-controls="pills-home" aria-selected="true">Cuenta</button>
+        </li>
+
+      </ul>
+    </div>
+    <div class="container">
+      <!-- cuerpo tabs -->
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Información Basica</h4>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="nombre" class="form-label">Nombre</label>
+                  <input type="text" [(ngModel)]="persona.Nombre" class="form-control" name="nombre"
+                    placeholder="Nombre">
+                </div>
+                <div class="col-md-6">
+                  <label for="segundonombre" class="form-label">Apellido</label>
+                  <input [(ngModel)]="persona.Apellidos" type="text" class="form-control" name="Apellido"
+                    placeholder="Apellido">
+                </div>
+                <div class="col-md-6">
+                  <label for="email" class="form-label">Email</label>
+                  <input [(ngModel)]="persona.Correo" type="email" class="form-control" name="email"
+                    placeholder="Email">
+                </div>
+                <div class="col-md-6">
+                  <label for="celular" class="form-label" [(ngModel)]="persona.Telefono">Celular</label>
+                  <input [(ngModel)]="persona.Telefono" type="tel" class="form-control" name="celular"
+                    placeholder="Celular">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="">Tipo de usuario</label>
+                  <select class="form-control" [(ngModel)]="tipousuarion">
+                    <option [value]="il.IdPerfil" *ngFor="let il of tipo_personas"> {{ il.Nombre}}
+                       </select>
+                </div>
+                <div class="col-12">
+                  <div class="form-check form-switch">
+                    <input (change)="status()" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" [(ngModel)]="persona.IdStatus">
+                    <label class="form-check-label" for="flexSwitchCheckChecked"> {{ label }}</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button (click)="ActualizarUsuario()" type="submit" class="btn btn-primary">Actualizar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- Content Wrapper END -->
+  <!-- Footer START -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p class="m-b-0">  </p>
+    </div>
+  </footer>
+  <!-- Footer END -->
+
+</div>

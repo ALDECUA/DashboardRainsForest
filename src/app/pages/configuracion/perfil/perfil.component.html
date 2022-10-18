@@ -1,0 +1,39 @@
+<div class="page-container" [ngClass]="{'sidebar_is_full': app.sidebarState, 'sidebar_is_small': !app.sidebarState}">
+  <!-- Content Wrapper START -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Crear nuevo perfil</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label for="">Nombre Perfil</label>
+          <input type="text" class="form-control" [(ngModel)]="newperfil">
+          <input type="text" name="fecha" class="form-control" id="fecha" [(ngModel)]="fech" readonly hidden>
+          <input type="text" name="fecha" class="form-control" id="usuario" [(ngModel)]="usuario" readonly hidden>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="CrearPerfil()">Crear
+            perfil</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main-content">
+    <button type="button" id="add" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+    (click)="actualizarfecha()">
+    <i class="fas fa-plus-circle"></i> Crear nuevo perfil
+  </button>
+    <app-datatable [dataList]="perfiles" [config]="configDataTable" [loading]="loading"></app-datatable>
+
+  </div>
+  <!-- Content Wrapper END -->
+
+  <!-- Footer START -->
+  <app-footer></app-footer>
+  <!-- Footer END -->
+
+</div>

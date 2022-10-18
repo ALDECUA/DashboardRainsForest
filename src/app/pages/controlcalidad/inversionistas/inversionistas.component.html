@@ -1,0 +1,204 @@
+<div
+  class="page-container"
+  [ngClass]="{
+    sidebar_is_full: app.sidebarState,
+    sidebar_is_small: !app.sidebarState
+  }"
+>
+  <div class="main-content position-relative">
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button
+          class="nav-link active"
+          id="nav-home-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-home"
+          type="button"
+          role="tab"
+          aria-controls="nav-home"
+          aria-selected="true"
+        >
+          Pendientes
+          <span class="badge bg-warning">{{
+            registros.pendientes.length
+          }}</span>
+        </button>
+        <button
+          class="nav-link"
+          id="nav-profile-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-profile"
+          type="button"
+          role="tab"
+          aria-controls="nav-profile"
+          aria-selected="false"
+        >
+          Aprobados
+          <span class="badge bg-success">{{ registros.aceptados.length }}</span>
+        </button>
+      </div>
+    </nav>
+    <div class="tab-content position-relative" id="nav-tabContent">
+      <button data-bs-toggle="modal" data-bs-target="#agregarinv" class="btn btn-success position-absolute nuevo">
+        Agregar Inversionista pre-sistema
+      </button>
+      <div
+        class="tab-pane fade show active"
+        id="nav-home"
+        role="tabpanel"
+        aria-labelledby="nav-home-tab"
+      >
+        <app-datatableHR
+          [dataList]="registros.pendientes"
+          [config]="configDataTable"
+          [loading]="loading"
+        ></app-datatableHR>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="nav-profile"
+        role="tabpanel"
+        aria-labelledby="nav-profile-tab"
+      >
+        <app-datatableHR
+          [dataList]="registros.aceptados"
+          [config]="configDataTable"
+          [loading]="loading"
+        ></app-datatableHR>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>
+
+<div
+  class="modal fade"
+  id="agregarinv"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Registro Inversionista
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form name="login" id="login" autocomplete="off">
+          <div class="row">
+            <div class="col-md-6">
+              <label for="nombre" class="form-label">Nombre(*)</label>
+              <input
+                type="text"
+                class="form-control"
+                name="nombre"
+                placeholder="Nombre"
+                [(ngModel)]="registro.Nombre"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="segundonombre" class="form-label"
+                >Segundo Nombre</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                name="segundonombre"
+                placeholder="Segundo Nombre"
+                [(ngModel)]="registro.Nombre_S"
+              />
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label for="nombre" class="form-label"
+                >Apellido paterno (*)</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                name="nombre"
+                [(ngModel)]="registro.Apellido_Pat"
+                placeholder="Apellido Paterno"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="segundonombre" class="form-label"
+                >Apellido materno</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                name="segundonombre"
+                [(ngModel)]="registro.Apellido_Mat"
+                placeholder="Apellido materno"
+              />
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label for="nombre" class="form-label"
+                >Correo electrónico (*)</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                name="nombre"
+                [(ngModel)]="registro.Email"
+                placeholder="Correo electrónico"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="segundonombre" class="form-label">Telefono (*)</label>
+              <input
+                type="number"
+                class="form-control"
+                name="segundonombre"
+                [(ngModel)]="registro.Num_Cel"
+                placeholder="Telefono"
+              />
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label for="nombre" class="form-label">Whatsapp (*)</label>
+              <input
+                type="number"
+                class="form-control"
+                name="nombre"
+                [(ngModel)]="registro.Whats"
+                placeholder="Whatsapp"
+              />
+            </div>
+          </div>
+          <div class="form-group mt-4 text-center">
+            <div class="ss m-t-30">
+              <button
+                class="btn btn-dark"
+                id="form-send2"
+                (click)="registro_persona()"
+              >
+                <b *ngIf="!loading"> Registrar </b>
+                <div
+                  *ngIf="loading"
+                  class="spinner-border text-light"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

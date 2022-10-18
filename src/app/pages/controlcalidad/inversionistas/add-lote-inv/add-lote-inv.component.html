@@ -1,0 +1,95 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-success mt-5" data-bs-toggle="modal" data-bs-target="#addLoteModal">
+    Agregar lote al inversionista
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="addLoteModal" tabindex="-1" aria-labelledby="addLoteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addLoteModalLabel">Agregar lote</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row contentlote1 mt-4">
+                    <h5>Lote adquirido #1</h5>
+                    <div class="form-group col-md-6 mt-1">
+                        <label>Desarrollo (*)</label>
+                        <select name="Desarrollo" class="form-control" id="des" [(ngModel)]="lotedata.IdDesarrollo"
+                            (change)="getEtapas()">
+                            <option [value]="undefined" disabled selected>Selecciona una opcion</option>
+                            <option *ngFor="let item of desarrollos" [value]=item.IdDesarrollo>{{item.Desarrollo}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6 koo-ocultar mt-2">
+                        <label>Etapa (*)</label>
+                        <select class="form-control" name="etapas" [(ngModel)]="lotedata.IdFase" id="etapas"
+                            (change)="CambioEtapa()">
+                            <option [value]="undefined" disabled selected>Selecciona una etapa</option>
+                            <option *ngFor="let item of etapas" [value]="item.IdFase"> {{ item.Fase }}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6 koo-ver mt-1">
+                        <label>Lote (*)</label>
+                        <select name="lote" [(ngModel)]="lotedata.IdLote" class="form-control" id="lote"
+                            (change)="cambiarLote()">
+                            <option [value]="undefined" disabled selected>Selecciona un lote</option>
+                            <option *ngFor="let item of lotesdisponibles" [value]="item.idpropiedad"> {{ item.nombre }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6 koo-ocultar mt-2">
+                        <label>Precio m2 (*)</label>
+                        <input type="text" name="preciom2" class="form-control preciom2 " placeholder="Precio m2"
+                            autocomplete="off" (keyup)="CambiarPrecio()" value="0" [(ngModel)]="lotedata.PrecioM2">
+                    </div>
+
+                    <div class="form-group col-md-6 koo-ocultar mt-2">
+                        <label>M2 del lote (*)</label>
+                        <input type="text" name="m2lote" class="form-control m2lote " placeholder="M2 del lote"
+                            [(ngModel)]="lotedata.m2" disabled>
+                    </div>
+
+                    <div class="form-group col-md-6 mt-2">
+                        <label>Costo total del lote (*)</label>
+                        <input type="text" name="costolote" class="form-control costolote validar"
+                            placeholder="Costo total del lote" autocomplete="off" [(ngModel)]="lotedata.Precio_Final"
+                            disabled>
+                    </div>
+                    <div class="form-group col-md-6 mt-2">
+                        <label>Fecha de compra (*)</label>
+                        <input type="date" class="form-control" [(ngModel)]="lotedata.Fecha_Enganche" name="" id="">
+                    </div>
+                    <div class="form-group col-md-6 mt-2">
+                        <label>Forma de compra (*)</label>
+                        <select (change)="cambiarFormaPago()" class="form-control formacompra validar"
+                            name="formacompra" [(ngModel)]="lotedata.Forma_Compra">
+                            <option [value]="undefined">Selecciona una opción</option>
+                            <option value="1">Contado</option>
+                            <option value="2">Financiado</option>
+                        </select>
+                    </div>
+
+                    <div *ngIf="lotedata.Forma_Compra==2" class="form-group col-md-6 contenmonto1 mt-2">
+                        <label>Monto de enganche (*)</label>
+                        <input type="text" name="montoenganche" class="form-control montoenganche "
+                            placeholder="Monto de enganche" [(ngModel)]="lotedata.Enganche">
+                    </div>
+
+                    <div *ngIf="lotedata.Forma_Compra==2" class="form-group col-md-6 contenttiempo1 mt-2">
+                        <label>Meses de financiamiento (*)</label>
+                        <input type="text" class="form-control" placeholder="No. de Meses" name="meseslote"
+                            [(ngModel)]="lotedata.Mensualidades">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="saveLote()" [disabled]="loading">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>

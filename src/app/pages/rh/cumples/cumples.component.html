@@ -1,0 +1,157 @@
+<div class="page-container" [ngClass]="{'sidebar_is_full': app.sidebarState, 'sidebar_is_small': !app.sidebarState}">
+
+  <!-- Content Wrapper START -->
+  <div class="main-content">
+    <div class="page-header no-gutters">
+      <div class="row align-items-md-center">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-xl-12 col-lg-8 col-md-12">
+              <div class="input-affix mb-3 mt-3">
+                <i class="fas fa-search"></i>
+                <input id="buscar_cumple" type="text" class="form-control" [(ngModel)]="searched"
+                  placeholder="Buscar Cumpleañero" (keyup)="filtrarPersona()">
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12">
+              <select [(ngModel)]="mes" (change)="filtrarPersona()" class="form-select mb-3" id="mes">
+                <option value="">Todos los meses</option>
+                <option value="01">Enero</option>
+                <option value="02">Febrero</option>
+                <option value="03">Marzo</option>
+                <option value="04">Abril</option>
+                <option value="05">Mayo</option>
+                <option value="06">Junio</option>
+                <option value="07">Julio</option>
+                <option value="08">Agosto</option>
+                <option value="09">Septiembre</option>
+                <option value="10">Octubre</option>
+                <option value="11">Noviembre</option>
+                <option value="12">Diciembre</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="text-md-right mb-3 mt-3">
+            <div class="btn-group me-3">
+              <button id="list-view-btn" type="button" (click)="cambiarvista(0)" class="btn btn-default btn-icon"
+                [ngClass]="{active:vista===0}" data-toggle="tooltip" data-placement="bottom" title=""
+                data-bs-original-title="List View">
+                <i class="fas fa-list"></i>
+              </button>
+              <button id="card-view-btn" type="button" (click)="cambiarvista(1)" class="btn btn-default btn-icon"
+                [ngClass]="{active:vista===1}" data-toggle="tooltip" data-placement="bottom" title=""
+                data-bs-original-title="Card View">
+                <i class="fas fa-th-large"></i>
+              </button>
+            </div>
+            <button class="btn btn-primary" id="btn-excel-download" (click)="exportAsExcelFile()">
+              <i class="fas fa-cloud-download-alt"></i>
+              <span class="ms-3">Descargar</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="d-flex justify-content-center" *ngIf="loading">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      <div class="col-lg-11 mx-auto">
+        <div class="row" id="card-view" *ngIf="vista === 1">
+          <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 cards-form" *ngFor="let persona of personas">
+            <div class="card card-cumple">
+              <div class="card-body">
+                <div class="mt-3 text-center">
+                  <div class="avatar avatar-image" style="height: 100px; width: 100px;">
+                    <img *ngIf="persona.Foto_Perfil == null" src="{{app.dominio}}pruebas_dwit/admin/Content/img/admins/avatar.png"
+                                alt="avatar">
+                                <img *ngIf="persona.Foto_Perfil != null" src="{{app.dominio}}newDesign/assets/images/imgPerfil/{{persona.Foto_Perfil}}"
+                                alt="avatar">
+                  </div>
+                  <h4 class="mt-4 name-form">{{persona.Nombre_Completo}}</h4>
+                  <p>{{persona.Email}}</p>
+                </div>
+                <div class="text-center mt-3">
+                  <h4 class="mt-2">{{persona.Fch_Nacimiento}}</h4>
+                </div>
+                <div class="text-center mt-4">
+                  <a [routerLink]="['/crm/rh/editarusuario/'+persona.IdPersona]" routerLinkActive="router-link-active"
+                    class="btn btn-primary btn-tone">
+                    <i class="fas fa-user"></i>
+                    <span class="ms-3">Perfil</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row" id="list-view" *ngIf="vista === 0">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Fecha</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr class="cards-form" *ngFor="let persona of personas">
+
+                        <td>
+                          <div class="media align-items-center">
+                            <div class="avatar avatar-image">
+                              <img *ngIf="persona.Foto_Perfil == null" src="{{app.dominio}}pruebas_dwit/admin/Content/img/admins/avatar.png"
+                                alt="avatar">
+                                <img *ngIf="persona.Foto_Perfil != null" src="{{app.dominio}}newDesign/assets/images/imgPerfil/{{persona.Foto_Perfil}}"
+                                alt="avatar">
+                            </div>
+                            <div class="media-body m-l-15">
+                              <h6 class="mb-0 name-form">{{persona.Nombre_Completo}}</h6>
+                            </div>
+                          </div>
+                        </td>
+                        <td>{{persona.Email}}</td>
+                        <td>
+                          <p>{{persona.Fch_Nacimiento}}</p>
+                        </td>
+                        <td class="text-right">
+                          <a [routerLink]="['/crm/rh/editarusuario/'+persona.IdPersona]"
+                            class="btn btn-primary btn-tone">
+                            <i class="fas fa-user"></i>
+                            <span class="ms-3">Perfil</span>
+                          </a>
+                        </td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Content Wrapper END -->
+
+  <!-- Footer START -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p class="mb-0"> </p>
+    </div>
+  </footer>
+  <!-- Footer END -->
+
+</div>

@@ -1,0 +1,42 @@
+
+.form-group{
+    padding-top: 2%;
+    padding-bottom: 3%;
+
+}
+table {
+    caption-side: bottom;
+    border-collapse: collapse;
+}
+.tiempo{
+    margin-right: 2%;
+    font-size:  1.2rem;
+    font-family:'Times New Roman', Times, serif
+}
+.a{
+   font-size: 2vw;
+}
+.row {
+    --bs-gutter-x: -6.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(var(--bs-gutter-y) * -1);
+    margin-right: calc(var(--bs-gutter-x) * -0.5);
+    margin-left: calc(var(--bs-gutter-x) * -0.5);
+    
+}
+.btn-primary {
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.col-md-1{
+    margin-left: 2%;
+    padding-bottom: 2%;
+    margin-top: 8%;
+    width: 47%;
+}
+
+

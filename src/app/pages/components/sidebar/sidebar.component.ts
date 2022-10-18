@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AppService } from 'src/app/services/app.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor() { }
+  public renderMenus = [];
+  constructor(
+    public app: AppService,
+    public router: Router,
+    private auth: AuthService
+  ) { }
 
   ngOnInit(): void {
+    this.renderMenus = this.auth.menus;
   }
+
 
 }

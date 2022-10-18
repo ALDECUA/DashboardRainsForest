@@ -1,0 +1,52 @@
+<div class="page-container" [ngClass]="{'sidebar_is_full': app.sidebarState, 'sidebar_is_small': !app.sidebarState}">
+
+  <!-- Content Wrapper START -->
+  <div class="main-content">
+      <div class="page-header no-gutters has-tab">
+        <div class="d-md-flex m-b-15 align-items-center justify-content-between">
+              <div class="media align-items-center m-b-15">
+                  <div class="m-l-15"></div>
+              </div>
+              <div class="m-b-15">
+                  <button id="actualizarBtnEmpresa" class="btn btn-primary" (click)="guardarCambios()" [disabled]="isLoading">
+                    <i class="far fa-save"></i> &nbsp;
+                      <span>Guardar</span>
+                  </button>
+              </div>
+          </div>
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#">Información Basica</a>
+          </li>
+        </ul>
+      </div>
+    <div class="tab-content m-t-15">
+      <div class="tab-pane fade show active" id="#">
+        <div class="card">
+          <div class="card-body">
+            <div class="container">
+              <div class="row">
+                <div class="mb-3">
+                  <label for="razonsocial" class="form-label">Razon Social</label>
+                  <input type="text" class="form-control" id="razonsocial" [(ngModel)]="empresa.RazonSocial">
+                  <input type="hidden" name="IdEmpresaDes" id="IdEmpresaDes" [(ngModel)]="empresa.IdEmpresaDes">
+                  <input type="hidden" id="idUsuario" name="idUsuario" value="Ulises">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Content Wrapper END -->
+
+  <!-- Footer START -->
+  <footer class="footer">
+    <div class="footer-content">
+        <p class="mb-0"> </p>
+    </div>
+  </footer>
+  <!-- Footer END -->
+
+</div>

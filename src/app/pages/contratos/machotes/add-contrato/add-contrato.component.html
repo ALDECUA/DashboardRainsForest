@@ -1,0 +1,49 @@
+<div class="row align-items-center mb-5">
+    <div class="col-auto">
+        <label class="col-form-label">
+            <b>Nombre del contrato</b>
+        </label>
+    </div>
+    <div class="col-auto">
+        <input type="text" class="form-control" style="width:300px" [(ngModel)]="contrato.Nombre">
+    </div>
+</div>
+
+<div class="form-floating mt-2 mb-5">
+    <b>Machote</b>
+
+    <ckeditor (change)="onChangeEditor($event, 'Machote')" editorUrl="https://cdn.ckeditor.com/4.16.2/full/ckeditor.js">
+    </ckeditor>
+    <!-- <ckeditor name="machote" debounce="300" [editor]="test" (change)="setEditorData($event, 'Machote')"></ckeditor> -->
+</div>
+
+<div class="form-floating mb-5">
+    <b>Clausula 3</b>
+    <ckeditor (change)="onChangeEditor($event, 'Clausula3')"
+        editorUrl="https://cdn.ckeditor.com/4.16.2/full/ckeditor.js"></ckeditor>
+    <!-- <ckeditor name="machotecl3" debounce="300" [editor]="test" (change)="setEditorData($event, 'Clausula3')">
+    </ckeditor> -->
+</div>
+
+<div class="form-floating mb-5">
+    <b>Clausula 4</b>
+    <ckeditor (change)="onChangeEditor($event, 'Clausula4')"
+        editorUrl="https://cdn.ckeditor.com/4.16.2/full/ckeditor.js"></ckeditor>
+    <!--    <ckeditor name="machotecl4" debounce="300" [editor]="test" (change)="setEditorData($event, 'Clausula4')">
+    </ckeditor> -->
+</div>
+
+<div class="form-floating mb-5">
+    <b>Clausula 5</b>
+    <ckeditor (change)="onChangeEditor($event, 'Clausula5')"
+        editorUrl="https://cdn.ckeditor.com/4.16.2/full/ckeditor.js"></ckeditor>
+    <!-- <ckeditor name="machotecl5" debounce="300" [editor]="test" (change)="setEditorData($event, 'Clausula5')">
+    </ckeditor> -->
+</div>
+
+<button class="btn btn-outline-success me-3" (click)="saveContrato()">
+    <i class="fas fa-save"></i> Guardar</button>
+
+<button class="btn btn-outline-danger" data-bs-toggle="collapse" href="#collapseExample" role="button"
+    aria-expanded="false" aria-controls="collapseExample">
+    <i class="fas fa-times"></i> Cerrar</button>

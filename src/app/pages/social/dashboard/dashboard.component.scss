@@ -1,0 +1,61 @@
+// .callout{
+//     position: relative;
+//     padding: 0 1rem;
+//     margin: 1rem 0;
+//     border-left: 4px solid #c8ced3;
+//     border-radius: 0.25rem;
+// }
+// .callout-info{
+//     border-left-color: #63c2de
+// }
+
+/* table */
+
+.table-btn.dropdown-toggle::after {
+    display: none;
+}
+
+.numeration {
+    position: sticky;
+    left: 0;
+}
+
+.name {
+    position: sticky;
+    left: 53px;
+}
+
+.prospect thead th {
+    background-color: #04003D;
+    color: #fff;
+}
+.table-responsive{
+    max-height: 760px;
+    overflow: auto;
+}
+
+.card {
+    padding: 0;
+}
+
+.btn-circle.btn-xl {
+    width: 40px;
+    height: 40px;
+    // padding: 13px 18px;
+    border-radius: 60px;
+    font-size: 15px;
+    text-align: center;
+    // background-color: #6c757d;
+    // color: white;
+}
+
+// .btn-circle.btn-xl:hover {
+    // background-color: #5c636a;
+    // color: white;
+// }
+
+// Checkbox
+input[type=checkbox] {
+    accent-color: #6c757d;
+  }
+

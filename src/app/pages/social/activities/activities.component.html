@@ -1,0 +1,54 @@
+<div class="page-container" [ngClass]="{'sidebar_is_full': app.sidebarState, 'sidebar_is_small': !app.sidebarState}">
+    <!-- Content Wrapper START -->
+    <div class="main-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    <div class="card">
+                      <div class="card-header">
+                        Listado de asignaciones
+                      </div>
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-md-12 list-activites">
+                              <div class="d-flex justify-content-center" *ngIf="loader">
+                                <div class="spinner-border" role="status">
+                                  <span class="visually-hidden">Loading...</span>
+                                </div>
+                              </div>
+                              <div class="alert alert-info" role="alert" *ngFor="let item of leadsObtenidos">
+                                Se asigno el lead <strong>{{item.Fullname}}</strong> al asesor :  <strong>{{item.Asesor}}</strong> de la plataforma <strong>{{item.Plataforma === 'fb' ? 'Facebok': 'Instagram'}}</strong> con fecha <strong>{{item.Fecha}}</strong>
+                              </div>
+                            </div>
+                          </div>
+                            <!-- <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Prospecto</th>
+                                        <th scope="col">Asesor</th>
+                                        <th scope="col">Plataforma</th>
+                                        <th scope="col">Origen</th>
+                                        <th scope="col">Fecha</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngFor="let item of leadsObtenidos">
+                                        <th scope="row">{{item.IdReferido}}</th>
+                                        <td>{{item.Fullname}}</td>
+                                        <td>{{item.Asesor}}</td>
+                                        <td class="uper">{{item.Plataforma}}</td>
+                                        <td>{{item.Origen === 3 ? 'LEADS': ''}}</td>
+                                        <td>{{item.Fecha}}</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                            </div> -->
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,175 @@
+<div class="page-container" [ngClass]="{
+    sidebar_is_full: app.sidebarState,
+    sidebar_is_small: !app.sidebarState
+  }">
+  
+<div class="container-fluid" >
+  <div class="row">
+    <div class="col-md-1" >
+      <form >
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="button" class="btn btn-outline-dark " (click)="showcontenn()"  ><i class="fas fa-book"></i></button>
+      </div>
+        
+          <div class="form-group">
+            <label for="inputTitulo" class="col-sm-2 col-form-label">Titulo</label>
+            <input type="text" class="form-control" maxlength="50"  name="titulo" id="inputTitulo"
+                [(ngModel)]="Notificacion.titulo">
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1" class="form-label">Notificacion</label>
+            <textarea [(ngModel)]="Notificacion.texto" maxlength="100" name="texto" class="form-control"
+              id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+              <button type="button" (click)="NombreImg()" class="btn btn-outline-info" href="#exampleModalToggle" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+                Selecciona una imagen
+              </button>
+              <div  *ngIf="show" class="alert alert-primary" role="alert" style="margin-top: 3%;" >
+                Imagen selecionada
+              </div>
+              <div style="padding-top: 4%;" class="form-check form-switch">
+                <input class="form-check-input" [(ngModel)]="theCheckbox"  data-md-icheck (change)="toggleVisibility($event)" type="checkbox" id="flexSwitchCheckDefault">
+                <label class="form-check-label"  for="flexSwitchCheckDefault">Agregar link</label>
+              </div>
+              <div class="mb-3 row">
+                <div class="col-sm-10">
+                  <input class="form-control" name="link"  [(ngModel)]="Notificacion.link" type="text" *ngIf="marked" placeholder="https://Ejemplo.com/" aria-label="default input example">
+                </div>
+              <div style="
+              margin-top: 2rem;
+              margin-left: 2rem;
+          ">
+           <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault"[(ngModel)]="radioSelected"(change)="onItemChange()" name="list_name" value="1" id="flexRadioDefault1" checked>
+            <label class="form-check-label" for="flexRadioDefault1">
+              Notificar asesores
+            </label>
+          </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" [(ngModel)]="radioSelected"(change)="onItemChange()" name="list_name" value="2" id="flexRadioDefault2" >
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Notificar inversionistas
+                  </label>
+                </div>
+                <div class="form-check"  *ngIf="showenviar">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" [(ngModel)]="radioSelected"(change)="onItemChange()" name="list_name" value="0" id="flexRadioDefault0">
+                  <label class="form-check-label" for="flexRadioDefault0">
+                    Notificar a todos
+                  </label>
+                </div>
+                </div>
+              </div>
+          </div>
+            <button type="button" *ngIf="showconten" class="btn btn-primary"(click)="selectToday()">Guardar</button>
+        <button (click)="Notificacionsend()" *ngIf="showenviar" class="btn btn-primary">Enviar</button>  
+      </form> 
+    </div>   
+    <div class="col-md-1" *ngIf="showconten" > 
+      <table class="table  table-hover">    
+        <thead>
+          <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Hora</th>
+            <th scope="col">Titulo</th>
+            <th scope="col">Texto</th>
+            <th scope="col">Nivel</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mensajes;let i=index">
+            <td>
+              {{item.FechaAgenda}}
+            </td>
+            <td>
+              {{item.Hora}}
+            </td>
+            <td>
+              {{item.Titulo}}
+            </td>
+            <td>
+              {{item.Texto}}
+            </td>
+            <td *ngIf="item.identificacion == 0">
+            Mensaje Global
+            </td>
+            <td *ngIf="item.identificacion == 1">
+            Asesores
+           </td>
+            <td *ngIf="item.identificacion == 2">
+            inversionistas
+            </td>
+            <td>
+              <button type="button" class="btn btn-outline-danger btn-sm" (click)="EliminarMensaje(item.IdNotificacionCRM)">Delete</button>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+      <input class="tiempo" type="time" value="24"  [(ngModel)]="horayminutos" >
+      <ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next"></ngb-datepicker>        
+    </div> 
+  </div>
+<!-- Modal 1 -->
+<div class="modal fade"  id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel">Imagen</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped" >
+          <thead>
+            <tr>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let result of imgs;let i = index">
+              <th scope="row">{{i+1}}</th>
+              <td>{{result.Titulo}}</td>
+              <td>
+                <button class="btn btn-sm btn-primary me-1" (click)="openFile(result)"><i class="far fa-eye"></i></button>
+                <button class="btn btn-outline-primary btn-sm"  data-bs-dismiss="modal" (click)="selectimg(result)"><i class="far fa-check-square"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table > 
+        <button class="btn btn-outline-dark" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Subir Imagen</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="closeModal"  data-bs-toggle="modal" data-bs-dismiss="modal" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal 2 -->
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel2">Imagen</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      
+        <div class="input-group mb-3">
+          <label for="Titulo" class="col-sm-2 col-form-label">Nombre</label>
+          <input type="text" class="form-control" name="titulo" id="Titulo"
+              [(ngModel)]="Ingresar.tituloarchivo">
+        </div>
+        <a>*Subir imagen de 320 x 212 px</a>
+        <div class="input-group">
+          <input type="file" #doc (change)="setFile(doc.files)" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">   
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" data-bs-dismiss="modal" (click)="NombreImg()" >Volver</button>
+        <button type="button" class="btn btn-primary" (click)="confirmar2()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+

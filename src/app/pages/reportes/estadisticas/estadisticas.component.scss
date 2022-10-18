@@ -1,0 +1,201 @@
+/* estadisticas */
+.pa-total{
+    position: absolute;
+    top: 42%;
+    left: 0;
+    right: 0;
+    bottom: 50%;
+}
+.coloruno{
+    color: '#0d6efd';
+}
+.colordos{
+    color: '#fd7e14';
+}
+.colortres{
+    color: '#0dcaf0';
+}
+.backgrounduno{
+    background-color: #0d6efd;
+}
+.backgrounddos{
+    background-color: #fd7e14;
+}
+.backgroundtres{
+    background-color: #0dcaf0;
+}
+.backgroundcuatro{
+    background-color: #05c9a7;
+}
+.backgroundcinco{
+    background-color: #886cff;
+}
+.backgroundseis{
+    background-color: #f16664;
+}
+/* backgroun y color desarrollos por nombre */
+.kunalB{
+    background: #6E2C00;
+
+}
+.villamarB{
+    background: #2E86C1;
+
+}
+.mantraB{
+    background: #48C9B0;
+
+}
+.horizontesB{
+    background: #B03A2E;
+
+}
+.viapalmarB{
+    background: #EC7063;
+
+}
+.koomunaB{
+    background: #886cff;
+
+}
+.zazilhaB{
+    background: #2980B9;
+
+}
+.bonareaB{
+    background: #F5B041;
+
+}
+
+/* activos de registro inversionistas */
+.iactivo{
+    background: #BB8FCE;
+}
+.irevisado{
+    background: #7FB3D5;
+}
+.idesactivado{
+    background: #E59866;
+}
+
+
+/* Tamaño canvas */
+.canvasChart canvas{
+    width: 100% !important;
+    padding-bottom: 2rem;
+}
+/* @media (max-width: 768px) {
+    .canvasChart canvas{
+        padding: 0;
+    }
+} */
+
+/* font-sizes */
+.fs-text-chart{
+    font-size: 12px;
+    text-align: left;
+    margin-bottom: 0;
+}
+/* tables */
+tbody, td, tfoot, th, thead, tr {
+    padding: 0 !important;
+  }
+.overlay{
+    height: 100%;
+    position: absolute;
+    left: 0;
+    z-index: 9;
+    right: 0;
+    top: 0;
+    align-items: center;
+}
+.backgroundOverlay{
+    background: #fff;
+}
+.dataShowInfo{
+    position: relative;
+}
+.scrolling, .dataShowInfo{
+    height: 500px;
+    overflow: overlay;
+}
+.mylist {
+    padding: 0;
+}
+.dataInfo p a, a{
+    text-decoration: none;
+}
+.displaynone{
+    display: none;
+}
+.posrel{
+    position: relative;
+}
+.btnGrid{
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 50px auto;
+}
+.flex-button{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+.flex-button .btn{
+    flex: initial;
+    margin: 5px 10px;
+    width: max-content;
+}
+.setentaxlqsa{
+    width: 70%;
+}
+.sesentaxlqsa{
+    width: 60%;
+}
+.cincuentaxlqsa{
+    width: 50%;
+}
+.cuarentaxlqsa{
+    width: 40%;
+}
+.mpross{
+    margin: 5px 10px;
+}
+.scroll{
+  overflow-y:scroll;
+   height:500px;
+   display:block;
+}
+.resaltartres{
+    background-color: #ffffff;
+    color: white!important;
+}
+.resaltardos{
+    background-color: #666e99;
+    color: white!important;
+}
+.resaltar{
+  background-color: #101c64;
+  color: white!important;
+
+}
+.table{
+  cursor: pointer;
+}
+.cerrado{
+max-height: 0;
+transition: max-height 0.5s ease-out;
+overflow: hidden;
+padding: 0!important;
+}
+.detalles{
+  width: 100%;
+}
+.display{
+    display: flex;
+    justify-content: space-between;
+}
+.action:hover{
+    background-color: #0d6efd;
+    color: white;
+}

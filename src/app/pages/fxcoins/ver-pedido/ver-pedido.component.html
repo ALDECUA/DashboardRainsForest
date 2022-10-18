@@ -1,0 +1,189 @@
+<div class="page-container" [ngClass]="{'sidebar_is_full': app.sidebarState, 'sidebar_is_small': !app.sidebarState}">
+
+    <div class="main-content">
+        <div class="page-header no-gutters">
+            <div class="d-md-flex m-b-15 align-items-center justify-content-between">
+                <div class="media align-items-center m-b-15">
+
+                    <div class="m-l-15">
+                        <h4 class="m-b-0">Pedido #{{pedido.IdPedido}}</h4>
+
+                    </div>
+                </div>
+                <div class="m-b-15">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="button" [routerLink]="['/crm/fxcoins/pedidos']" class="btn btn-warning"><i
+                class="fas fa-long-arrow-alt-left"></i> Volver</button>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav nav-pills mt-5" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Información del pedido</button>
+
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="btn btn-secondary ms-2" (click)="verRecibo()">Previsualizar recibo</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="btn btn-primary ms-2" (click)="generarRecibo()" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Agregar recibo</button>
+                </li>
+
+            </ul>
+            <small>La <b>Nota</b> aparecera como "<b>undefined</b>" al previsualizar pero mostrara la nota cuando le llegue al correo de la persona</small>
+        </div>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="row g-3">
+
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-title">
+                                <h5>Información Basica</h5>
+                            </div>
+                            <table class="table table-hover">
+                                <tr>
+                                    <td>Fecha del pedido</td>
+                                    <td>{{pedido.Fch_Pedido}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Estatus del pedido</td>
+                                    <td>
+                                        <select class="form-control" [(ngModel)]="pedido.IdStatus">
+                      <option value="1">Aprobado</option>
+                      <option value="2">Pendiente</option>
+                      <option value="3">Rechazado</option>
+                    </select>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Moneda</td>
+                                    <td>{{pedido.Moneda}}</td>
+                                </tr>
+                            </table>
+                            <button *ngIf="showBtn" class="btn btn-success" style="width:200px;" (click)="updateStPedido()">Guardar
+                estatus</button>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-title">
+                                <h5>Información del solicitante</h5>
+                            </div>
+                            <table class="table table-hover">
+                                <tr>
+                                    <td>Nombre:</td>
+                                    <td>{{pedido.Nombre}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Correo electronico:</td>
+                                    <td>{{pedido.Email}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Telefono:</td>
+                                    <td>{{pedido.Num_Cel}}</td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-title">
+                                <h5>Información del producto</h5>
+                            </div>
+                            <table class="table table-hover">
+                                <tr>
+                                    <td>Producto</td>
+                                    <td>{{pedido.Producto}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Categoria</td>
+                                    <td>{{pedido.Nombre_Categoria}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Precio final</td>
+                                    <td>{{pedido.Precio_Final}}</td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-title">
+                                <h5>Datos adicionales del pedido</h5>
+
+                                <table class="table table-hover">
+                                    <tr *ngIf="pedido.IdDesarrollo!=null">
+                                        <td>Desarrollo:</td>
+                                        <td>
+                                            {{pedido.Desarrollo}}
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="pedido.Etapa != null">
+                                        <td>Etapa:</td>
+                                        <td>{{pedido.Fase}}</td>
+                                    </tr>
+                                    <tr *ngIf="pedido.IdLote != null">
+                                        <td>Lote:</td>
+                                        <td>{{pedido.Lote}}</td>
+                                    </tr>
+                                    <tr *ngIf="(pedido.Adultos>0)&&(pedido.Adultos!=null)">
+                                        <td>Adultos</td>
+                                        <td>{{pedido.Adultos}}</td>
+                                    </tr>
+                                    <tr *ngIf="(pedido.Ninos!=null)&&(pedido.Adultos>0)">
+                                        <td>Niños</td>
+                                        <td>{{pedido.Ninos}}</td>
+                                    </tr>
+                                    <tr *ngIf="pedido.Evento!=null">
+                                        <td>Evento</td>
+                                        <td>{{pedido.Evento}}</td>
+                                    </tr>
+                                    <tr *ngIf="pedido.Evento!=null">
+                                        <td>Proveedor</td>
+                                        <td>{{pedido.Proveedor}}</td>
+                                    </tr>
+                                    <tr *ngIf="pedido.Evento!=null">
+                                        <td>Razon Social</td>
+                                        <td>{{pedido.RazonSocial}}</td>
+                                    </tr>
+                                    <tr *ngIf="pedido.Evento!=null">
+                                        <td>Banco</td>
+                                        <td>{{pedido.Banco}}</td>
+                                    </tr>
+                                    <tr *ngIf="pedido.Evento!=null">
+                                        <td>Clabe</td>
+                                        <td>{{pedido.CLABE}}</td>
+                                    </tr>
+                                    <tr *ngIf="pedido.Cotizacion!=null">
+                                        <td>Cotización</td>
+                                        <td>
+                                            <a target="_blank" href="{{app.dominio}}asesores/ProductosFXCoins/Cotizaciones/{{pedido.Cotizacion}}">
+                            Abrir PDF
+                        </a>
+                                        </td>
+                                    </tr>
+
+                                    <tr *ngIf="pedido.Nota!=null">
+                                        <td>Nota</td>
+                                        <td>{{pedido.Nota}}</td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer START -->
+    <app-recibos></app-recibos>
+    <app-footer></app-footer>
+    <!-- Footer END -->
+
+</div>

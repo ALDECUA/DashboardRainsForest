@@ -1,0 +1,74 @@
+<ng-container *ngIf="etapa !== undefined">
+    <div class="row">
+        <div class="form-group col-sm-12">
+            <label class="font-weight-semibold" for="nombreLote">Nombre del lote</label>
+            <input type="text" class="form-control" id="nombreLote" placeholder="Nombre del lote"
+                [(ngModel)]="lote.nombre">
+            <div id="feedbackNombreLote" class="invalid-feedback">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-sm-6">
+            <label class="font-weight-semibold" for="base">Base</label>
+            <input type="text" class="form-control" name="base" id="base" placeholder="Base" [(ngModel)]="lote.base">
+            <div id="feedbackbase" class="invalid-feedback">
+            </div>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="font-weight-semibold" for="altura">Altura</label>
+            <input type="text" class="form-control" name="altura" id="altura" placeholder="Altura"
+                [(ngModel)]="lote.altura">
+            <div id="feedbackaltura" class="invalid-feedback">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-6">
+            <label class="font-weight-semibold" for="m2">M<sup>2</sup></label>
+            <input type="text" class="form-control" id="m2" placeholder="M2" [(ngModel)]="lote.m2">
+            <div id="feedbackm2" class="invalid-feedback">
+            </div>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="font-weight-semibold" for="precio">Precio</label>
+            <input type="text" class="form-control" id="precio" placeholder="Precio" [(ngModel)]="lote.precio">
+            <div id="feedbackprecio" class="invalid-feedback">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-sm-6">
+            <label class="font-weight-semibold" for="PrecioTotal">Precio Total</label>
+            <input type="text" class="form-control" id="PrecioTotal" placeholder="Precio Total"
+                [(ngModel)]="lote.preciototal">
+            <div id="feedbackPrecioTotal" class="invalid-feedback">
+            </div>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="font-weight-semibold" for="Numtablaje">Num Tablaje</label>
+            <input type="text" class="form-control" id="Numtablaje" placeholder="Numtablaje"
+                [(ngModel)]="lote.numtablaje">
+            <div id="feedbackNumtablaje" class="invalid-feedback">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <label class="font-weight-semibold">Clausula 1</label>
+        <ckeditor name="clausula1" debounce="300" [editor]="test" (change)="onChange($event, 0, 'clausula1')">
+        </ckeditor>
+    </div>
+    <div class="row">
+        <label class="font-weight-semibold">Clausula 2</label>
+        <ckeditor name="clausula2" debounce="300" [editor]="test" (change)="onChange($event, 0, 'clausula2')">
+        </ckeditor>
+    </div>
+
+    <div class="text-end mt-1">
+        <button class="btn btn-outline-primary me-1" (click)="guardarLote()" [disabled]="loading"><i
+                class="fas fa-save"></i>&nbsp;Guardar</button>
+        <button class="btn btn-outline-danger" data-bs-toggle="collapse" href="#addLoteCollapse" aria-expanded="false"
+            aria-controls="addLoteCollapse"><i class="fas fa-times"></i>&nbsp;Cerrar</button>
+    </div>
+</ng-container>

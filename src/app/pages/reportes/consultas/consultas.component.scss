@@ -1,0 +1,28 @@
+.img-cons{
+    width: 43%;
+}
+.main-content{
+    text-align: center;
+}
+.line-bottom{
+    border: none;
+    border-bottom: 1px solid #000;
+    border-radius: 0px;
+}
+.form-select{
+    border:none;
+    border-radius: 0;
+    border-bottom: 1px solid #000;
+}
+.btnObtener{
+    display: flex;
+    height: auto;
+    width: auto;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: flex-end;
+}
+.cotizaciones{
+
+margin-top: 15px;
+}

@@ -1,0 +1,48 @@
+/* card */
+
+.bk-card {
+    background-color: transparent;
+}
+
+.card {
+    padding: 0;
+}
+
+.card-actividades {
+    min-width: 14rem;
+}
+
+.card-header {
+    padding: 1rem;
+    font-weight: bold;
+}
+
+.activities-card-report {
+    justify-content:flex-start;
+}
+
+.activities-card-report:nth-child(1) .card-actividades .card-body .btn-card-item-activities {
+    color: #000;
+}
+
+.activities-card-report:nth-child(1) .card-actividades .card-body .btn-card-item-activities:hover {
+    color: #fff;
+}
+
+.btn-card-item-activities {
+    padding: 1rem;
+}
+
+.btn-card-item-activities:focus {
+    box-shadow: none;
+}
+
+
+/* .btn-card-item-activities {
+    color: #fff;
+} */
+
+
+/* .btn-card-item-activities:hover {
+    box-shadow: 0px 0px 52px 0px rgba(0, 0, 0, 0.3);
+} */

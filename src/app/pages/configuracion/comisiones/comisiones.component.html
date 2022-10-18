@@ -1,0 +1,214 @@
+<div class="page-container" [ngClass]="{'sidebar_is_full': app.sidebarState, 'sidebar_is_small': !app.sidebarState}">
+  <!-- Content Wrapper START -->
+
+
+  <div class="main-content">
+    <div class="card">
+      <div class="card-body">
+
+        <div class="row" style="margin-bottom: 3rem;">
+          <div class="col-md-6">
+            <h1 style="margin: 0;">Dashboard - Editar Comisiones</h1>
+          </div>
+          <div class="col-md-6 flex">
+            <button type="button" class="btn btn-success botonagregar" data-bs-toggle="modal"
+              data-bs-target="#Modalnivel"><i class="fas fa-plus"></i></button>
+            <h5> &nbsp;&nbsp;Agregar Nuevo</h5>
+          </div>
+        </div>
+
+        <div class="row mb-12">
+          <div class="col-lg-12">
+            <div class="row d-md-flex table-responsive">
+              <table class="table ">
+                <thead class="table-dark ">
+                  <tr>
+                    <th scope="col">Nivel</th>
+                    <ng-container *ngFor="let columna of comisiones ;let i = index ">
+                      <ng-container *ngFor="let itemobje of columna | keyvalue ">
+                        <ng-container
+                          *ngIf="i == 0 && itemobje.key !== 'Fch' && itemobje.key !== 'IdComision' && itemobje.key !== 'IdNivel' && itemobje.key !== 'IdStatus' && itemobje.key !== 'IdUsuario' && itemobje.key !== 'Interes' && itemobje.key !== 'Nivel' ">
+                          <th style="text-align: center;" scope="col">{{itemobje.key}}</th>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                    <th>
+                      <button type="button" class="btn btn-success btn-sm " (click)="AgregarColumna()"><i
+                          class="fas fa-plus"></i></button>
+                      &nbsp;&nbsp;
+                      <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#eliminarcolumna" ><i
+                          class="fas fa-minus"></i></button>
+                    </th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of comisiones">
+                    <ng-container *ngIf="item.Nivel != null">
+                      <th>{{item.Nivel}}</th>
+                      <ng-container *ngFor="let itemobje of item | keyvalue">
+                        <td style="text-align: center;"
+                          *ngIf="itemobje.key !== 'Fch' && itemobje.key !== 'IdComision' && itemobje.key !== 'IdNivel' && itemobje.key !== 'IdStatus' && itemobje.key !== 'IdUsuario' && itemobje.key !== 'Interes' && itemobje.key !== 'Nivel' ">
+                          <ng-container *ngIf="itemobje.value == null">
+                            0%
+                          </ng-container>
+                          <ng-container *ngIf="itemobje.value !== null">
+                            {{itemobje.value}}%
+                          </ng-container>
+                        </td>
+                      </ng-container>
+                      <td class="margin">
+                        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal"
+                          data-bs-target="#ModalNombre" (click)="CambiarNombre(item)"><i
+                            class="fas fa-edit"></i></button>
+                        <button type="button" click="" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                          data-bs-target="#exampleModal" (click)="Enviarid(item)">Editar</button>
+                        <button type="button" *ngIf="item.IdStatus == 1" class="btn btn-secondary btn-sm"
+                          (click)="CambiarStatus(item)">Desactivar</button>
+                        <button type="button" *ngIf="item.IdStatus == 0" class="btn btn-success btn-sm"
+                          (click)="CambiarStatus(item)">Activar</button>
+                      </td>
+                      <td>
+
+                      </td>
+                    </ng-container>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="text-center" *ngIf="loading">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Content Wrapper END -->
+
+  <!-- Footer START -->
+  <app-footer></app-footer>
+  <!-- Footer END -->
+
+</div>
+
+<!-- Modal -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nuevo porcentaje</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"
+        style="display: flex;justify-content: space-around;flex-direction: column;align-items: center;">
+        <ng-container *ngFor="let columna of comisiones ;let i = index ">
+          <ng-container *ngFor="let itemobje of columna  | keyvalue ;let a = index ">
+            <ng-container
+              *ngIf="i == 0 && itemobje.key !== 'Fch' && itemobje.key !== 'IdComision' && itemobje.key !== 'IdNivel' && itemobje.key !== 'IdStatus' && itemobje.key !== 'IdUsuario' && itemobje.key !== 'Interes' && itemobje.key !== 'Nivel' ">
+
+        <div class="col-md-6">
+          <form role="form" >
+          <label class="form-label">{{itemobje.key}}</label>
+          <div class="d-flex  align-items-end">
+            <input type="number"  class="form-control" #name  min={{itemobje.value}} (change)="CambiarComisiones($event, itemobje, name.value)" value={{itemobje.value}}  ><p style="font-size: 19px;
+            margin: 0;
+            margin-bottom: 5px;">%</p> 
+          </div>
+         </form>
+        </div>  
+           </ng-container>
+          </ng-container>
+         </ng-container>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cerrar" data-bs-dismiss="modal">Salir</button>
+        <button type="button" class="btn btn-primary" type="submit" (click)="Guardarnuevacomision()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="Modalnivel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nombre del nuevo nivel</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="col-md-12">
+          <input type="text" class="form-control" [(ngModel)]="NivelNuevo">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cerrardos" data-bs-dismiss="modal">Salir</button>
+        <button type="button" class="btn btn-primary" (click)="NuevoNivelfuncion()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="ModalNombre" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Nombre - {{nombrenivel}} </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="col-md-12">
+          <input type="text" class="form-control" [(ngModel)]="nombrenivel">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cerrartres" data-bs-dismiss="modal">Salir</button>
+        <button type="button" class="btn btn-primary" (click)="EditarNombre()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="eliminarcolumna" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Columnas</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngFor="let columna of comisiones ;let i = index ">
+          <ng-container *ngFor="let itemobje of columna | keyvalue ">
+            <ng-container
+              *ngIf="i == 0 && itemobje.key !== 'Fch' && itemobje.key !== 'IdComision' && itemobje.key !== 'IdNivel' && itemobje.key !== 'IdStatus' && itemobje.key !== 'IdUsuario' && itemobje.key !== 'Interes' && itemobje.key !== 'Nivel' ">
+
+          <div class="form-check">
+            <input class="form-check-input" name="columnas[]" type="checkbox" [value]="itemobje.key" (click)="GuardarCheck(itemobje.key)" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              {{itemobje.key}}
+            </label>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
+        <button type="button" class="btn btn-primary" (click)="EliminarColumna()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
