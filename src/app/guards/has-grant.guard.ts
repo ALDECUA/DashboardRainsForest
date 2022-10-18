@@ -33,16 +33,16 @@ export class HasGrantGuard implements CanActivate {
   }
 
   public async getMenus(grant): Promise<boolean> {
-    await this.auth.refreshUserData();
+    /* await this.auth.refreshUserData(); */
     console.log('enmenu');
     return new Promise((resolve, reject) => {
-      if (this.auth.menus.includes(grant)) {
+/*       if (this.auth.menus.includes(grant)) { */
         resolve(true);
-      } else {
+     /*  } else {
         this.toast.error('No tienes permiso para realizar esta acción', 'Acceso denegado');
         this.router.navigateByUrl('/crm');
         resolve(false);
-      }
+      } */
     });
   }
 

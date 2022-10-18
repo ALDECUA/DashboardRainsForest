@@ -23,7 +23,7 @@ export class AuthService {
 
     if (userData) {
       this.user = JSON.parse(userData);
-      this.refreshUserData();
+      /* this.refreshUserData(); */
     } else {
       //this.logout();
       //location.href = '/login';
@@ -45,7 +45,7 @@ export class AuthService {
     return this.http.post(this.urlFoto, data);
   }
 
-  public refreshUserData() {
+ /*  public refreshUserData() {
     return new Promise((resolve, reject) => {
       this.http.post(this.urlGetData, {}).subscribe((res: any) => {
         if (res.unauthorized) {
@@ -71,5 +71,5 @@ export class AuthService {
       }
     });
     this.menus.push(0);
-  }
+  } */
 }
