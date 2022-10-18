@@ -84,7 +84,7 @@
             <img class="img-profile-sup" src="{{app.dominio}}pruebas_dwit/admin/Content/img/admins/avatar.png" *ngIf="userData.Foto_Perfil==null;else sinopp" alt="User">
             <div class="frame"></div>
             <ng-template #sinopp>
-              <img src="{{userData.Foto_Perfil|fotoperfil}}" alt="User">
+              <img src="{{app.dominio}}pruebas_dwit/admin/Content/img/admins/avatar.png" alt="User">
             </ng-template>            
           </div>
         </div>
@@ -95,7 +95,7 @@
                 <img class="img-profile-sup" src="{{app.dominio}}pruebas_dwit/admin/Content/img/admins/avatar.png" *ngIf="userData.Foto_Perfil==null;else sinopp1" alt="User">
                 <div class="frame"></div>
             <ng-template #sinopp1>
-              <img src="{{userData.Foto_Perfil|fotoperfil}}" alt="User">
+              <img src="{{app.dominio}}pruebas_dwit/admin/Content/img/admins/avatar.png" alt="User">
             </ng-template>      
               </div>
               <div class="m-l-10 m-2">
