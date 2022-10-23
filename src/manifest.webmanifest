@@ -1,8 +1,8 @@
 {
-  "name": "proyectoprueba",
-  "short_name": "proyectoprueba",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "name": "Rainforest Adventure",
+  "short_name": "Rainforest",
+  "theme_color": "#0a5c14de",
+  "background_color": "#0a5c14de",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
