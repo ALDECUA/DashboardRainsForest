@@ -25,6 +25,6 @@ export class NavbarComponent implements OnInit {
 
   public cerrarSesion() {
     this.auth.logout();
-    location.href = '/angularcrm/login';
+    location.href = '/login';
   }
 }

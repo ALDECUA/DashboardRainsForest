@@ -3,7 +3,8 @@
   "short_name": "Rainforest",
   "theme_color": "#0a5c14de",
   "background_color": "#0a5c14de",
-  "display": "standalone",
+  "display": "browser",
+  "orientation": "portrait",
   "scope": "./",
   "start_url": "./",
   "icons": [

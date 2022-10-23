@@ -45,7 +45,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.auth.login(this.loginData).subscribe((res: any) => {
-
         console.log(res);
         if (res.token) { 
           this.auth.user = res.persona;
