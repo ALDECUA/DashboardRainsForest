@@ -19,32 +19,25 @@ declare var bootstrap: any;
   styleUrls: ['./usuarios.component.scss'],
 })
 export class UsuariosComponent implements OnInit, OnDestroy, AfterViewInit {
+  
   public userData: any = {};
-
   public subscriptions = new Subscription();
-
-  public loading: boolean = false;
-
   public modalA = null;
-  public pwd;
-  public npwd;
-  public npwd1;
-
+  public loading: boolean = false;
+  public pwd: any = { uno: '', dos:''};
+  public pedidos: any = [];
   constructor(
-    public app: AppService,
     private auth: AuthService,
+    public app: AppService,
     private ngZone: NgZone,
-    private toast: ToastrService
-  ) {
-    this.app.currentModule = 'Usuario';
-    this.app.currentSection = '- Perfil';
+    private toast: ToastrService,
+   
+    ) { 
+      this.app.currentSection = 'Perfil';
+    }
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
-
-  ngOnInit(): void {
-    this.userData = this.auth.user;
-    console.log(this.userData);
-  }
-
   ngAfterViewInit(): void {
     this.modalA = new bootstrap.Modal(
       document.getElementById('cropperModal'),
@@ -52,76 +45,79 @@ export class UsuariosComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
+  ngOnInit(): void {
+    this.userData = this.auth.user;
+  
+    
   }
 
   public subirImagen(event) {
-    console.log(event);
-    this.loading = true;
+
     fetch(event)
       .then((res) => res.blob())
       .then((file) => {
         let formData = new FormData();
         formData.append('foto', file, 'imagen.png');
-        formData.append('IdUsuario', this.auth.user.IdUsuario);
-        console.log(this.auth.user.IdUsuario);
+        formData.append('IdPersona', this.auth.user.IdPersona);
         this.subscriptions.add(
           this.auth.cambiarFoto(formData).subscribe((res: any) => {
             this.userData.Foto_Perfil = res.Foto + '?' + new Date().getTime();
-            console.log(this.userData);
+            console.log(res);
             this.auth.user.Foto_Perfil = res.Foto + '?' + new Date().getTime();
-            this.loading = false;
             this.modalA.hide();
             this.ngZone.run(() => {});
+            this.userData.Foto_Perfil = res;
+
+
+            this.auth.actualizar({IdPersona: this.auth.user.IdPersona, Foto: res}).subscribe((res:any)=>{
+              if(!res.error ){
+                this.toast.success("Se ha guardado la foto de perfil")
+              }
+            })
+
           })
         );
       });
   }
+  CambiarPwd()
+  {
+      if(this.pwd.uno.length < 8)
+      {
+        this.toast.error('', 'La contraseña debe tener al menos 8 caracteres');
+        return;
+      }
+      if(this.pwd.uno != this.pwd.dos)
+      {
+        this.toast.error('', 'Las contraseñas no coinciden');
+        return;
+      }
+      this.loading = true;
+      this.auth.PwdInversionista({IdUsuario: this.userData.IdPersona, Pwd: this.pwd.uno}).subscribe((res:any)=>
+      {
+        if(res.updated)
+        {
+          this.toast.success('', 'Contraseña actualizada con éxito');
+          this.pwd.uno= '';
+          this.pwd.dos= '';
+          this.loading = false;
+        }
+      })
+  }
+  public subirPortada(files) {
+    const file = files[0];
+    let formdata = new FormData();
+    formdata.append("file", file);
+    formdata.append("user", this.userData.IdPersona);
 
-  public cambiarpwd() {
-    if (this.pwd == null) {
-      this.toast.warning('', 'La contraseña actual es obligatoria');
-      return;
-    }
-    if (this.npwd == null) {
-      this.toast.warning('', 'La nueva contraseña es obligatoria');
-      return;
-    }
-    if (this.npwd != this.npwd1) {
-      this.toast.warning('', 'Las contraseñas no coinciden');
-      return;
-    }
-    if (this.npwd.length < 8) {
-      this.toast.warning('', 'La contraseña debe tener al menos 8 caracteres');
-      return;
-    }
-
-    this.subscriptions.add(
-      this.auth
-        .CambiarPwd({
-          IdUsuario: this.auth.user.IdUsuario,
-          Pwd: this.pwd,
-          NPwd: this.npwd,
-        })
-        .subscribe((res: any) => {
-          if (res.updated == true) {
-            Swal.fire(
-              '¡Contraseña actualizada!',
-              'Recuerde este cambio cuando inicie sesión',
-              'success'
-            );
-            this.pwd = null;
-            this.npwd = null;
-            this.npwd1 = null;
-          } else {
-            Swal.fire(
-              '¡La contraseña no fue actualizada!',
-              'Por favor intente nuevamente.',
-              'error'
-            );
-          }
-        })
-    );
+    this.auth.subirPortadaServidor(formdata).subscribe((res: any) => {
+      if (res.result === true) {
+        this.userData.Foto_Portada = res.nameimg;
+        this.auth.updatePortada({
+          IdPersona: this.userData.IdPersona,
+          Foto: res.nameimg
+        }).subscribe((resp: any) => {
+        });
+      }
+    });
   }
 }

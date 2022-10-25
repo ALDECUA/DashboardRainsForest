@@ -11,6 +11,17 @@ export class AuthService {
   private urlFoto = environment.dominio+"api/storage/uploadFotoCrm.php";
   private urlGetData = environment.api + 'login/crm_me';
   private urlPwd = environment.api + 'users/password';
+  private urlUptPortada = environment.api + 'users/updateportada';
+  private urlFotoP = environment.dominio+"api/storage/uploadFotoInversionista.php";
+  private urlEnviarError = environment.dominio+'asesores/app/correoAyudaInversionista';
+  private urlRegistrarPersona = environment.api + 'reclutamiento/insertar_simple';
+  private urlRegistroInversionista = environment.api + 'hr/crear_inversionista_simple'
+  private urlPwdInversionista = environment.api +'users/pwd_imversionistas'
+  private urlDashboard = environment.api + 'login/dashboard/';
+  private urlSubirFoto = 'https://greenpark.mx/api/storage/insertarImagenPerfil.php';
+  private urlUptFoto = environment.api + 'users/updatefotostatuswapp';
+  private urlSubirPortada = 'https://greenpark.mx/api/storage/insertarImagenPortada.php';
+ 
 
   public logged = false;
   public user: any = {};
@@ -36,7 +47,7 @@ export class AuthService {
   public CambiarPwd(data) {
     return this.http.post(this.urlPwd, data);
   }
-
+ 
   public logout() {
     localStorage.clear();
   }
@@ -44,7 +55,29 @@ export class AuthService {
   public cambiarFoto(data) {
     return this.http.post(this.urlFoto, data);
   }
-
+    public ReporteErrores(data) {
+      return this.http.post(this.urlEnviarError, data);
+    }
+    public InsertarPersona(data) {
+      return this.http.post(this.urlRegistrarPersona, data);
+    }
+    public CrearInversionista(data) {
+      return this.http.post(this.urlRegistroInversionista, data);
+    }
+    public PwdInversionista(data)
+    {
+      return this.http.post(this.urlPwdInversionista,data);
+    }
+    public subirPortadaServidor(data) {
+      return this.http.post(this.urlSubirPortada, data);
+    }
+  
+    public updatePortada(data) {
+      return this.http.post(this.urlUptPortada, data);
+    }
+    public actualizar(data){
+      return this.http.post(this.urlUptFoto,data);
+    }
  /*  public refreshUserData() {
     return new Promise((resolve, reject) => {
       this.http.post(this.urlGetData, {}).subscribe((res: any) => {

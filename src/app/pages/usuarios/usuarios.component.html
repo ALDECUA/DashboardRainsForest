@@ -1,296 +1,201 @@
-<div class="page-container" [ngClass]="{'sidebar_is_full': app.sidebarState, 'sidebar_is_small': !app.sidebarState}">
-
+<div class="page-container">
     <!-- Content Wrapper START -->
     <div class="main-content">
-        <div class="page-header no-gutters has-tab">
-            <h2 class="font-weight-normal">Perfil</h2>
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#tab-account">Cuenta</a>
-                </li>
-                <!-- Aun no se sabe si se implementara -->
-     <!--            <li class="nav-item">
-                    <a class="nav-link disabled" data-toggle="tab" href="#tab-files">Archivos</a>
-                </li> -->
-            </ul>
+      <div class="Perfil position-relative">
+        <div
+          style="
+            right: 10px;
+            bottom: 10px;
+            overflow: hidden;
+            left: 0;
+            right: 0;
+            text-align: center;
+            top: 375px;
+            z-index: 1000;
+          "
+          class="position-absolute"
+        >
+          <button
+            type="button"
+            class="btn btn-tone btn-profile btn-light"
+            data-bs-toggle="modal"
+            data-bs-target="#cropperModal"
+          >
+            <i _ngcontent-btg-c57="" class="fas fa-camera"></i>
+          </button>
         </div>
-        <div class="container">
-            <div class="tab-content m-t-15">
-                <div class="tab-pane fade show active" id="tab-account">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Información Basica</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="media align-items-center">
-                                <div class="avatar avatar-image  m-h-10 m-r-15 me-2" style="height: 80px; width: 80px">
-                                    <img class="img-profile-sup" src="{{app.dominio}}pruebas_dwit/admin/Content/img/admins/avatar.png" alt="User">
-                                    <div class="frame frame2"></div>
-                                </div>
-                                <div class="m-l-20 m-r-20">
-                                    <h5 class="m-b-5 font-size-18">Cambiar Foto Perfil</h5>
-                                    <p class="opacity-07 font-size-13 m-b-0">
-                                        Medidas Recomendadas: <br>
-                                        120x120 Tamaño maximo: 5MB
-                                    </p>
-                                </div>
-                                <div>
-                                    <label for="inputPerfil ms-3">
-                                        <button type="button" class="btn btn-tone btn-profile btn-light"
-                                            data-bs-toggle="modal" data-bs-target="#cropperModal">
-                                            Editar
-                                        </button>
-                                    </label>
-                                    <input type="file" class="form-control " id="inputPerfil" style="display: none"
-                                        placeholder="Sube una foto">
-                                </div>
-                            </div>
-                            <hr class="m-v-25">
-                            <form>
-
-                                <div class="form-row">
-                                    <div class="form-group ms-1 me-2">
-                                        <label class="font-weight-semibold" for="firstName">Nombre:</label>
-                                        <input type="text" class="form-control disabled" name="firstName" disabled=""
-                                            placeholder="Nombre" [(ngModel)]="userData.Nombre">
-                                    </div>
-                                    <div class="form-group ms-1 me-2">
-                                        <label class="font-weight-semibold" for="lastName">Apellido Paterno:</label>
-                                        <input type="text" class="form-control disabled" name="lastName" disabled=""
-                                            placeholder="Apellido Paterno" [(ngModel)]="userData.Apellidos">
-                                    </div>
-                                    <div class="form-group ms-1 me-2">
-                                        <label class="font-weight-semibold" for="lastName2">Apellido Materno:</label>
-                                        <input type="text" class="form-control disabled" id="lastName2" disabled=""
-                                            placeholder="Apellido Materno">
-                                    </div>
-                                </div>
-                                <div class="form-row mt-2">
-                                    <div class="form-group ms-1 me-2">
-                                        <label class="font-weight-semibold" for="email">Email:</label>
-                                        <input type="email" class="form-control disabled" name="email" disabled=""
-                                            placeholder="Email" [(ngModel)]="userData.Correo">
-                                    </div>
-                                    <div class="form-group ms-1 me-2">
-                                        <label class="font-weight-semibold" for="phoneNumber">Celular:</label>
-                                        <input type="text" [(ngModel)]="userData.Telefono" name="Celular" class="form-control disabled" id="phoneNumber" disabled=""
-                                            placeholder="Celular">
-                                    </div>
-                                    <div class="form-group ms-1 me-2">
-                                        <label class="font-weight-semibold" for="puesto">Puesto:</label>
-                                        <input type="text" class="form-control disabled" id="puesto" disabled=""
-                                            placeholder="Puesto" value="Programador">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Cambiar Contraseña</h4>
-                        </div>
-                        <div class="card-body">
-                            <form id="form-password" novalidate="novalidate">
-                                <div class="form-row">
-                                    <div class="form-group ms-1 col-md-3 col-sm-6 me-1">
-
-                                        <label class="font-weight-semibold" for="oldPassword">Contraseña Actual:</label>
-                                        <input type="password" class="form-control" id="oldPassword" name="oldPassword"
-                                            placeholder="Contraseña Actual" [(ngModel)]="pwd">
-
-                                    </div>
-                                    <div class="form-group ms-1 col-md-3 col-sm-6 me-1">
-
-                                        <label class="font-weight-semibold" for="newPassword">Contraseña Nueva:</label>
-                                        <input type="password" class="form-control" id="newPassword" name="newPassword"
-                                            placeholder="Contraseña Nueva" [(ngModel)]="npwd">
-
-                                    </div>
-                                    <div class="form-group ms-1 col-md-3 col-sm-6 me-1">
-
-                                        <label class="font-weight-semibold" for="confirmPassword">Confirmar
-                                            Contraseña:</label>
-                                        <input type="password" class="form-control" id="confirmPassword"
-                                            name="confirmPassword" [(ngModel)]="npwd1" placeholder="Confirmar Contraseña">
-
-                                    </div>
-
-                                    <div class="form-group col-md-3 col-sm-6 xx d-flex">
-                                        <button class="btn btn-primary m-t-35 middle-button" (click)="cambiarpwd()">Cambiar</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="tab-pane fade" id="tab-files">
-                    <div class="row">
-                        <div class="col-md-8 mx-auto">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Network Integration</h4>
-                                </div>
-                                <div class="card-body">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item p-h-0">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-icon"
-                                                        style="color: #4267b1; background: rgba(66, 103, 177, 0.1)">
-                                                        <i class="anticon anticon-facebook"></i>
-                                                    </div>
-                                                    <div class="font-size-15 font-weight-semibold m-l-15">Facebook</div>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <label class="m-b-0">https://facebook.com</label>
-                                                    <div class="switch m-t-5 m-l-10">
-                                                        <input type="checkbox" id="switch-fb" checked="">
-                                                        <label for="switch-fb"></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item p-h-0">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-icon"
-                                                        style="color: #fff; background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%)">
-                                                        <i class="anticon anticon-instagram"></i>
-                                                    </div>
-                                                    <div class="font-size-15 font-weight-semibold m-l-15">Instagram
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="switch m-t-5 m-l-10">
-                                                        <input type="checkbox" id="switch-inst">
-                                                        <label for="switch-inst"></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item p-h-0">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-icon"
-                                                        style="color: #1ca1f2; background: rgba(28, 161, 242, 0.1)">
-                                                        <i class="anticon anticon-twitter"></i>
-                                                    </div>
-                                                    <div class="font-size-15 font-weight-semibold m-l-15">Twitter</div>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <label class="m-b-0">https://twitter.com</label>
-                                                    <div class="switch m-t-5 m-l-10">
-                                                        <input type="checkbox" id="switch-tw" checked="">
-                                                        <label for="switch-tw"></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item p-h-0">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-icon"
-                                                        style="color: #d8487e; background: rgba(216, 72, 126, 0.1)">
-                                                        <i class="anticon anticon-dribbble"></i>
-                                                    </div>
-                                                    <div class="font-size-15 font-weight-semibold m-l-15">Dribbble</div>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="switch m-t-5 m-l-10">
-                                                        <input type="checkbox" id="switch-dr">
-                                                        <label for="switch-dr"></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item p-h-0">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-icon"
-                                                        style="color: #323131; background: rgba(50, 49, 49, 0.1)">
-                                                        <i class="anticon anticon-github"></i>
-                                                    </div>
-                                                    <div class="font-size-15 font-weight-semibold m-l-15">Github</div>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <label class="m-b-0">https://github.com</label>
-                                                    <div class="switch m-t-5 m-l-10">
-                                                        <input type="checkbox" id="switch-gh" checked="">
-                                                        <label for="switch-gh"></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item p-h-0">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-icon"
-                                                        style="color: #0174af; background: rgba(1, 116, 175, 0.1)">
-                                                        <i class="anticon anticon-linkedin"></i>
-                                                    </div>
-                                                    <div class="font-size-15 font-weight-semibold m-l-15">Linkedin</div>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <label class="m-b-0">https://linkedin.com</label>
-                                                    <div class="switch m-t-5 m-l-10">
-                                                        <input type="checkbox" id="switch-ln" checked="">
-                                                        <label for="switch-ln"></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item p-h-0">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-icon"
-                                                        style="color: #005ef7; background: rgba(0, 94, 247, 0.1)">
-                                                        <i class="anticon anticon-dropbox"></i>
-                                                    </div>
-                                                    <div class="font-size-15 font-weight-semibold m-l-15">Dropbox</div>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="switch m-t-5 m-l-10">
-                                                        <input type="checkbox" id="switch-db">
-                                                        <label for="switch-db"></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div
+          class="portada position-relative"
+          [ngStyle]="{
+            'background-image':
+              userData.Foto_Portada != null
+                ? 'url(https://greenpark.mx/newDesign/assets/images/imgPerfil/' +
+                  userData.Foto_Portada
+                : 'url(https://greenpark.mx/newDesign/assets/images/imgPerfil/imgPortada_620fe77685299_1227.jpg'
+          }"
+        >
+          <div
+            style="right: 10px; bottom: 10px; max-width: 50px; overflow: hidden"
+            class="position-absolute"
+          >
+            <input
+              (change)="subirPortada(portada.files)"
+              #portada
+              style="opacity: 0; width: 100%; height: 100%"
+              type="file"
+              class="position-absolute"
+            />
+            <button class="btn btn-primary btn-tone">
+              <i class="fas fa-camera"></i>
+            </button>
+          </div>
+        </div>
+  
+        <div class="text-center">
+          <div class="fotoperfil text-center position-absolute">
+            <div
+              class="avatar avatar-image"
+              style="width: 180px; height: 180px; border: 2px solid #04003d"
+            >
+              <img
+                *ngIf="userData.Foto_Perfil !== null"
+                id="most1"
+                style="object-fit: cover"
+                src="https://greenpark.mx/newDesign/assets/images/imgPerfil/{{
+                  userData.Foto_Perfil
+                }}"
+                alt="Foto de perfil"
+              />
+  
+              <img
+                *ngIf="userData.Foto_Perfil === null"
+                src="https://greenpark.mx/newDesign/assets/images/imgPreview.jpg"
+                alt="Foto de perfil"
+              />
             </div>
+          </div>
         </div>
+  
+        <div class="datos text-center">
+          <h3>
+            {{ userData.Nombre }} {{ userData.Nombre_S }}
+            {{ userData.Apellido_P }} {{ userData.Apellido_M }}
+          </h3>
+          <h5>Inversionista</h5>
+          <p>{{ userData.Email }}</p>
+        </div>
+      </div>
+      <div class="container-fluid"></div>
+      <div class="container">
+        <div class="tab-content m-t-15" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="tab-account">
+            <div class="card mt-5">
+              <div class="card-header">
+                <h5 style="color: white" class="mb-0">Cambio de contraseña</h5>
+              </div>
+              <div class="row p-3 mt-4">
+                <div class="col mt-2">
+                  <label for="">Nueva contraseña</label
+                  ><input
+                    type="password"
+                    [(ngModel)]="pwd.uno"
+                    class="form-control"
+                  />
+                </div>
+                <div class="col mt-2">
+                  <label for="">Confirmar contraseña</label
+                  ><input
+                    type="password"
+                    [(ngModel)]="pwd.dos"
+                    class="form-control"
+                  />
+                </div>
+                <div style="align-self: flex-end" class="col-auto">
+                  <button
+                    style="margin-top: 10px"
+                    (click)="CambiarPwd()"
+                    type="button"
+                    class="btn btn-primary" style="background: #687454; border: #687454;"
+                  >
+                    <div
+                      *ngIf="loading"
+                      class="spinner-border"
+                      style="width: 1.25rem; height: 1.25rem"
+                      role="status"
+                    >
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <label *ngIf="!loading" for="">Actualizar</label>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body mt-3 mt-3"></div>
+            </div>
+  <!--           <div class="card mt-5">
+              <div class="card-header">
+                <h5 style="color: white" class="mb-0">Mis pedidos FXCoins</h5>
+              </div>
+              <div class="card-body">
+                <div class="row ">
+                  <ng-container *ngFor="let pedido of pedidos">
+                    <div class="col-md-6 col-lg-4 col-xl-4 mb-1 p-2">
+                      <div class="row producto">
+                        <div class="col-5">
+                          <img class="productos" src="https://greenpark.mx/asesores/Content/img/fxcoins/{{pedido.Imagen}}" alt="">
+                        </div>
+                        <div class="col-7 text-end pe-2">
+                          <h5>{{pedido.Producto}}</h5>
+                          <h6>{{pedido.Precio_Final}} {{pedido.Moneda}}</h6>
+                          <h4 [ngClass]="{blue: pedido.IdStatus == 2,green: pedido.IdStatus == 1,red: pedido.IdStatus == 3}">{{pedido.Status}}</h4>
+                          <p>{{pedido.Fch_Pedido}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
     </div>
     <!-- Content Wrapper END -->
-
-    <!-- Footer START -->
-    <footer class="footer">
-        <div class="footer-content">
-            <p class="m-b-0">  </p>
-        </div>
-    </footer>
-    <!-- Footer END -->
-
+  
+   
+  
     <!-- Modal -->
-    <div class="modal fade" id="cropperModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Recortar imagen</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <app-cropperjs (onDefineImage)="subirImagen($event)" [loading]="loading"></app-cropperjs>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
+    <div
+      class="modal fade"
+      id="cropperModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Recortar imagen</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <app-cropperjs (onDefineImage)="subirImagen($event)"></app-cropperjs>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
+  

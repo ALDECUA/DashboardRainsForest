@@ -1,12 +1,23 @@
 .header {
-    background: #fff;
     height: 70px;
-    border-bottom: 1px solid #edf2f9;
+    /*     border-bottom: 1px solid #d6dcea;
+ */
+    position: fixed;
     position: fixed;
     top: 0px;
     width: 100%;
     z-index: 1030;
     display: flex;
+}
+
+.title-nabvar {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.iconfxc {
+    width: 20px;
+    height: 31px;
 }
 
 .header .logo {
@@ -29,16 +40,25 @@ img {
     border-style: none;
 }
 
+p {
+    font-family: "Arial", "Titillium", sans-serif;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
 .header .nav-wrap {
     flex: 1;
     display: flex;
     justify-content: space-between;
+    background-color: #c6cfb8fe;
 }
 
 .header .nav-wrap .nav-left {
-    margin-left: 10px;
+    margin-left: 1rem;
 }
-.header .nav-wrap .nav-left, .header .nav-wrap .nav-right {
+
+.header .nav-wrap .nav-left,
+.header .nav-wrap .nav-right {
     list-style-type: none;
     padding-left: 0px;
     margin-bottom: 0px;
@@ -49,7 +69,9 @@ img {
 .header .nav-wrap .nav-right {
     margin-right: 10px;
 }
-.header .nav-wrap .nav-left, .header .nav-wrap .nav-right {
+
+.header .nav-wrap .nav-left,
+.header .nav-wrap .nav-right {
     list-style-type: none;
     padding-left: 0px;
     margin-bottom: 0px;
@@ -57,7 +79,9 @@ img {
     display: flex;
 }
 
-.header .nav-wrap .nav-left li>a, .header .nav-wrap .nav-left li nz-dropdown>a, .header .nav-wrap .nav-right li>a, .header .nav-wrap .nav-right li nz-dropdown>a {
+.header .nav-wrap .nav-left li nz-dropdown>a,
+.header .nav-wrap .nav-right li>a,
+.header .nav-wrap .nav-right li nz-dropdown>a {
     padding: 5px 15px;
     font-size: 20px;
     color: #53535f;
@@ -79,12 +103,19 @@ img {
     display: inline-block;
 }
 
-.dropup, .dropright, .dropdown, .dropleft {
+.dropup,
+.dropright,
+.dropdown,
+.dropleft {
     position: relative;
 }
 
 .pointer {
     cursor: pointer;
+}
+
+.mix-spacing {
+    padding-right: 3rem;
 }
 
 .avatar {
@@ -99,7 +130,7 @@ img {
     width: 40px;
     height: 40px;
     line-height: 40px;
-    border-radius: 50%;
+    border-radius: 10px;
     display: inline-block;
 }
 
@@ -115,16 +146,26 @@ img {
 }
 
 .sidebar_small {
-    width:80px;
+    width: 80px;
 }
 
 .sidebar_full {
     /* width: 280px; */
     width: 230px;
+    background: rgb(6, 1, 68);
+    background: linear-gradient(80deg, rgba(104, 116, 84, 1) 0%, rgba(104, 116, 84, 1) 24%, rgba(28, 52, 242, 1) 58%);
 }
 
-@media only screen and (min-width: 992px)
-{
+
+/* .menu {
+    background-color: #2D45FF;
+} */
+
+.menu {
+    display: none;
+}
+
+@media only screen and (min-width: 992px) {
     .header .nav-wrap .mobile-toggle {
         display: none;
     }
@@ -132,16 +173,81 @@ img {
 
 .header .dropdown-menu {
     font-size: 18px;
-    padding:10px;
-    transition:all 0.2s ease;
+    padding: 10px;
+    transition: all 0.2s ease;
 }
 
 .pop-profile {
     width: 270px;
 }
-/* @media only screen and (max-width: 992px){
-    .logo {
-        display:none;
+
+@media only screen and (max-width: 992px) {
+    .Nombre {
+        display: none;
     }
 }
- */
+
+.fs-8 {
+    font-size: .8rem;
+}
+
+.fsi-23 {
+    font-size: 23px;
+}
+
+@media screen and (min-width: 992px) {
+    .menub {
+        display: none;
+    }
+}
+
+.tipousuario {
+    font-size: 15px;
+    color: #7a86a1;
+}
+
+.monedas {
+    background-color: #687454;
+    color: white;
+    padding: 5px 20px;
+    border-radius: 20px;
+    margin: 0px 5px 0px 10px;
+}
+
+.coins {
+    height: 100%;
+    align-items: center;
+    display: flex;
+    padding-left: 10px;
+    margin-right: 10px;
+}
+
+.x {
+    color: #687454;
+    border-color: #687454;
+}
+
+@media screen and (max-width: 1023px) {
+    .menu {
+        display: block;
+        color: #687454;
+        border-color: #687454;
+    }
+    .title-nabvar {
+        display: none;
+    }
+}
+
+@media screen and (max-width:480px) {
+    .title-nabvar {
+        font-size: 18px;
+    }
+    .mix-spacing {
+        padding-right: 1rem;
+    }
+}
+.dropdown-item.active, .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #687454;
+}

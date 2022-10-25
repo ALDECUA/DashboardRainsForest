@@ -11,6 +11,7 @@ import { EditarUsuarioComponent } from './editar-usuario/editar-usuario.componen
 import { EditarPerfilesComponent } from './editar-perfiles/editar-perfiles.component';
 import { EditarComisionesComponent } from './editar-comisiones/editar-comisiones.component';
 import { ComisionesComponent } from './comisiones/comisiones.component';  
+import { CropperjsModule } from 'src/app/lib/cropperjs/cropperjs.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ComisionesComponent } from './comisiones/comisiones.component';
     ConfiguracionRoutingModule,
     ComponentsModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    CropperjsModule
   ]
 })
 export class ConfiguracionModule { }

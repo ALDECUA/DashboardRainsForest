@@ -21,6 +21,15 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.userData = this.auth.user;
+    this.userData = this.auth.user;
+    console.log(this.userData.Fxcoins);
+
+    if (screen.width > 768) {
+      this.app.sidebarState = true;
+      //this.sidebarState = false;
+    }else{
+      this.app.sidebarState = false;
+    }
   }
 
   public cerrarSesion() {
