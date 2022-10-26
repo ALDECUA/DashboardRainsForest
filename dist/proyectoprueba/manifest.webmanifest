@@ -1,8 +1,8 @@
 {
   "name": "Rainforest Adventure",
   "short_name": "Rainforest",
-  "theme_color": "#0a5c14de",
-  "background_color": "#0a5c14de",
+  "theme_color": "#1976d2",
+  "background_color": "#1976d2",
   "display": "browser",
   "orientation": "portrait",
   "scope": "./",
