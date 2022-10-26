@@ -7,11 +7,11 @@ import { LoadloginpageGuard } from './guards/loadloginpage.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'crm',
+    redirectTo: 'Inicio',
     pathMatch: 'full'
   },
   {
-    path: 'crm',
+    path: 'Inicio',
     loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule),
     canLoad: [IsAuthenticatedGuard]
   },
