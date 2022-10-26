@@ -4,198 +4,25 @@
     sidebar_is_full: app.sidebarState,
     sidebar_is_small: !app.sidebarState
   }"
->
+><div  class="botones">
+  <button id="escondete" class="btn btn-primary"><i class="fas fa-cloud-download-alt"></i></button>
+  <button  class="pdfbtn" (click)="pdf()"  style="color: #FF0000 ;" ><i class="far fa-file-pdf"></i></button>
+  <button class="excelbtn" (click)="excell()" style="color:  #1C6C40;" ><i class="far fa-file-excel"></i></button>
+  <button class="btn btn-primary"><i class="fas fa-cloud-download-alt"></i></button>
+</div>
   <!-- Content Wrapper START -->
   <div class="main-content">
     <div class="card">
       <h2>Reportes</h2>
       <div class="card-body">
-        <!-- <form class="row g-3">
-                    <div class="col-md-3">
-                        <label for="tipo" class="form-label">Tipo</label>
-                        <select id="tipo" name="tipo" [(ngModel)]="tipo" class="form-select">
-                            <option selected disabled value="">Seleccionar Opcion</option>
-                            <option>Propietarios</option>
-                            <option value="1">Reporte HR</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="desde" class="form-label">Desde</label>
-                        <input type="date" name="desde" [(ngModel)]="desde" class="form-control line-bottom" id="desde">
-                    </div>
-                    <div class="col-md-2">
-                        <label for="hasta" class="form-label">Hasta</label>
-                        <input type="date" name="hasta" [(ngModel)]="hasta" class="form-control line-bottom" id="hasta">
-                    </div>
-                   
-                    <div class="col-md-2 btnObtener">
-                      <button type="button" (click)="reporte()" class="btn btn-primary"><i class="me-3 fas fa-download"></i> Obtener</button>
-                    </div>
-                </form> -->
-        <!-- <div class="row g3 mt-5">
-                    <div class="col-md-12">
-                        <h2>Sin Datos</h2>
-                    </div>
-                </div> -->
+
         <div class="row mt-4">
-          <div class="col-lg-4">
-            <div class="card mb-3">
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <h5>Lotes disponibles</h5>
-                  <div>
-                    <a
-                      routerLink="/crm/reportes/reporte/3"
-                      class="btn btn-sm btn-outline-secondary"
-                      >Ver detalles</a
-                    >
-                  </div>
-                </div>  <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>Desarrollo</th>
-                          <th>Lotes disponibles</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let item of lotes">
-                          <td>{{ item.Desarrollo }}</td>
-                          <td>{{item.LotesDisponibles}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                
-                <div class="row pt-3"></div>
-              </div>
-            </div>
-            <div class="card ">
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <h5>Volumen HR</h5>
-                  <div>
-                    <a
-                      routerLink="/crm/reportes/reporte/1"
-                      class="btn btn-sm btn-outline-secondary"
-                      >Ver todo</a
-                    >
-                  </div>
-                </div>
-                <div class="mt-5">
-                  <div class="table-responsive">
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>Desarrollo</th>
-                          <th># de HRs</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let pedido of Volumen">
-                          <td>{{ pedido.Desarrollo }}</td>
-                          <td>{{ pedido.TotalHR }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-8">
-            <div class="card mb-3">
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <h5>Ultimos pagos</h5>
-                  <div>
-                    <a
-                      routerLink="/crm/reportes/reporte/2"
-                      class="btn btn-sm btn-outline-secondary"
-                      >Ver todos</a
-                    >
-                  </div>
-                </div>
-                <div class="mt-5">
-                  <div class="table-responsive">
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>Desarrollo</th>
-                          <th>Lote</th>
-                          <th>Concepto</th>
-                          <th>Fecha</th>
-                          <th>Status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let pedido of pagos">
-                          <td>{{ pedido.Desarrollo }}</td>
-                          <td>{{ pedido.nombre }}</td>
-                          <td>{{ pedido.Concepto }}</td>
-                          <td>{{ pedido.FechaPago }}</td>
-                          <td>
-                            <div class="d-flex align-items-center">
-                              <span
-                                class="
-                                  p-2
-                                  me-2
-                                  border border-light
-                                  rounded-circle
-                                "
-                                [ngClass]="{
-                                  'bg-danger': pedido.IdStatus === 3,
-                                  'bg-success': pedido.IdStatus === 1,
-                                  'bg-primary': pedido.IdStatus === 2
-                                }"
-                              ></span>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <h5>Volumen HR</h5>
-                  <div>
-                    <a
-                      routerLink="/crm/fxcoins/pedidos"
-                      class="btn btn-sm btn-outline-secondary"
-                      >Ver todos</a
-                    >
-                  </div>
-                </div>
-                <div class="mt-5">
-                  <div class="table-responsive">
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>Desarrollo</th>
-                          <th>HR</th>
-                          <th>Volumen</th>
-                         
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let pedido of Volumen">
-                          <td>{{ pedido.Desarrollo }}</td>
-                          <td>{{ pedido.TotalHR }}</td>
-                          <td>o</td>
-                         
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="col-lg-12">   
+          <div class="col-lg-12">
             <div class="card cotizaciones ">
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center ">
-                  <h5>Cotizaciones</h5>
+                  <h5>Reporte de ventas</h5>
                   <div>
                     <a
                       routerLink="/crm/reportes/reporte/4"
@@ -209,14 +36,13 @@
                     <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th>Nombre Interesado</th>
-                          <th>Desarrollo</th>
+                          <th>Parkes</th>
+                          
                         </tr>
                       </thead>
                       <tbody>
                         <tr *ngFor="let item of CotizacionesPorDesarrollo">
                           <td>{{item.Nombre_Interesado}}</td>
-                          <td  >{{item.Lotes_Informacion[0].NDesarrollo}}</td>
                         </tr>
                       </tbody>
                     </table>

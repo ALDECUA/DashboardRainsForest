@@ -14,32 +14,29 @@
       />
     </div>
     <ul id="menu">
-      <!-- <li [routerLink]="['/configuracion/perfil']" routerLinkActive="page_active">
-        <a>Perfil</a>
-      </li> -->
-      <li [routerLink]="['/']" routerLinkActive="page_active">
+      <li [routerLink]="['/Inicio/']" routerLinkActive="page_active">
         <img
           src="https://greenpark.mx/img/iconos_inversionista/icon-resumen-activo.svg"
           alt=""
         /><a>Resumen</a>
       </li>
 
-      <li [routerLink]="['Inicio/pagos/']" routerLinkActive="page_active">
+      <li [routerLink]="['/Inicio/configuracion/usuario']" routerLinkActive="page_active">
         <img
           src="https://greenpark.mx/img/iconos_inversionista/icon-pagos-on.svg"
           alt=""
         />
         <a>Configuracion</a>
       </li>
-      <li [routerLink]="['app/inversiones']" routerLinkActive="page_active">
+      <li [routerLink]="['/Inicio/reportes/estadisticas']" routerLinkActive="page_active">
         <img
           src="https://greenpark.mx/img/iconos_inversionista/icon-inversiones-on.svg"
           alt=""
         />
-        <a>Mis Inversiones</a>
+        <a>Estadisticas</a>
       </li>      
-      <li [routerLink]="['app/asistencia/']" routerLinkActive="page_active">
-        <i class="fas fa-headset me-2"></i> <a>Asistencia</a>
+      <li [routerLink]="['/Inicio/reportes/consultas']" routerLinkActive="page_active">
+        <i class="fas fa-clipboard-list me-2"></i> <a>Reportes</a> 
       </li>
     </ul>
     <div class="d-flex justify-content-center">

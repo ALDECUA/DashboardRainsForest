@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
     public app: AppService,
     private auth: AuthService
   ) {
-    this.app.currentModule = 'Index';
+    this.app.currentModule = 'Inicio';
     this.app.currentSection = '';
    }
 

@@ -5,8 +5,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { EditarUsuarioComponent } from './editar-usuario/editar-usuario.component';
 import { EditarPerfilesComponent } from './editar-perfiles/editar-perfiles.component';
 import { HasGrantGuard } from 'src/app/guards/has-grant.guard';
-import { ComisionesComponent } from './comisiones/comisiones.component';
-import { EditarComisionesComponent } from './editar-comisiones/editar-comisiones.component';
+
 
 const routes: Routes = [
   
@@ -33,18 +32,6 @@ const routes: Routes = [
     component: EditarPerfilesComponent,
     canActivate: [HasGrantGuard],
     data: { grant: 2 }
-  },
-  {
-    path: 'editarcomisones/:id',
-    component: EditarComisionesComponent,
-    canActivate: [HasGrantGuard],
-    data: { grant: 43 }
-  },
-  {
-    path: 'comisiones',
-    component: ComisionesComponent,
-    canActivate: [HasGrantGuard],
-    data: { grant: 43 }
   }
 ];
 

@@ -1,9 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AppService } from 'src/app/services/app.service';
-import { DesarrollosService } from 'src/app/services/desarrollos.service';
 import { ReportesService } from 'src/app/services/reportes.service';
-import { RhService } from 'src/app/services/rh.service';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -15,14 +13,13 @@ import { fontFamily } from 'html2canvas/dist/types/css/property-descriptors/font
 import { fontStyle } from 'html2canvas/dist/types/css/property-descriptors/font-style';
 import { Workbook } from 'exceljs';
 import { CommaListExpression } from 'typescript';
-import { ListarComisionesComponent } from '../../desarrollos/listar-comisiones/listar-comisiones.component';
+
 import { WSA_E_CANCELLED } from 'constants';
 
 import { FormControl, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ConsultasComponent } from '../consultas/consultas.component';
 import { NULL_EXPR } from '@angular/compiler/src/output/output_ast';
-import { ContabilidadService } from 'src/app/services/contabilidad.service';
 
 declare var Chart: any;
 
@@ -320,14 +317,11 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy {
     public app: AppService,
     private el: ElementRef,
     private estadisticas: ReportesService,
-    private desarollos: DesarrollosService,
-    private rhService: RhService,
     public reportes: ReportesService,
-    public datepipe: DatePipe,
-    public contabilidad: ContabilidadService
+    public datepipe: DatePipe
   ) {
-    this.app.currentModule = 'Reportes';
-    this.app.currentSection = ' - Estadisticas';
+    this.app.currentModule = '';
+    this.app.currentSection = '  Estadisticas';
     /* this.downloadPDF(); */
   }
 
@@ -378,14 +372,7 @@ dateRangeChange() {
           'yyyy-MM-dd'
       );
       console.log(this.fechas);
-      this.contabilidad.Volumen(this.fechas).subscribe((res: any) => {
-          if (!res.error) {
-              this.backupPersonas = res.personas;
-              console.log(this.backupPersonas)
-              this.filtrarPersona();
-              this.loading = false;
-          }
-      });
+     
   }
 }
 
@@ -435,12 +422,7 @@ detalles(persona) {
   this.fechas.IdPersona = persona.IdAsociado;
   this.fechas.Seleccion = 1;
   console.log(this.fechas)
-  this.contabilidad.ObtenerTeamLider(this.fechas).subscribe((res: any) => {
-      this.hrs = res.personas;
-      console.log(res)
-      persona.ver = true;
 
-  });
 }
 
 detalles2(item) {
@@ -460,11 +442,6 @@ detalles2(item) {
   this.fechas.Seleccion = 2;
   console.log(this.fechas)
 
-  this.contabilidad.ObtenerTeamLider(this.fechas).subscribe((res: any) => {
-      this.hrss = res.personas;
-      console.log(res, 'RESGRESO')
-      item.ver = true;
-  });
 }
 
 public imprimirexelSC(){
@@ -474,182 +451,7 @@ public imprimirexelSC(){
   this.fechas.Seleccion = 3;
   console.log(this.fechas)
   console.log(this.fechas.FechaInicio)
-  this.contabilidad.ObtenerTeamLider(this.fechas).subscribe((res: any) => {
-      console.log(res, 'Respuesta Total SC')
-      console.log(res.personas, 'Respuesta Total SC')
-      this.datos = res.personas;
-      console.log(this.datos)
-
-
-      /* Contadores Grafico Excel Inicio*/
-      let inv = 2;
-      let ref = 0;
-      let aux = 0;
-      let workBook = new Workbook();
-      let workSheet = workBook.addWorksheet('Reporte Socios Comerciales');
-      let headers = workSheet.addRow(['Colaborador', 'Nivel', 'Volumen']);
-      for (let i = 1; i <= 3; i++) {
-          let columna = headers.getCell(i);
-          columna.fill = {
-              type: 'pattern',
-              pattern: 'solid',
-              fgColor: { argb: 'FF00085E' },
-          };
-          columna.border = {
-              top: { style: 'thin' },
-              left: { style: 'thin' },
-              bottom: { style: 'thin' },
-              right: { style: 'thin' },
-          };
-          columna.font = {
-              color: { argb: 'FFFFFFFF' },
-              bold: true,
-              size: 13,
-          };
-      }
-      /* Datos SocioComercial */
-      this.datos.forEach((item) => {
-          if (item.TEAMLIDER) {
-              item.IL = item.TEAMLIDER
-              console.log(item.IL)
-          }
-          else {
-              console.log('Nel perro')
-          }
-
-          const row = workSheet.addRow([
-              item.Colaborador,
-              item.Nivel,
-              item.Volumen_Equipo,
-          ]);
-
-          let y3 = item.Volumen_Equipo.replace(/[$,]/g,"");
-          y3 = +y3
-          aux = aux + y3;
-
-          for (let i = 1; i <= 3; i++) {
-              const col = row.getCell(i);
-              col.fill = {
-                  type: 'pattern',
-                  pattern: 'solid',
-                  fgColor: { argb: '0000CD' },
-              };
-              col.font = {
-                  color: { argb: 'FFFFFFFF' },
-              };
-              col.border = {
-                  top: { style: 'thin' },
-                  left: { style: 'thin' },
-                  bottom: { style: 'thin' },
-                  right: { style: 'thin' },
-              };
-              col.alignment = { vertical: 'middle', horizontal: 'left', shrinkToFit: true }
-              workSheet.getColumn(3).numFmt = '"$"#,##0.00;[Red]-"$"#,##0.00';
-              workSheet.getCell('C' + inv).alignment = { horizontal: 'center' }
-              workSheet.getCell('D' + inv).alignment = { horizontal: 'center' }
-          }
-
-          /* Datos Inversionista Lider */
-
-          console.log(JSON.parse(item.IL), 'ilider')
-          JSON.parse(item.IL).forEach((item) => {
-              console.log(item)
-              if (item.Nombre == ' ' || item.Nivel == null) {
-                  item.Nombre = 'Sin nombre'
-                  item.Nivel = 'Sin nombre'
-              }
-              inv++
-              ref = inv
-              if (item.IdStatusReferido === 1) {
-                  item.IdStatusReferido = 'El referido no ha invertido';
-              } else if (item.IdStatusReferido === 2) {
-                  item.IdStatusReferido = 'El referido ha invertido';
-              }
-              const row = workSheet.addRow([
-                  item.Nombre,
-                  item.Nivel,
-                  item.PrecioFinal
-              ]);
-
-              for (let i = 1; i <= 3; i++) {
-                  const col = row.getCell(i);
-                  col.fill = {
-                      type: 'pattern',
-                      pattern: 'solid',
-                      fgColor: { argb: '6A8BFA' },
-                  };
-                  col.border = {
-                      top: { style: 'thin' },
-                      left: { style: 'thin' },
-                      bottom: { style: 'thin' },
-                      right: { style: 'thin' },
-                  };
-                  col.alignment = { vertical: 'middle', horizontal: 'left', shrinkToFit: true }
-                  workSheet.getCell('C' + ref).alignment = { horizontal: 'center' }
-              }
-
-
-              item.ASESOR.forEach((item) => {
-                  console.log(item)
-                  if (item.Nombre == ' ' || item.Nivel == null) {
-                      item.Nombre = 'Sin nombre'
-                      item.Nivel = 'Sin nombre'
-                  }
-                  inv++
-                  ref = inv
-                  if (item.IdStatusReferido === 1) {
-                      item.IdStatusReferido = 'El referido no ha invertido';
-                  } else if (item.IdStatusReferido === 2) {
-                      item.IdStatusReferido = 'El referido ha invertido';
-                  }
-                  const row = workSheet.addRow([
-                      item.Nombre,
-                      item.Nivel,
-                      item.PrecioFinal
-                  ]);
-
-                  for (let i = 1; i <= 3; i++) {
-                      const col = row.getCell(i);
-                      col.border = {
-                          top: { style: 'thin' },
-                          left: { style: 'thin' },
-                          bottom: { style: 'thin' },
-                          right: { style: 'thin' },
-                      };
-                      col.alignment = { vertical: 'middle', horizontal: 'left', shrinkToFit: true }
-                      workSheet.getCell('C' + ref).alignment = { horizontal: 'center' }
-                  }
-              });
-          });
-          inv++
-      });
-      aux.toFixed(2)
-      let aux2: number = +aux
-
-      let total = workSheet.getCell('B' + (inv + 1))
-      total.value = "Volumen Total SC's"
-      total.fill = {type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF00085E' },};
-      total.border = {top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' },};
-      total.font = {color: { argb: 'FFFFFFFF' }, bold: true, size: 13,};
-
-      workSheet.getCell('C' + (inv + 1)).value = aux2;
-      workSheet.columns.forEach(function (column, i) {
-          var maxLength = 0;
-          column["eachCell"]({ includeEmpty: true }, function (cell) {
-              var columnLength = cell.value ? cell.value.toString().length : 20;
-              if (columnLength > maxLength) {
-                  maxLength = columnLength;
-              }
-          });
-          column.width = maxLength < 20 ? 20 : maxLength;
-      });
-      workBook.xlsx.writeBuffer().then((data) => {
-          let blob = new Blob([data], {
-              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-          });
-          saveAs(blob, 'Reporte_HR_Ventas_SC.xlsx');
-      });
-  });
+  
 }
 
 public imprimirexelIL(){
@@ -658,123 +460,7 @@ public imprimirexelIL(){
   }
   this.fechas.Seleccion = 4;
   console.log(this.fechas)
-  this.contabilidad.ObtenerTeamLider(this.fechas).subscribe((res: any) => {
-      console.log(res, 'Respuesta Total IL')
-      console.log(res.personas, 'Respuesta Total IL')
-      this.datos = res.personas;
-      console.log(this.datos)
-
-
-      /* Contadores Grafico Excel Inicio*/
-      let inv = 2;
-      let ref = 0
-      let workBook = new Workbook();
-      let workSheet = workBook.addWorksheet('Reporte Inversionistas Lideres');
-      let headers = workSheet.addRow(['Colaborador', 'Nivel', 'Volumen']);
-      for (let i = 1; i <= 3; i++) {
-          let columna = headers.getCell(i);
-          columna.fill = {
-              type: 'pattern',
-              pattern: 'solid',
-              fgColor: { argb: 'FF00085E' },
-          };
-          columna.border = {
-              top: { style: 'thin' },
-              left: { style: 'thin' },
-              bottom: { style: 'thin' },
-              right: { style: 'thin' },
-          };
-          columna.font = {
-              color: { argb: 'FFFFFFFF' },
-              bold: true,
-              size: 13,
-          };
-      }
-      /* Datos Inversionista Lider */
-      this.datos.forEach((item) => {
-          if (item.ASESOR) {
-              item.A = item.ASESOR
-              console.log(item.A)
-          }
-          else {
-              console.log('Nel perro')
-          }
-
-          const row = workSheet.addRow([
-              item.Colaborador,
-              item.Nivel,
-              item.Volumen_Equipo,
-          ]);
-          for (let i = 1; i <= 3; i++) {
-              const col = row.getCell(i);
-              col.fill = {
-                  type: 'pattern',
-                  pattern: 'solid',
-                  fgColor: { argb: '0000CD' },
-              };
-              col.font = {
-                  color: { argb: 'FFFFFFFF' },
-              };
-              col.border = {
-                  top: { style: 'thin' },
-                  left: { style: 'thin' },
-                  bottom: { style: 'thin' },
-                  right: { style: 'thin' },
-              };
-              col.alignment = { vertical: 'middle', horizontal: 'left', shrinkToFit: true }
-              workSheet.getColumn(3).numFmt = '"$"#,##0.00;[Red]\-"$"#,##0.00';
-              workSheet.getCell('C' + inv).alignment = { horizontal: 'center' }
-              workSheet.getCell('D' + inv).alignment = { horizontal: 'center' }
-          }
-
-          /* Datos Asesores */
-
-          console.log(JSON.parse(item.A), 'ilider')
-          JSON.parse(item.A).forEach((item) => {
-              inv++
-              ref = inv
-              if (item.IdStatusReferido === 1) {
-                  item.IdStatusReferido = 'El referido no ha invertido';
-              } else if (item.IdStatusReferido === 2) {
-                  item.IdStatusReferido = 'El referido ha invertido';
-              }
-              const row = workSheet.addRow([
-                  item.Nombre,
-                  item.Nivel,
-                  item.PrecioFinal
-              ]);
-
-              for (let i = 1; i <= 3; i++) {
-                  const col = row.getCell(i);
-                  col.border = {
-                      top: { style: 'thin' },
-                      left: { style: 'thin' },
-                      bottom: { style: 'thin' },
-                      right: { style: 'thin' },
-                  };
-                  col.alignment = { vertical: 'middle', horizontal: 'left', shrinkToFit: true }
-                  workSheet.getCell('C' + ref).alignment = { horizontal: 'center' }
-              }
-          });
-          inv++
-      });
-      workSheet.columns.forEach(function (column, i) {
-          var maxLength = 0;
-          column["eachCell"]({ includeEmpty: true }, function (cell) {
-              var columnLength = cell.value ? cell.value.toString().length : 20;
-              if (columnLength > maxLength) {
-                  maxLength = columnLength;
-              }
-          });
-          column.width = maxLength < 20 ? 20 : maxLength;
-      });
-      workBook.xlsx.writeBuffer().then((data) => {
-          let blob = new Blob([data], {
-              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-          });
-          saveAs(blob, 'Reporte_HR_Ventas_IL.xlsx');
-      });
-  });
+ 
 }
 
 public imprimirexelA(){
@@ -783,77 +469,7 @@ public imprimirexelA(){
   }
   this.fechas.Seleccion = 5;
   console.log(this.fechas)
-  this.contabilidad.ObtenerTeamLider(this.fechas).subscribe((res: any) => {
-      console.log(res, 'Respuesta Total IL')
-      console.log(res.personas, 'Respuesta Total IL')
-      this.datos = res.personas;
-      console.log(this.datos)
-
-
-      /* Contadores Grafico Excel Inicio*/
-      let inv = 2;
-      let ref = 0
-      let workBook = new Workbook();
-      let workSheet = workBook.addWorksheet('Reporte Asesores');
-      let headers = workSheet.addRow(['Colaborador', 'Nivel', 'Volumen']);
-      for (let i = 1; i <= 3; i++) {
-          let columna = headers.getCell(i);
-          columna.fill = {
-              type: 'pattern',
-              pattern: 'solid',
-              fgColor: { argb: 'FF00085E' },
-          };
-          columna.border = {
-              top: { style: 'thin' },
-              left: { style: 'thin' },
-              bottom: { style: 'thin' },
-              right: { style: 'thin' },
-          };
-          columna.font = {
-              color: { argb: 'FFFFFFFF' },
-              bold: true,
-              size: 13,
-          };
-      }
-      /* Datos Inversionista Lider */
-      this.datos.forEach((item) => {
-          const row = workSheet.addRow([
-              item.Colaborador,
-              item.Nivel,
-              item.Volumen_Equipo,
-          ]);
-          for (let i = 1; i <= 3; i++) {
-              const col = row.getCell(i);
-              col.border = {
-                  top: { style: 'thin' },
-                  left: { style: 'thin' },
-                  bottom: { style: 'thin' },
-                  right: { style: 'thin' },
-              };
-              col.alignment = { vertical: 'middle', horizontal: 'left', shrinkToFit: true }
-              workSheet.getColumn(3).numFmt = '"$"#,##0.00;[Red]\-"$"#,##0.00';
-              workSheet.getCell('C' + inv).alignment = { horizontal: 'center' }
-              workSheet.getCell('D' + inv).alignment = { horizontal: 'center' }
-          }
-          inv++
-      });
-      workSheet.columns.forEach(function (column, i) {
-          var maxLength = 0;
-          column["eachCell"]({ includeEmpty: true }, function (cell) {
-              var columnLength = cell.value ? cell.value.toString().length : 20;
-              if (columnLength > maxLength) {
-                  maxLength = columnLength;
-              }
-          });
-          column.width = maxLength < 20 ? 20 : maxLength;
-      });
-      workBook.xlsx.writeBuffer().then((data) => {
-          let blob = new Blob([data], {
-              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-          });
-          saveAs(blob, 'Reporte_HR_Ventas_A.xlsx');
-      });
-  });
+ 
 }
 
 public imprimirexelSC_Individual(persona){
@@ -861,156 +477,7 @@ public imprimirexelSC_Individual(persona){
   this.fechas.IdPersona = persona.IdAsociado;
   this.fechas.Seleccion = 6;
   console.log(this.fechas)
-  this.contabilidad.ObtenerTeamLider(this.fechas).subscribe((res: any) => {
-      console.log(res, 'Respuesta Total SC Individual')
-      console.log(res.personas, 'Respuesta Total SC Individual')
-      this.datos = res.personas;
-      console.log(this.datos)
-
-
-      /* Contadores Grafico Excel Inicio*/
-      let inv = 2;
-      let ref = 0
-      let workBook = new Workbook();
-      let workSheet = workBook.addWorksheet('Reporte ' + persona.Colaborador);
-      let headers = workSheet.addRow(['Colaborador', 'Nivel', 'Volumen']);
-      for (let i = 1; i <= 3; i++) {
-          let columna = headers.getCell(i);
-          columna.fill = {
-              type: 'pattern',
-              pattern: 'solid',
-              fgColor: { argb: 'FF00085E' },
-          };
-          columna.border = {
-              top: { style: 'thin' },
-              left: { style: 'thin' },
-              bottom: { style: 'thin' },
-              right: { style: 'thin' },
-          };
-          columna.font = {
-              color: { argb: 'FFFFFFFF' },
-              bold: true,
-              size: 13,
-          };
-      }
-      /* Datos SocioComercial */
-      this.datos.forEach((item) => {
-          if (item.TEAMLIDER) {
-              item.IL = item.TEAMLIDER
-              console.log(item.IL)
-          }
-          else {
-              console.log('Nel perro')
-          }
-
-          const row = workSheet.addRow([
-              item.Colaborador,
-              item.Nivel,
-              item.Volumen_Equipo,
-          ]);
-          for (let i = 1; i <= 3; i++) {
-              const col = row.getCell(i);
-              col.fill = {
-                  type: 'pattern',
-                  pattern: 'solid',
-                  fgColor: { argb: '0000CD' },
-              };
-              col.font = {
-                  color: { argb: 'FFFFFFFF' },
-              };
-              col.border = {
-                  top: { style: 'thin' },
-                  left: { style: 'thin' },
-                  bottom: { style: 'thin' },
-                  right: { style: 'thin' },
-              };
-              workSheet.getColumn(3).numFmt = '"$"#,##0.00;[Red]\-"$"#,##0.00';
-              col.alignment = { vertical: 'middle', horizontal: 'left', shrinkToFit: true }
-              workSheet.getCell('C' + inv).alignment = { horizontal: 'center' }
-              workSheet.getCell('D' + inv).alignment = { horizontal: 'center' }
-          }
-
-          /* Datos Inversionista Lider */
-
-          console.log(JSON.parse(item.IL), 'ilider')
-          JSON.parse(item.IL).forEach((item) => {
-              inv++
-              ref = inv
-              if (item.IdStatusReferido === 1) {
-                  item.IdStatusReferido = 'El referido no ha invertido';
-              } else if (item.IdStatusReferido === 2) {
-                  item.IdStatusReferido = 'El referido ha invertido';
-              }
-              const row = workSheet.addRow([
-                  item.Nombre,
-                  item.Nivel,
-                  item.PrecioFinal
-              ]);
-
-              for (let i = 1; i <= 3; i++) {
-                  const col = row.getCell(i);
-                  col.fill = {
-                      type: 'pattern',
-                      pattern: 'solid',
-                      fgColor: { argb: '6A8BFA' },
-                  };
-                  col.border = {
-                      top: { style: 'thin' },
-                      left: { style: 'thin' },
-                      bottom: { style: 'thin' },
-                      right: { style: 'thin' },
-                  };
-                  col.alignment = { vertical: 'middle', horizontal: 'left', shrinkToFit: true }
-                  workSheet.getCell('C' + ref).alignment = { horizontal: 'center' }
-              }
-
-
-              item.ASESOR.forEach((item) => {
-                  inv++
-                  ref = inv
-                  if (item.IdStatusReferido === 1) {
-                      item.IdStatusReferido = 'El referido no ha invertido';
-                  } else if (item.IdStatusReferido === 2) {
-                      item.IdStatusReferido = 'El referido ha invertido';
-                  }
-                  const row = workSheet.addRow([
-                      item.Nombre,
-                      item.Nivel,
-                      item.PrecioFinal
-                  ]);
-
-                  for (let i = 1; i <= 3; i++) {
-                      const col = row.getCell(i);
-                      col.border = {
-                          top: { style: 'thin' },
-                          left: { style: 'thin' },
-                          bottom: { style: 'thin' },
-                          right: { style: 'thin' },
-                      };
-                      col.alignment = { vertical: 'middle', horizontal: 'left', shrinkToFit: true }
-                      workSheet.getCell('C' + ref).alignment = { horizontal: 'center' }
-                  }
-              });
-          });
-          inv++
-      });
-      workSheet.columns.forEach(function (column, i) {
-          var maxLength = 0;
-          column["eachCell"]({ includeEmpty: true }, function (cell) {
-              var columnLength = cell.value ? cell.value.toString().length : 20;
-              if (columnLength > maxLength) {
-                  maxLength = columnLength;
-              }
-          });
-          column.width = maxLength < 20 ? 20 : maxLength;
-      });
-      workBook.xlsx.writeBuffer().then((data) => {
-          let blob = new Blob([data], {
-              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-          });
-          saveAs(blob, 'Reporte_HR_Ventas_SC_Individual_' + persona.Colaborador + '.xlsx');
-      });
-  });
+ 
 }
 
 public imprimirexelIL_Individual(persona){
@@ -1018,198 +485,13 @@ public imprimirexelIL_Individual(persona){
   this.fechas.IdPersona = persona.IdTeamLider;
   this.fechas.Seleccion = 7;
   console.log(this.fechas)
-  this.contabilidad.ObtenerTeamLider(this.fechas).subscribe((res: any) => {
-      console.log(res, 'Respuesta Total IL Individual')
-      console.log(res.personas, 'Respuesta Total IL Individual')
-      this.datos = res.personas;
-      console.log(this.datos)
-
-
-      /* Contadores Grafico Excel Inicio*/
-      let inv = 2;
-      let ref = 0
-      let workBook = new Workbook();
-      let workSheet = workBook.addWorksheet('Reporte ' + persona.Colaborador);
-      let headers = workSheet.addRow(['Colaborador', 'Nivel', 'Volumen']);
-      for (let i = 1; i <= 3; i++) {
-          let columna = headers.getCell(i);
-          columna.fill = {
-              type: 'pattern',
-              pattern: 'solid',
-              fgColor: { argb: 'FF00085E' },
-          };
-          columna.border = {
-              top: { style: 'thin' },
-              left: { style: 'thin' },
-              bottom: { style: 'thin' },
-              right: { style: 'thin' },
-          };
-          columna.font = {
-              color: { argb: 'FFFFFFFF' },
-              bold: true,
-              size: 13,
-          };
-      }
-      /* Datos Inversionista Lider */
-      this.datos.forEach((item) => {
-          if (item.ASESOR) {
-              item.A = item.ASESOR
-              console.log(item.A)
-          }
-          else {
-              console.log('Nel perro')
-          }
-
-          const row = workSheet.addRow([
-              item.Colaborador,
-              item.Nivel,
-              item.Volumen_Equipo,
-          ]);
-          for (let i = 1; i <= 3; i++) {
-              const col = row.getCell(i);
-              col.fill = {
-                  type: 'pattern',
-                  pattern: 'solid',
-                  fgColor: { argb: '0000CD' },
-              };
-              col.font = {
-                  color: { argb: 'FFFFFFFF' },
-              };
-              col.border = {
-                  top: { style: 'thin' },
-                  left: { style: 'thin' },
-                  bottom: { style: 'thin' },
-                  right: { style: 'thin' },
-              };
-              workSheet.getColumn(3).numFmt = '"$"#,##0.00;[Red]\-"$"#,##0.00';
-              col.alignment = { vertical: 'middle', horizontal: 'left', shrinkToFit: true }
-              workSheet.getCell('C' + inv).alignment = { horizontal: 'center' }
-              workSheet.getCell('D' + inv).alignment = { horizontal: 'center' }
-          }
-
-          /* Datos Asesores */
-
-          console.log(JSON.parse(item.A), 'ilider')
-          JSON.parse(item.A).forEach((item) => {
-              inv++
-              ref = inv
-              if (item.IdStatusReferido === 1) {
-                  item.IdStatusReferido = 'El referido no ha invertido';
-              } else if (item.IdStatusReferido === 2) {
-                  item.IdStatusReferido = 'El referido ha invertido';
-              }
-              const row = workSheet.addRow([
-                  item.Nombre,
-                  item.Nivel,
-                  item.PrecioFinal
-              ]);
-
-              for (let i = 1; i <= 3; i++) {
-                  const col = row.getCell(i);
-                  col.border = {
-                      top: { style: 'thin' },
-                      left: { style: 'thin' },
-                      bottom: { style: 'thin' },
-                      right: { style: 'thin' },
-                  };
-                  col.alignment = { vertical: 'middle', horizontal: 'left', shrinkToFit: true }
-                  workSheet.getCell('C' + ref).alignment = { horizontal: 'center' }
-              }
-          });
-          inv++
-      });
-      workSheet.columns.forEach(function (column, i) {
-          var maxLength = 0;
-          column["eachCell"]({ includeEmpty: true }, function (cell) {
-              var columnLength = cell.value ? cell.value.toString().length : 20;
-              if (columnLength > maxLength) {
-                  maxLength = columnLength;
-              }
-          });
-          column.width = maxLength < 20 ? 20 : maxLength;
-      });
-      workBook.xlsx.writeBuffer().then((data) => {
-          let blob = new Blob([data], {
-              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-          });
-          saveAs(blob, 'Reporte_HR_Ventas_IL_Individual_' + persona.Colaborador + '.xlsx');
-      });
-  });
+ 
 }
 
 public imprimirexelA_Individual(){
   this.fechas.Seleccion = 8;
   console.log(this.fechas)
-  this.contabilidad.ObtenerTeamLider(this.fechas).subscribe((res: any) => {
-      console.log(res, 'Respuesta Total A Individual')
-      console.log(res.personas, 'Respuesta Total A Individual')
-      this.datos = res.personas;
-      console.log(this.datos)
 
-
-      /* Contadores Grafico Excel Inicio*/
-      let inv = 2;
-      let ref = 0
-      let workBook = new Workbook();
-      let workSheet = workBook.addWorksheet('Referidos');
-      let headers = workSheet.addRow(['Colaborador', 'Nivel', 'Volumen']);
-      for (let i = 1; i <= 3; i++) {
-          let columna = headers.getCell(i);
-          columna.fill = {
-              type: 'pattern',
-              pattern: 'solid',
-              fgColor: { argb: 'FF00085E' },
-          };
-          columna.border = {
-              top: { style: 'thin' },
-              left: { style: 'thin' },
-              bottom: { style: 'thin' },
-              right: { style: 'thin' },
-          };
-          columna.font = {
-              color: { argb: 'FFFFFFFF' },
-              bold: true,
-              size: 13,
-          };
-      }
-      /* Datos Inversionista Lider */
-      this.datos.forEach((item) => {
-          const row = workSheet.addRow([
-              item.Colaborador,
-              item.Nivel,
-              item.Volumen_Equipo,
-          ]);
-          for (let i = 1; i <= 3; i++) {
-              const col = row.getCell(i);
-              col.border = {
-                  top: { style: 'thin' },
-                  left: { style: 'thin' },
-                  bottom: { style: 'thin' },
-                  right: { style: 'thin' },
-              };
-              col.alignment = { vertical: 'middle', horizontal: 'left', shrinkToFit: true }
-              workSheet.getCell('C' + inv).alignment = { horizontal: 'center' }
-              workSheet.getCell('D' + inv).alignment = { horizontal: 'center' }
-          }
-          inv++
-      });
-      workSheet.columns.forEach(function (column, i) {
-          var maxLength = 0;
-          column["eachCell"]({ includeEmpty: true }, function (cell) {
-              var columnLength = cell.value ? cell.value.toString().length : 20;
-              if (columnLength > maxLength) {
-                  maxLength = columnLength;
-              }
-          });
-          column.width = maxLength < 20 ? 20 : maxLength;
-      });
-      workBook.xlsx.writeBuffer().then((data) => {
-          let blob = new Blob([data], {
-              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-          });
-          saveAs(blob, 'Reporte_HR_Ventas_A_Individual.xlsx');
-      });
-  });
 }
 
 public filtrarPersona() {
@@ -1262,26 +544,7 @@ public filtrarPersona() {
     this.FechaFinal = new Date(lastday).toISOString().slice(0, 10);
 
     /* traigo los desarollos */
-    this.desarollos.getDesarrollos(1).subscribe((res: any) => {
-      this.des = res.desarrollos;
 
-      let btn = {};
-      let btnColor = {};
-
-      for (let index = 0; index < this.des.length; index++) {
-        const element = this.des[index];
-
-        /* botones de los desarrollos */
-        btn = {
-          IdDesarrollo: element.IdDesarrollo,
-          Desarrollo: element.Desarrollo,
-          Color: this.colorRGB()
-        }
-        this.btngroup.push(btn);
-      }
-
-
-    });
 
     this.subscriptions.add(
       this.estadisticas.getUrlTotalLotes().subscribe((res: any) => {

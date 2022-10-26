@@ -9,8 +9,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { EditarUsuarioComponent } from './editar-usuario/editar-usuario.component';
 import { EditarPerfilesComponent } from './editar-perfiles/editar-perfiles.component';
-import { EditarComisionesComponent } from './editar-comisiones/editar-comisiones.component';
-import { ComisionesComponent } from './comisiones/comisiones.component';  
+
+
 import { CropperjsModule } from 'src/app/lib/cropperjs/cropperjs.module';
 
 @NgModule({
@@ -19,8 +19,8 @@ import { CropperjsModule } from 'src/app/lib/cropperjs/cropperjs.module';
     UsuarioComponent,
     EditarUsuarioComponent,
     EditarPerfilesComponent,
-    EditarComisionesComponent,
-    ComisionesComponent,
+  
+
   ],
   imports: [
     CommonModule,

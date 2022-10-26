@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { DatatableComponent } from './datatable/datatable.component';
 import { SortDirective } from '../directives/sort.directive';
 import { FullLoaderComponent } from './full-loader/full-loader.component';
-import { DataRecluComponent } from './data-reclu/data-reclu.component';
+
 import { DatatableHR } from './datatableHR/datatable.component';
 import { DatatableHRVerComponent } from './datatable-hrver/datatable-hrver.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -23,7 +23,7 @@ import {  ReactiveFormsModule } from '@angular/forms';
     DatatableComponent,
     SortDirective,
     FullLoaderComponent,
-    DataRecluComponent,
+  
     DatatableHR
 
   ],
@@ -39,7 +39,7 @@ import {  ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
   ],
   exports: [
-    DataRecluComponent,
+   
     DatatableComponent,
     FullLoaderComponent,
     DatatableHR,

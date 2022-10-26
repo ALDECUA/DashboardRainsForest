@@ -26,3 +26,71 @@
 
 margin-top: 15px;
 }
+.circulo
+{
+    position: fixed;
+    right: 5%;
+    bottom: 5%;
+    width: 70px;
+    height: 70px;
+    border-radius: 70px;
+    background-color: rgb(224, 222, 219);
+    overflow: hidden;
+}
+.circulo div{
+    width: 50%;
+    
+}
+.circulo div button{
+    width: 100%;
+    height: 100%;
+    font-size: 30px;
+    border: none;
+}
+
+.botones{
+position: fixed;
+right: 5%;
+bottom: 5%;
+max-height: 80px!important;
+overflow: hidden;
+display: grid;
+max-height: 500px;
+transition: max-height 0.25s ease-out;
+z-index: 1000;
+}
+.botones:hover{
+    height: auto;
+    max-height: 240px!important;
+    transition: max-height 0.5s ease-in;
+
+}
+.botones:hover .excelbtn, .botones:hover .pdfbtn{
+    display: block; 
+}
+.excelbtn, .pdfbtn{
+    display: block; 
+}
+.botones:hover #escondete
+{
+        display: none;
+}
+
+.botones button{
+    width: 70px;
+    height: 70px;
+    border-radius: 70px;
+    font-size: 30px;
+    margin-top: 10px;
+    border: 1px solid black;
+}
+
+.excelbtn:hover
+{
+  background-color: #1C6C40;
+  color: white!important;
+}
+.pdfbtn:hover{
+    background-color: #ff0000;
+    color: #fff!important;
+}

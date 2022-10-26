@@ -13,7 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DashboardComponent } from './dashboard/dashboard.component';
+
 
 
 @NgModule({
@@ -21,7 +21,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ConsultasComponent,
     EstadisticasComponent,
     ReporteComponent,
-    DashboardComponent
+   
   ],
   imports: [
     CommonModule,

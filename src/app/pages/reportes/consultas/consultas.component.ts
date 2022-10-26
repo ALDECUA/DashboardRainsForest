@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { AppService } from 'src/app/services/app.service';
 import { ReportesService } from 'src/app/services/reportes.service';
-
+import Swal from 'sweetalert2';
+import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-consultas',
   templateUrl: './consultas.component.html',
@@ -64,6 +65,42 @@ export class ConsultasComponent implements OnInit {
     this.reportes.VolumenHR({}).subscribe((res:any)=>{
      this.Volumen= res;
      console.log(this.Volumen);
+    });
+  }
+  pdf() {
+    Swal.fire({
+      title: 'Elige un reporte en PDF',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonColor: '#0E1D60',
+      denyButtonColor: '#0E1D60',
+      confirmButtonText: 'Reporte Activos',
+      denyButtonText: `Reporte Global`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+     /*  if (result.isConfirmed) {
+        this.ListarPersonas();
+      } else if (result.isDenied) {
+        this.PrepararReporteGeneral();
+      } */
+    });
+  }
+  excell() {
+    Swal.fire({
+      title: 'Elige un reporte en Excel',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonColor: '#1C6C40',
+      denyButtonColor: '#1C6C40',
+      confirmButtonText: 'Reporte Activos',
+      denyButtonText: `Reporte Global`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+     /*  if (result.isConfirmed) {
+        this.ListarPersonasExcel();
+      } else if (result.isDenied) {
+        this.exportAsExcelFile();
+      } */
     });
   }
 }
