@@ -11,20 +11,20 @@ const routes: Routes = [
     path: 'consultas',
     component: ConsultasComponent,
     canActivate: [HasGrantGuard],
-    data: { grant: 25 }
+    data: { grant: 3 }
   },
   {
     path: 'estadisticas',
     component: EstadisticasComponent,
     canActivate: [HasGrantGuard],
-    data: { grant: 25 }
+    data: { grant: 2 }
   },
   
   {
     path: 'reporte/:id',
     component: ReporteComponent,
     canActivate: [HasGrantGuard],
-    data: { grant: 25 }
+    data: { grant: 3 }
   }
 
 ];

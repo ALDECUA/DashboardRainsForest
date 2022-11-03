@@ -34,7 +34,7 @@ export class AuthService {
 
     if (userData) {
       this.user = JSON.parse(userData);
-      /* this.refreshUserData(); */
+      this.refreshUserData();
     } else {
       //this.logout();
       //location.href = '/login';
@@ -78,31 +78,33 @@ export class AuthService {
     public actualizar(data){
       return this.http.post(this.urlUptFoto,data);
     }
- /*  public refreshUserData() {
-    return new Promise((resolve, reject) => {
-      this.http.post(this.urlGetData, {}).subscribe((res: any) => {
-        if (res.unauthorized) {
-          alert('Tu sesión ha caducado!');
-          this.logout();
-          window.location.href = '/angularcrm/login';
-          resolve(true)
-        } else {
-          this.permisos = JSON.parse(res.permisos);
-          localStorage.setItem('user_data', JSON.stringify(res));
-          this.user = res;
-          this.generateMenus();
-          resolve(true);
+    public refreshUserData() {
+      return new Promise((resolve, reject) => {
+        this.http.post(this.urlGetData, {}).subscribe((res: any) => {
+          if (res.unauthorized) {
+            alert('Tu sesión ha caducado!');
+            this.logout();
+            window.location.href = '/angularcrm/login';
+            resolve(true)
+          } else {
+            this.permisos = JSON.parse(res.permisos);
+            localStorage.setItem('user_data', JSON.stringify(res));
+            this.user = res;
+            this.generateMenus();
+            resolve(true);
+          }
+        });
+      })
+    }
+  
+    public generateMenus() {
+      this.permisos.Menus.forEach((menu) => {
+        if (menu.Lectura === 1) {
+          this.menus.push(menu.IdMenu);
         }
       });
-    })
+      this.menus.push(0);
+      console.log(this.menus)
+    }
   }
-
-  public generateMenus() {
-    this.permisos.Menus.forEach((menu) => {
-      if (menu.Menus.Lectura === 1) {
-        this.menus.push(menu.Menus.IdMenu);
-      }
-    });
-    this.menus.push(0);
-  } */
-}
+  

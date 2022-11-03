@@ -21,21 +21,21 @@
         /><a>Resumen</a>
       </li>
 
-      <li [routerLink]="['/Inicio/configuracion/usuario']" routerLinkActive="page_active">
+      <li [routerLink]="['/Inicio/configuracion/usuario']" routerLinkActive="page_active" *ngIf="renderMenus.includes(1)">
         <img
           src="https://greenpark.mx/img/iconos_inversionista/icon-pagos-on.svg"
           alt=""
         />
         <a>Configuracion</a>
       </li>
-      <li [routerLink]="['/Inicio/reportes/estadisticas']" routerLinkActive="page_active">
+      <li [routerLink]="['/Inicio/reportes/estadisticas']" routerLinkActive="page_active" *ngIf="renderMenus.includes(2)">
         <img
           src="https://greenpark.mx/img/iconos_inversionista/icon-inversiones-on.svg"
           alt=""
         />
         <a>Estadisticas</a>
       </li>      
-      <li [routerLink]="['/Inicio/reportes/consultas']" routerLinkActive="page_active">
+      <li [routerLink]="['/Inicio/reportes/consultas']" routerLinkActive="page_active" *ngIf="renderMenus.includes(3)">
         <i class="fas fa-clipboard-list me-2"></i> <a>Reportes</a> 
       </li>
     </ul>

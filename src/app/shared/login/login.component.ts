@@ -33,8 +33,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   public login() {
-    console.log(this.loginData);
-
     if (this.loginData.Correo === null) {
       return;
     }
@@ -51,8 +49,9 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.auth.logged = true;
           localStorage.setItem('auth_token', res.token);
           localStorage.setItem('user_data', JSON.stringify(res.persona));
-          /* this.auth.permisos = JSON.parse(res.persona.permisos);
-          this.auth.generateMenus(); */
+          this.auth.permisos = JSON.parse(res.persona.permisos);
+          console.log('astqui bien')
+          this.auth.generateMenus();
           this.router.navigateByUrl('/');
         } else {
           this.toast.error('Verifica tus datos','Acceso denegado', { timeOut: 3000});

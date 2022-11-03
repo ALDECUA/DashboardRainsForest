@@ -93,8 +93,9 @@ export class UsuarioComponent implements OnInit {
     this.listarUsuarios();
     this.subscriptions.add(
       this.CRMService.ObtenerPerfiles({ Opcion: 0}).subscribe((res: any) => {
-        console.log(res);
+        
         this.tipo_personas = res.perfiles;
+        console.log(this.tipo_personas);
         this.loading = false;
       })
     );

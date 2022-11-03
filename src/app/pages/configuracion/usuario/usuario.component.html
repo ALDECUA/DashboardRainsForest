@@ -28,7 +28,7 @@
             <label for="">Tipo de usuario</label>
             <select class="form-control tipo_usuario" (change)="change()" name="tipo_usuario" [(ngModel)]="id_newperfil">
               <option [value]="null" disabled>Selecciona una opción</option>
-              <option [value]="il.IdPerfil" *ngFor="let il of tipo_personas"> {{ il.Nombre}} </select>
+              <option [value]="il.IdPerfil" *ngFor="let il of tipo_personas"> {{ il.Nombre}}</option> </select>
             <input type="text" name="fecha" class="form-control fecha" id="fecha" [(ngModel)]="fech" readonly hidden>
             <input type="text" name="fecha" class="form-control usuario" id="usuario" [(ngModel)]="usuario" readonly hidden>
 
