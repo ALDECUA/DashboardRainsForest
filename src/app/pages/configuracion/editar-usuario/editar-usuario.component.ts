@@ -39,7 +39,7 @@ export class EditarUsuarioComponent implements OnInit {
     });
     this.subscriptions.add(
       this.CRMService.UsuarioPorId({ Id: this.id }).subscribe((res: any) => {
-        this.persona = res.usuario;
+        this.persona = res.usuario[0];
         console.log(this.persona);
         this.tipousuarion=this.persona.IdPerfil;
         if (this.persona.IdStatus == 0) {

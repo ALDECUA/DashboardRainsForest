@@ -59,7 +59,7 @@ export class UsuarioComponent implements OnInit {
     editable: true,
     urlMedia: this.app.dominio+'api/storage/usuarios/perfiles/',
     idField: 'IdUsuario',
-    urlEdit: '/crm/configuracion/editarusuario/',
+    urlEdit: '/Inicio/configuracion/editarusuario/',
     fotoField: 'Foto_Perfil',
     filtroA:{
       data: [

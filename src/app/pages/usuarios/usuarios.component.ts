@@ -92,7 +92,7 @@ export class UsuariosComponent implements OnInit, OnDestroy, AfterViewInit {
         return;
       }
       this.loading = true;
-      this.auth.PwdInversionista({IdUsuario: this.userData.IdPersona, Pwd: this.pwd.uno}).subscribe((res:any)=>
+      this.auth.PwdInversionista({IdUsuario: this.auth.user.IdUsuario , Pwd: this.pwd.uno}).subscribe((res:any)=>
       {
         if(res.updated)
         {
