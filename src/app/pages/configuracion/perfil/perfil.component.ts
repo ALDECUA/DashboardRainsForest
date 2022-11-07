@@ -75,8 +75,7 @@ export class PerfilComponent implements OnInit {
   public CrearPerfil()
   {
     this.subscriptions = this.CRMService.CrearPerfil({Perfil: this.newperfil,  fecha:this.fech, Usuario: this.usuario}).subscribe((res: any) => {
-     console.log(res);
-     this.perfiles.unshift(res.record);
+ 
       if(res.insert==true)
       {
         Swal.fire(
@@ -84,6 +83,9 @@ export class PerfilComponent implements OnInit {
           'Recuerda asignarle permisos desde el panel de perfiles',
           'success'
         )
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000);
       }
       else
       {
