@@ -15,7 +15,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment'
+import { environment } from '../environments/environment';
+import { ConsultasRoutingModule } from './pages/reportes/consultas/consultas-routing.module'
 
 
 
@@ -38,6 +39,7 @@ import { environment } from '../environments/environment'
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     }),
+    ConsultasRoutingModule,
 
   ],
   providers: [

@@ -13,8 +13,8 @@
       <div class="col" style="text-align: end"></div>
     </div>
     <div class="row g-3 mb-5">
-      <div class="col-md-3" *ngIf="reporte == 2">
-        <label for="tipo" class="form-label">Desarrollo</label>
+      <div class="col-md-3" >
+        <label for="tipo" class="form-label">Tipo de orden</label>
         <select
           id="tipo"
           (change)="Filtros()"
@@ -28,8 +28,8 @@
           </option>
         </select>
       </div>
-      <div class="col-md-3" *ngIf="reporte == 2">
-        <label for="tipo" class="form-label">Tipo</label>
+      <div class="col-md-3" >
+        <label for="tipo" class="form-label">Nacionalidad</label>
         <select
           id="tipo"
           (change)="Filtros()"
@@ -38,41 +38,17 @@
           class="form-select"
         >
           <option value="0">Todos</option>
-          <option value="1">Concepto</option>
+        <!--   <option value="1">Concepto</option>
           <option value="2">Enganche</option>
           <option value="3">Gasto Administrativo</option>
           <option value="4">Mensualidad</option>
           <option value="5">Pago generico</option>
           <option value="6">Intereses</option>
-          <option value="7">Pago de contado</option>
+          <option value="7">Pago de contado</option> -->
         </select>
       </div>
-      <ng-container  *ngIf="reporte != 3 " >
-      <div class="col-md-2" *ngIf="reporte != 4 " >
-        <label for="desde" class="form-label">Desde</label>
-        <input
-          type="date"
-          (change)="Filtros()"
-          name="desde"
-          [(ngModel)]="desde"
-          class="form-control line-bottom"
-          id="desde"
-        />
-      </div>
-    </ng-container>
-    <ng-container  *ngIf="reporte != 3 " >
-      <div class="col-md-2" *ngIf="reporte != 4 ">
-        <label for="hasta" class="form-label">Hasta</label>
-        <input
-          type="date"
-          (change)="Filtros()"
-          name="hasta"
-          [(ngModel)]="hasta"
-          class="form-control line-bottom"
-          id="hasta"
-        />
-      </div>
-    </ng-container>
+   
+ 
       <div class="col-md-2 btnObtener">
         <button type="button" (click)="Descarga()" class="btn btn-primary">
           <i class="me-3 fas fa-download"></i> Descargar reporte
@@ -81,38 +57,17 @@
       </div>
     </div>
 
-    <div *ngIf="reporte == 1">
+
+    <div >
       <div class="table-responsive">
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>Desarrollo</th>
-              <th># de HRs</th>
-              <th>Volumen Enganche</th>
-              <th>Volumen Lotes</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of Volumen">
-              <td>{{ item.Desarrollo }}</td>
-              <td>{{ item.TotalHR }}</td>
-              <td>$ {{ item.VolumenEnganches }}</td>
-              <td>$ {{ item.VolumenLotes }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div *ngIf="reporte == 2">
-      <div class="table-responsive">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>Desarrollo</th>
-              <th>Lote</th>
-              <th>Concepto</th>
-              <th>Monto</th>
-              <th>Fecha pago</th>
+              <th>Tour</th>
+              <th>Importe</th>
+              <th>Total</th>
+              <th>Tarifa</th>
+              <th>Niños</th>
             </tr>
           </thead>
           <tbody>
@@ -127,339 +82,13 @@
         </table>
       </div>
     </div>
-    <div *ngIf="reporte == 3">
-      <button 
-      type="button"   
-      class="btn btn-primary btngeneral" 
-      data-bs-toggle="modal" 
-      data-bs-target="#exampleModal">
-    <i class="fas fa-caret-down"></i> reporte general
-  </button>
-  <button 
-  type="button"   
-  class="btn btn-primary btngeneral" 
-  data-bs-toggle="modal" 
-  data-bs-target="#exampleModalToggle">
-<i class="fas fa-caret-down"></i> reporte Filtro
-</button>
-      <div class="table-responsive">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>Desarrollo</th>
-              <th># total de lotes</th>
-              <th>Disponibles</th>
-              <th>Apartados</th>
-              <th>Vendidos</th>
-              <th>Secretos</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of lotes">
-              <td>{{ item.Desarrollo }}</td>
-              <td>{{ item.TotalLotes }}</td>
-              <td>{{ item.LotesDisponibles }}</td>
-              <td>{{ item.LotesApartados }}</td>
-              <td>{{ item.LotesVendidos }}</td>
-              <td>{{ item.LotesSecretos }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div *ngIf="reporte == 4">
-      <div class="table-responsive">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>Nombre Interesado</th>
-              <th>Teléfono</th>
-              <th>Correo</th>
-              <th>HR</th>
-              <th>Datos Cotización</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of CotizacionesPorDesarrollo">
-              <td>{{item.Nombre_Interesado}}</td>
-              <td>{{item.Telefono_Interesado}}</td>
-              <td>{{item.Email}}</td>
-              <td>{{item.IdHR}}</td>
-              <button type="button"  (click)="verinformacion(item.IdCotizador)" class="btn btn-outline-dark btn-sm  datos" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="far fa-eye"></i></button>
-            </tr>
-          </tbody>
-        </table>
 
-        <div
-          class="offcanvas offcanvas-end"
-          tabindex="-1"
-          id="offcanvasRight"
-          aria-labelledby="offcanvasRightLabel"
-        >
-          <div class="offcanvas-header">
-            <h5>Datos Cotización</h5>
-            <button
-              type="button"
-              class="btn-close text-reset"
-              data-bs-dismiss="offcanvas"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="offcanvas-body">
-            <div class="d-grid gap-2">
-              <div
-                class="accordion accordion-flush"
-                id="accordionFlushExample"
-              >
-                <!--            COMENTARIOS         -->
-                <div
-                  class="accordion-item"
-                  *ngFor="let category of InformacionCotizacion; let i = index"
-                >
-                  <h2
-                    class="accordion-header"
-                    [attr.id]="'flush-heading' + i"
-                  >
-                    <button
-                      style="font-size: x-large"
-                      class="accordion-button collapsed"
-                      type="button"
-                      (click)="openAccordion[i] = !openAccordion[i]"
-                      data-bs-toggle="collapse"
-                      [attr.data-bs-target]="'#collapse' + i"
-                      aria-expanded="false"
-                      [attr.aria-controls]="'collapse' + i"
-                    > 
-                    Lote {{i+1}}
-                    </button>
-                  </h2>
-                  <div
-                    [attr.id]="'collapse' + i"
-                    class="accordion-collapse collapse"
-                    [class.show]="openAccordion[i]"
-                    [attr.aria-labelledby]="'heading' + i"
-                    data-bs-parent="#accordionExample"
-                  >
-                    <div class="accordion-body">
-                      
-                        <table class="table">
-                            <thead>
-                              <tr>
-                                <th scope="col">Información</th>
-                                <th scope="col">Dato</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">Desarrollo</th>
-                                <td>{{category.IdDesarrollo}}</td> 
-                              </tr>
-                              <tr>
-                                <th scope="row">Financiamiento</th>
-                                <td>{{category.Financiamiento}}</td> 
-                              </tr>
-                              <tr>
-                                <th scope="row">Etapa</th>
-                                <td>{{category.IdEtapa}}</td> 
-                              </tr>
-                              <tr>
-                                <th scope="row">Numero de Lote</th>
-                                <td>{{category.NombreLote}}</td> 
-                              </tr>
-                              <tr>
-                                <th scope="row">Precio M2</th>
-                                <td>$ {{category.Precio_M2}}</td> 
-                              </tr>
-                              <tr>
-                                <th scope="row">Precio Total</th>
-                                <td>$ {{category.Precio_Total}}</td> 
-                              </tr>
-                              <tr>
-                                <th scope="row">Enganche</th>
-                                <td>$ {{category.Enganche}}</td> 
-                              </tr>
-                            </tbody>
-                          </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      
-      
-       
-
-
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Reporte General</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      
-        
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th scope="col">Desarrollo</th>
-              <th scope="col">Inversionista</th>
-              <th scope="col">Precio Venta</th>
-              <th scope="col">Fecha</th>
-              <th scope="col">Estatus</th>
-            </tr>
-          </thead>
-          <tbody >
-            <ng-container *ngFor="let nombrelotes of lotes;let indice = index" >
-            <tr>
-              <th scope="row" style="border-top-width: 15px; border-top-color: #0d6efd;"  colspan="5">{{nombrelotes.Desarrollo}}</th>
-            </tr>
-            <tr>
-              <th  scope="row" colspan="5">Fase 1</th>
-            </tr>
-            <ng-container *ngFor="let item of todolotes" >
-              <tr *ngIf="item.Desarrollo == nombrelotes.Desarrollo && item.Fase == '1'">
-                <th>{{item.Nombre}}</th>
-                <th>{{item.NombreInversionista}}</th>
-                <th>$ {{item.Precio_Final}}</th>
-                <th>{{item.Fecha_Registro}}</th>
-                <th [ngClass]="{Disponible: item.Status == 'Disponible',Apartado: item.Status == 'Apartado',Vendido: item.Status == 'Vendido',Secreto: item.Status == 'Secreto' }">{{item.Status}}</th>
-              </tr>
-            </ng-container>
-            <tr>
-              <th  scope="row" *ngIf="nombrelotes.Desarrollo == 'VIA PALMAR' || nombrelotes.Desarrollo == 'HORIZONTES'|| nombrelotes.Desarrollo == 'KUNAL'|| nombrelotes.Desarrollo == 'ZAZIL-HA'|| nombrelotes.Desarrollo == 'VILLAMAR' " colspan="5">Fase 2</th>
-            </tr>
-            <ng-container *ngFor="let item of todolotes" >
-              <tr *ngIf="item.Desarrollo == nombrelotes.Desarrollo && item.Fase == '2'">
-                <th>{{item.Nombre}}</th>
-                <th>{{item.NombreInversionista}}</th>
-                <th>$ {{item.Precio_Final}}</th>
-                <th>{{item.Fecha_Registro}}</th>
-                <th [ngClass]="{Disponible: item.Status == 'Disponible',Apartado: item.Status == 'Apartado',Vendido: item.Status == 'Vendido',Secreto: item.Status == 'Secreto' }">{{item.Status}}</th>
-              </tr>
-            </ng-container>
-          <tr>
-            <th  scope="row"  *ngIf="nombrelotes.Desarrollo == 'VIA PALMAR'" colspan="5">Fase 3</th>
-          </tr>
-          <ng-container *ngFor="let item of todolotes" >
-            <tr *ngIf="item.Desarrollo == nombrelotes.Desarrollo && item.Fase == '3'">
-              <th>{{item.Nombre}}</th>
-              <th>{{item.NombreInversionista}}</th>
-              <th>$ {{item.Precio_Final}}</th>
-              <th>{{item.Fecha_Registro}}</th>
-              <th [ngClass]="{Disponible: item.Status == 'Disponible',Apartado: item.Status == 'Apartado',Vendido: item.Status == 'Vendido',Secreto: item.Status == 'Secreto' }">{{item.Status}}</th>
-            </tr>
-          </ng-container>
-          <tr>
-            <th  scope="row" *ngIf="nombrelotes.Desarrollo == 'VIA PALMAR'" colspan="5">Fase 4</th>
-          </tr>
-          <ng-container *ngFor="let item of todolotes" >
-            <tr *ngIf="item.Desarrollo == nombrelotes.Desarrollo && item.Fase == '4'">
-              <th>{{item.Nombre}}</th>
-              <th>{{item.NombreInversionista}}</th>
-              <th>$ {{item.Precio_Final}}</th>
-              <th>{{item.Fecha_Registro}}</th>
-              <th [ngClass]="{Disponible: item.Status == 'Disponible',Apartado: item.Status == 'Apartado',Vendido: item.Status == 'Vendido',Secreto: item.Status == 'Secreto' }">{{item.Status}}</th>
-            </tr>
-          </ng-container>
-            </ng-container>
-          </tbody>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" (click)="ImprimirReporteGeneral()" class="btn btn-primary">Descargar reporte</button>
-      </div>
-    </div>
+   
   </div>
 </div>
 
 
 
-<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-  <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalToggleLabel2">Reporte Filtrado</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">DESARROLLO</th>
-              <th scope="col">ETAPA</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th >  
-                  <select [(ngModel)]="DesarrolloFiltro" name="myDesarrollo"  (ngModelChange)="onChangeObj()" class="form-select" aria-label="Default select example">
-                    <option  disabled>Selecione un desarrollo . . . </option>
-                    <option value="12">COPROPIEDAD</option>
-                    <option value="11">KUNAL</option>
-                    <option value="10">VILLAMAR</option>
-                    <option value="8">MANTRA</option>
-                    <option value="7">HORIZONTES</option>
-                    <option value="5">VIA PALMAR</option>
-                    <option value="4">KOOMUNA</option>
-                    <option value="3">ZAZIL-HA</option>
-                    <option value="1">BONAREA</option>
-                  </select>
-               
-              </th>
-              <td >
-                <select [(ngModel)]="Etapa" name="Etapa" (ngModelChange)="onChangeObj()" class="form-select" aria-label="Default select example">
-                  <option disabled>Selecione un etapa . . .</option>
-                  <option  *ngIf="DesarrolloFiltro == 12" value="1">ZENICA</option>
-                  <option  *ngIf="DesarrolloFiltro == 11 || DesarrolloFiltro == 10 || DesarrolloFiltro == 7 ||DesarrolloFiltro == 3  ||DesarrolloFiltro == 5||DesarrolloFiltro == 1 || DesarrolloFiltro == 4 || DesarrolloFiltro == 8  " value="1">Etapa 1</option>
-                  <option *ngIf="DesarrolloFiltro == 11 || DesarrolloFiltro == 10 || DesarrolloFiltro == 7 ||DesarrolloFiltro == 3  ||DesarrolloFiltro == 5" value="2">Etapa 2</option>
-                  <option *ngIf="DesarrolloFiltro == 5" value="3">Etapa 3</option>
-                  <option *ngIf="DesarrolloFiltro == 5" value="4">Etapa 4</option>
-                </select>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Lote</th>
-              <th scope="col">Inversionista</th>
-              <th scope="col">Precio Venta</th>
-              <th scope="col">Fecha</th>
-              <th scope="col">Estatus</th>
-            </tr>
-          </thead>
-          <tbody>
-            <ng-container *ngFor="let item of filtrolotes" >
-              <tr >
-                <th>{{item.Nombre}}</th>
-                <th>{{item.NombreInversionista}}</th>
-                <th>$ {{item.Precio_Final}}</th>
-                <th>{{item.Fecha_Registro}}</th>
-                <th [ngClass]="{Disponible: item.Status == 'Disponible',Apartado: item.Status == 'Apartado',Vendido: item.Status == 'Vendido',Secreto: item.Status == 'Secreto' }">{{item.Status}}</th>
-              </tr>
-            </ng-container>
-          </tbody>
-        </table>
 
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" (click)="ImprimirReporteFiltrado()" class="btn btn-primary">Descargar reporte</button>
-      </div>
-    </div>
-  </div>
-</div>
+

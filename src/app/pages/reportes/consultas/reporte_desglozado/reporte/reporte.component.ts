@@ -56,88 +56,17 @@ export class ReporteComponent implements OnInit {
    });
   }
  
-  verinformacion(data){
-    for(let i= 0; i< this.CotizacionesPorDesarrollo.length ; i++){
-     if(this.CotizacionesPorDesarrollo[i].IdCotizador == data){
-       this.InformacionCotizacion =  this.CotizacionesPorDesarrollo[i].Lotes_Informacion
-       for(let a= 0; a< this.InformacionCotizacion.length; a++){
-         if(this.InformacionCotizacion[a].IdDesarrollo == 12 ){
-           this.InformacionCotizacion[a].IdDesarrollo = 'Copropiedad'
-         }
-         if(this.InformacionCotizacion[a].IdDesarrollo == 11 ){
-           this.InformacionCotizacion[a].IdDesarrollo = 'Kunal'
-         } 
-         if(this.InformacionCotizacion[a].IdDesarrollo == 10 ){
-           this.InformacionCotizacion[a].IdDesarrollo = 'Villamar'
-         }  
-         if(this.InformacionCotizacion[a].IdDesarrollo == 8 ){
-           this.InformacionCotizacion[a].IdDesarrollo = 'Mantra'
-         }  
-         if(this.InformacionCotizacion[a].IdDesarrollo == 7 ){
-           this.InformacionCotizacion[a].IdDesarrollo = 'Horizontes'
-         }  
-         if(this.InformacionCotizacion[a].IdDesarrollo == 5 ){
-           this.InformacionCotizacion[a].IdDesarrollo = 'Via Palmar'
-         }  
-         if(this.InformacionCotizacion[a].IdDesarrollo == 4 ){
-           this.InformacionCotizacion[a].IdDesarrollo = 'Koomuna'
-         }  
-         if(this.InformacionCotizacion[a].IdDesarrollo == 3 ){
-           this.InformacionCotizacion[a].IdDesarrollo = 'Zazil-Ha'
-         }  
-         if(this.InformacionCotizacion[a].IdDesarrollo == 1 ){
-           this.InformacionCotizacion[a].IdDesarrollo = 'Bonarea'
-         }  
-         if(this.InformacionCotizacion[a].IdEtapa == 21 ||
-           this.InformacionCotizacion[a].IdEtapa == 20 ||
-            this.InformacionCotizacion[a].IdEtapa == 15 ||
-            this.InformacionCotizacion[a].IdEtapa == 11 ||
-            this.InformacionCotizacion[a].IdEtapa == 9 ||
-            this.InformacionCotizacion[a].IdEtapa == 128 ||
-            this.InformacionCotizacion[a].IdEtapa == 130   ){
-           this.InformacionCotizacion[a].IdEtapa = '1'
-         }  
-         if(this.InformacionCotizacion[a].IdEtapa == 2 ||
-           this.InformacionCotizacion[a].IdEtapa == 16 ||
-           this.InformacionCotizacion[a].IdEtapa == 8 ||
-           this.InformacionCotizacion[a].IdEtapa == 129 ||
-           this.InformacionCotizacion[a].IdEtapa == 131  ){
-          this.InformacionCotizacion[a].IdEtapa = '2'
-        }
-        if(this.InformacionCotizacion[a].IdEtapa == 3  ){
-        this.InformacionCotizacion[a].IdEtapa = '3'
-      }
-      if(this.InformacionCotizacion[a].IdEtapa == 4  ){
-       this.InformacionCotizacion[a].IdEtapa = '4'
-     }
-       }
-     }
-     }
-   }
+
   ngOnInit(): void {
     this.activatedRouter.paramMap.subscribe((params: any) => {
       this.reporte = params.params.id;
-      switch (this.reporte) {
-        case '1':
-          this.ObtenerVolumenHR();
-          this.titulo = 'Volumen HR';
-          break;
-        case '2':
-          this.ObtenerPagos();
-          this.titulo = 'Pagos';
-          break;
-        case '3':
-          this.ObtenerLotes();
-          this.titulo = 'Lotes';
-          break;
-          case '4':
-         this.ObtenerCotizaciones();
-            this.titulo = 'Cotizaciones';
-            break;
-      }
-
-   
+     
+      /* this.titulo = 'Volumen HR'; */
     });
+    this.reportes.obtenerparqueid(this.reporte).subscribe((res:any) => {
+
+    })
+
     this.DescargaGeneral();
     this.getDesarrollos();
   }

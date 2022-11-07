@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Console } from 'console';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { AppService } from 'src/app/services/app.service';
 import { ReportesService } from 'src/app/services/reportes.service';
@@ -10,7 +11,9 @@ import * as XLSX from 'xlsx';
   styleUrls: ['./consultas.component.scss'],
 })
 export class ConsultasComponent implements OnInit {
-
+  @Input()
+  nombre = 'DesarrolloWeb.com';
+  public parques;
   public desde;
   public hasta;
   public tipo;
@@ -27,10 +30,20 @@ export class ConsultasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ObtenerPagos();
+    this.obtenerparques();
+   /*  this.ObtenerPagos();
     this.ObtenerLotes();
     this.ObtenerVolumenHR();
-    this.ObtenerCotizaciones();
+    this.ObtenerCotizaciones(); */
+  }
+  obtenerparques(){
+    this.reportes.parquesrainfores().subscribe((res:any) => {
+    if(!res.error){
+      this.parques = res
+    }
+      
+
+  })
   }
   ObtenerCotizaciones(){
     this.reportes.Cotizaciones().subscribe((res:any) => {
@@ -73,16 +86,13 @@ export class ConsultasComponent implements OnInit {
       showDenyButton: true,
       showCancelButton: false,
       confirmButtonColor: '#0E1D60',
-      denyButtonColor: '#0E1D60',
-      confirmButtonText: 'Reporte Activos',
-      denyButtonText: `Reporte Global`,
+      /* denyButtonColor: '#0E1D60', */
+      confirmButtonText: 'Reporte Global',
+     /*  denyButtonText: `Reporte Global`, */
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-     /*  if (result.isConfirmed) {
-        this.ListarPersonas();
-      } else if (result.isDenied) {
-        this.PrepararReporteGeneral();
-      } */
+      if (result.isConfirmed) {
+        console.log('entro pdf')
+      } 
     });
   }
   excell() {
@@ -91,16 +101,13 @@ export class ConsultasComponent implements OnInit {
       showDenyButton: true,
       showCancelButton: false,
       confirmButtonColor: '#1C6C40',
-      denyButtonColor: '#1C6C40',
-      confirmButtonText: 'Reporte Activos',
-      denyButtonText: `Reporte Global`,
+      /* denyButtonColor: '#1C6C40', */
+      confirmButtonText: 'Reporte Global',
+      /* denyButtonText: `Reporte Global`, */
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-     /*  if (result.isConfirmed) {
-        this.ListarPersonasExcel();
-      } else if (result.isDenied) {
-        this.exportAsExcelFile();
-      } */
+      if (result.isConfirmed) {
+        console.log('entro excel')
+      } 
     });
   }
 }

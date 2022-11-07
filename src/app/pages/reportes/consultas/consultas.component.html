@@ -11,7 +11,7 @@
   <button class="btn btn-primary"><i class="fas fa-cloud-download-alt"></i></button>
 </div>
   <!-- Content Wrapper START -->
-  <div class="main-content">
+  
     <div class="card">
       <h2>Reportes</h2>
       <div class="card-body">
@@ -22,28 +22,29 @@
             <div class="card cotizaciones ">
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center ">
-                  <h5>Reporte de ventas</h5>
-                  <div>
+                  <h5>Reporte de General</h5>
+                  <!-- <div>
                     <a
                       routerLink="/crm/reportes/reporte/4"
                       class="btn btn-sm btn-outline-secondary"
                       >Ver Detalles</a
                     >
-                  </div>
+                  </div> -->
                 </div>
                 <div class="mt-5">
                   <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover  table-striped">
                       <thead>
                         <tr>
-                          <th>Parkes</th>
-                          
+                          <th>Parques</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr *ngFor="let item of CotizacionesPorDesarrollo">
-                          <td>{{item.Nombre_Interesado}}</td>
-                        </tr>
+                      <tbody >
+                        <ng-container *ngFor="let item of parques;let indice=index">
+                        <a   routerLink="/Inicio/reportes/reporte/{{item.IdParque}}" type="button" class="btn btn-outline-dark" style="width: 100%;"><tr  style="border-bottom-width: 0;">
+                         <td >{{item.Nombre}} </td>
+                        </tr></a> 
+                      </ng-container>
                       </tbody>
                     </table>
                   </div>
@@ -55,9 +56,4 @@
       </div>
     </div>
   </div>
-  <!-- Content Wrapper END -->
-
-  <!-- Footer START -->
-  <app-footer></app-footer>
-  <!-- Footer END -->
-</div>
+ 
