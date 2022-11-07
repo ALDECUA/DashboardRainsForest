@@ -1,117 +1,97 @@
-import {  AfterViewInit, Component, NgZone, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AppService } from 'src/app/services/app.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsuariosCrmService } from 'src/app/services/usuarios-crm.service';
 import Swal from 'sweetalert2';
-import { ToastrService } from 'ngx-toastr';
 
-declare var bootstrap: any;
 
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.scss']
 })
-export class PerfilComponent implements OnInit, OnDestroy, AfterViewInit {
- 
-  public userData: any = {};
-  public subscriptions = new Subscription();
-  public modalA = null;
-  public loading: boolean = false;
-  public pwd: any = { uno: '', dos:''};
-  public pedidos: any = [];
-  constructor(
-    private auth: AuthService,
-    public app: AppService,
-    private ngZone: NgZone,
-    private toast: ToastrService,
-   
-    ) { 
-      this.app.currentSection = 'Perfil';
+export class PerfilComponent implements OnInit {
+  public perfiles: any[];
+  public configDataTable = {
+    fields: [
+      {
+        text: 'Nombre Perfil',
+        value: 'Nombre',
+        hasImage: false,
+        pipe: null
+      },
+      {
+        text: 'Estatus',
+        value: 'Status',
+        hasImage: false,
+        pipe: null
+      }
+    ],
+    editable: true,
+    urlEdit: '/Inicio/configuracion/editarperfil/',
+    idField: 'IdPerfil',
+    filtroA:{
+      data: [
+        {
+          value: "Inactivo",
+          texto: 'Inactivos'
+        },
+        {
+          value: "Activo",
+          texto: 'Activos'
+        }
+      ],
+      fieldFilter: 'Status'
     }
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-  }
-  ngAfterViewInit(): void {
-    this.modalA = new bootstrap.Modal(
-      document.getElementById('cropperModal'),
-      {}
+  };
+  public loading: boolean = true;
+  public usuario;
+  public newperfil;
+  public fech;
+
+  
+  constructor(public app: AppService,
+    private auth:AuthService,
+    private CRMService: UsuariosCrmService) { }
+    private subscriptions = new Subscription();
+      
+  ngOnInit(): void {
+    this.app.currentModule = 'Configuracion';
+    this.app.currentSection = '- Perfiles';
+    this.usuario =this.auth.user.Nombre;
+    this.subscriptions.add(
+      this.CRMService.ObtenerPerfiles({ Opcion: 1}).subscribe((res: any) => {
+        this.loading=false;
+        this.perfiles= res.perfiles;        
+        console.log(res);
+      })
     );
   }
-
-  ngOnInit(): void {
-    this.userData = this.auth.user;
-  
-    
-  }
-
-  public subirImagen(event) {
-
-    fetch(event)
-      .then((res) => res.blob())
-      .then((file) => {
-        let formData = new FormData();
-        formData.append('foto', file, 'imagen.png');
-        formData.append('IdPersona', this.auth.user.IdPersona);
-        this.subscriptions.add(
-          this.auth.cambiarFoto(formData).subscribe((res: any) => {
-            this.userData.Foto_Perfil = res.Foto + '?' + new Date().getTime();
-            console.log(res);
-            this.auth.user.Foto_Perfil = res.Foto + '?' + new Date().getTime();
-            this.modalA.hide();
-            this.ngZone.run(() => {});
-            this.userData.Foto_Perfil = res;
-
-
-            this.auth.actualizar({IdPersona: this.auth.user.IdPersona, Foto: res}).subscribe((res:any)=>{
-              if(!res.error ){
-                this.toast.success("Se ha guardado la foto de perfil")
-              }
-            })
-
-          })
-        );
-      });
-  }
-  CambiarPwd()
+  public actualizarfecha()
   {
-      if(this.pwd.uno.length < 8)
-      {
-        this.toast.error('', 'La contraseña debe tener al menos 8 caracteres');
-        return;
-      }
-      if(this.pwd.uno != this.pwd.dos)
-      {
-        this.toast.error('', 'Las contraseñas no coinciden');
-        return;
-      }
-      this.loading = true;
-      this.auth.PwdInversionista({IdUsuario: this.userData.IdPersona, Pwd: this.pwd.uno}).subscribe((res:any)=>
-      {
-        if(res.updated)
-        {
-          this.toast.success('', 'Contraseña actualizada con éxito');
-          this.pwd.uno= '';
-          this.pwd.dos= '';
-          this.loading = false;
-        }
-      })
+    this.fech=new Date().toISOString().slice(0, 19).replace('T', ' ')
   }
-  public subirPortada(files) {
-    const file = files[0];
-    let formdata = new FormData();
-    formdata.append("file", file);
-    formdata.append("user", this.userData.IdPersona);
-
-    this.auth.subirPortadaServidor(formdata).subscribe((res: any) => {
-      if (res.result === true) {
-        this.userData.Foto_Portada = res.nameimg;
-        this.auth.updatePortada({
-          IdPersona: this.userData.IdPersona,
-          Foto: res.nameimg
-        }).subscribe((resp: any) => {
-        });
+  public CrearPerfil()
+  {
+    this.subscriptions = this.CRMService.CrearPerfil({Perfil: this.newperfil,  fecha:this.fech, Usuario: this.usuario}).subscribe((res: any) => {
+     console.log(res);
+     this.perfiles.unshift(res.record);
+      if(res.insert==true)
+      {
+        Swal.fire(
+          'Perfil creado!',
+          'Recuerda asignarle permisos desde el panel de perfiles',
+          'success'
+        )
+      }
+      else
+      {
+        Swal.fire(
+          '¡El perfil no fue creado!',
+          'Por favor intente nuevamente.',
+          'error'
+        )
       }
     });
   }

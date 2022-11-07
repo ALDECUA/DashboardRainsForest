@@ -1,86 +1,12 @@
-.card{
-    padding: 0;
+.img-cons{
+    width: 43%;
 }
-@media (max-width:767px) {
-    .col
-    {
-        flex: none;
-    }
-    .col-auto
-    {
-        margin: 0 auto;
-    }
+.main-content{
+    text-align: center;
 }
-.portada
+#add 
 {
-    height: 300px;
-    width: 100%;
-    background-size: cover;
-    background-position: center center;
-    
-}
-.btn-tone
-{
-    background-color: #687454!important;
-    border-color: transparent;
-    color: #fff;
-    font-weight: 500;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    padding: 0;
-    font-size: 1.5rem;
-}
-.datos
-{
-    margin-top: 120px;
-}
-.fotoperfil
-{
-    margin: 0 auto;
-    pointer-events: none;
-    width: 100%;
-    top: 225px;
-}
-.avatar
-{
-    border-radius: 30px;
-}
-.card-header
-{
-    background-color: #687454;
     color: white;
+    margin-left: 60vw;
+    margin-bottom: 20px;
 }
-.card
-{
-    border: 1px solid #687454;
-}
-.productos
-{
-    width: 100%;
-}
-.producto{
-    border: 1px solid #04003d3f;
-     --bs-gutter-x: 0; 
-     --bs-gutter-y: 0;
-     box-shadow: 3px 2px 5px  #04003d42 ;
-
-}
-.green
-{
-    color: green;
-}
-.red{
-    color: red;
-}
-.blue{
-    color: blue;
-}
-
-@media screen and (min-width: 1024px) {
-    .page-container
-    {
-        margin-left: 230px;
-    }
-}
-

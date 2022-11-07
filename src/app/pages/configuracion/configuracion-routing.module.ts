@@ -13,7 +13,7 @@ const routes: Routes = [
     path: 'perfil',
     component: PerfilComponent,
     canActivate: [HasGrantGuard],
-    data: { grant: 1 }
+    data: { grant: 4 }
   },
   {
     path: 'usuario',
@@ -31,7 +31,7 @@ const routes: Routes = [
     path: 'editarperfil/:id',
     component: EditarPerfilesComponent,
     canActivate: [HasGrantGuard],
-    data: { grant: 1 }
+    data: { grant: 4 }
   }
 ];
 

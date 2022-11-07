@@ -1,163 +1,34 @@
-<div class="page-container">
+<div class="page-container" [ngClass]="{'sidebar_is_full': app.sidebarState, 'sidebar_is_small': !app.sidebarState}">
   <!-- Content Wrapper START -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Crear nuevo perfil</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label for="">Nombre Perfil</label>
+          <input type="text" class="form-control" [(ngModel)]="newperfil">
+          <input type="text" name="fecha" class="form-control" id="fecha" [(ngModel)]="fech" readonly hidden>
+          <input type="text" name="fecha" class="form-control" id="usuario" [(ngModel)]="usuario" readonly hidden>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="CrearPerfil()">Crear
+            perfil</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="main-content">
-    <div class="Perfil position-relative">
-      <div
-        style="
-          right: 10px;
-          bottom: 10px;
-          overflow: hidden;
-          left: 0;
-          right: 0;
-          text-align: center;
-          top: 375px;
-          z-index: 1000;
-        "
-        class="position-absolute"
-      >
-        <button
-          type="button"
-          class="btn btn-tone btn-profile btn-light"
-          data-bs-toggle="modal"
-          data-bs-target="#cropperModal"
-        >
-          <i _ngcontent-btg-c57="" class="fas fa-camera"></i>
-        </button>
-      </div>
-      <div
-        class="portada position-relative"
-        [ngStyle]="{
-          'background-image':
-            userData.Foto_Portada != null
-              ? 'url(https://greenpark.mx/newDesign/assets/images/imgPerfil/' +
-                userData.Foto_Portada
-              : 'url(https://greenpark.mx/newDesign/assets/images/imgPerfil/imgPortada_620fe77685299_1227.jpg'
-        }"
-      >
-        <div
-          style="right: 10px; bottom: 10px; max-width: 50px; overflow: hidden"
-          class="position-absolute"
-        >
-          <input
-            (change)="subirPortada(portada.files)"
-            #portada
-            style="opacity: 0; width: 100%; height: 100%"
-            type="file"
-            class="position-absolute"
-          />
-          <button class="btn btn-primary btn-tone">
-            <i class="fas fa-camera"></i>
-          </button>
-        </div>
-      </div>
+    <button type="button" id="add" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+    (click)="actualizarfecha()">
+    <i class="fas fa-plus-circle"></i> Crear nuevo perfil
+  </button>
+    <app-datatable [dataList]="perfiles" [config]="configDataTable" [loading]="loading"></app-datatable>
 
-      <div class="text-center">
-        <div class="fotoperfil text-center position-absolute">
-          <div
-            class="avatar avatar-image"
-            style="width: 180px; height: 180px; border: 2px solid #04003d"
-          >
-            <img
-              *ngIf="userData.Foto_Perfil !== null"
-              id="most1"
-              style="object-fit: cover"
-              src="https://greenpark.mx/newDesign/assets/images/imgPerfil/{{
-                userData.Foto_Perfil
-              }}"
-              alt="Foto de perfil"
-            />
-
-            <img
-              *ngIf="userData.Foto_Perfil === null"
-              src="https://greenpark.mx/newDesign/assets/images/imgPreview.jpg"
-              alt="Foto de perfil"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div class="datos text-center">
-        <h3>
-          {{ userData.Nombre }} {{ userData.Nombre_S }}
-          {{ userData.Apellido_P }} {{ userData.Apellido_M }}
-        </h3>
-        <h5>Inversionista</h5>
-        <p>{{ userData.Email }}</p>
-      </div>
-    </div>
-    <div class="container-fluid"></div>
-    <div class="container">
-      <div class="tab-content m-t-15" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="tab-account">
-          <div class="card mt-5">
-            <div class="card-header">
-              <h5 style="color: white" class="mb-0">Cambio de contraseña</h5>
-            </div>
-            <div class="row p-3 mt-4">
-              <div class="col mt-2">
-                <label for="">Nueva contraseña</label
-                ><input
-                  type="password"
-                  [(ngModel)]="pwd.uno"
-                  class="form-control"
-                />
-              </div>
-              <div class="col mt-2">
-                <label for="">Confirmar contraseña</label
-                ><input
-                  type="password"
-                  [(ngModel)]="pwd.dos"
-                  class="form-control"
-                />
-              </div>
-              <div style="align-self: flex-end" class="col-auto">
-                <button
-                  style="margin-top: 10px"
-                  (click)="CambiarPwd()"
-                  type="button"
-                  class="btn btn-primary" style="background: #687454; border: #687454;"
-                >
-                  <div
-                    *ngIf="loading"
-                    class="spinner-border"
-                    style="width: 1.25rem; height: 1.25rem"
-                    role="status"
-                  >
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <label *ngIf="!loading" for="">Actualizar</label>
-                </button>
-              </div>
-            </div>
-            <div class="card-body mt-3 mt-3"></div>
-          </div>
-<!--           <div class="card mt-5">
-            <div class="card-header">
-              <h5 style="color: white" class="mb-0">Mis pedidos FXCoins</h5>
-            </div>
-            <div class="card-body">
-              <div class="row ">
-                <ng-container *ngFor="let pedido of pedidos">
-                  <div class="col-md-6 col-lg-4 col-xl-4 mb-1 p-2">
-                    <div class="row producto">
-                      <div class="col-5">
-                        <img class="productos" src="https://greenpark.mx/asesores/Content/img/fxcoins/{{pedido.Imagen}}" alt="">
-                      </div>
-                      <div class="col-7 text-end pe-2">
-                        <h5>{{pedido.Producto}}</h5>
-                        <h6>{{pedido.Precio_Final}} {{pedido.Moneda}}</h6>
-                        <h4 [ngClass]="{blue: pedido.IdStatus == 2,green: pedido.IdStatus == 1,red: pedido.IdStatus == 3}">{{pedido.Status}}</h4>
-                        <p>{{pedido.Fch_Pedido}}</p>
-                      </div>
-                    </div>
-                  </div>
-                </ng-container>
-              </div>
-            </div>
-          </div> -->
-        </div>
-      </div>
-    </div>
   </div>
   <!-- Content Wrapper END -->
 
@@ -165,38 +36,4 @@
   <app-footer></app-footer>
   <!-- Footer END -->
 
-  <!-- Modal -->
-  <div
-    class="modal fade"
-    id="cropperModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Recortar imagen</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <app-cropperjs (onDefineImage)="subirImagen($event)"></app-cropperjs>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Cancelar
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>

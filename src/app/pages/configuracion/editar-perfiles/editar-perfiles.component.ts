@@ -46,7 +46,8 @@ export class EditarPerfilesComponent implements OnInit {
   public Desactivar() {
     this.subscriptions.add(
       this.CRMService.PerfilPorId({ Id: this.id }).subscribe((res: any) => {
-        this.persona = res.usuario;
+        console.log(res.usuario,'aqui')
+        this.persona = res.usuarios;
         if (this.persona.IdStatus == 0) {
           this.label = 'El usuario quedará inactivo';
         }
