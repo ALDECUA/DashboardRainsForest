@@ -1,0 +1,50 @@
+<div
+  class="page-container"
+  [ngClass]="{
+    sidebar_is_full: app.sidebarState,
+    sidebar_is_small: !app.sidebarState
+  }"
+>
+
+
+<div  class="botones">
+  <button (click)="Descarga()"  class="btn btn-primary"><i class="fas fa-cloud-download-alt"></i></button>
+</div>
+
+<div class="main-content">
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <h2 ><a routerLink="/Inicio/reportes/reporte/{{id}}">  <img style="width: 2rem;" src="https://img.icons8.com/flat-round/64/null/circled-left-2--v1.png"/></a> Regresar</h2>
+     <h1 class="text-center">Personas Registradas</h1> 
+    </div>
+    <div class="col" style="text-align: end"></div>
+  </div>
+  <div class="row g-3 mb-5">
+    <div class="col-md-6">
+     
+    </div>
+  </div>
+  <div class="table-responsive">
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Ciudad</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Telefono</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr *ngFor="let item of parques">
+        <td>{{ item.Nombre}}</td>
+        <td>{{ item.Country }}</td>
+        <td>{{ item.Email }}</td>
+        <td>{{ item.Telefono
+        }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+</div>

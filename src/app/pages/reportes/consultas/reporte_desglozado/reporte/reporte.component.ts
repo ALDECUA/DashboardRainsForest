@@ -1,4 +1,6 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { AppService } from 'src/app/services/app.service';
@@ -12,6 +14,10 @@ import { isGetAccessor } from 'typescript';
   styleUrls: ['./reporte.component.scss'],
 })
 export class ReporteComponent implements OnInit {
+  dateRange = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl(),
+  });
   lista:string[]=["1","2","3","4"];
   public DesarrolloFiltro:any;
   openAccordion = []
@@ -28,15 +34,27 @@ export class ReporteComponent implements OnInit {
   public Desarrollo = 0;
   public des: any = [];
   public todolotes:any ;
+  public hrss = [];
+  public hrs = [];
+  public personas = [];
+  public buscar = '';
+  public busqueda = 0;
+  public loading = false;
+  public fechas: any = {};
+  public backupPersonas = [];
+  public datos = [];
   filtrolotes: any;
   renderer: any;
   Desarrollodos
   CotizacionesPorDesarrollo: any;
   InformacionCotizacion: any;
+  parques: any;
+  id: any;
   constructor(
     private activatedRouter: ActivatedRoute,
     public app: AppService,
-    public reportes: ReportesService
+    public reportes: ReportesService,
+    public datepipe: DatePipe
   ) {}
   public reporte;
 
@@ -61,14 +79,65 @@ export class ReporteComponent implements OnInit {
     this.activatedRouter.paramMap.subscribe((params: any) => {
       this.reporte = params.params.id;
      
-      /* this.titulo = 'Volumen HR'; */
+       
     });
-    this.reportes.obtenerparqueid(this.reporte).subscribe((res:any) => {
-
+    this.reportes.obtenerparqueid( this.reporte).subscribe((res:any) => { 
+      console.log(res)
+      this.titulo = res[0].Nombre ;
+      this.id = res[0].IdParque;
+      this.parques = res
     })
 
     this.DescargaGeneral();
     this.getDesarrollos();
+  }
+
+  dateRangeChange() {
+    this.buscar = "";
+    this.busqueda++;
+    if (!this.fechas.Elegir) {
+        this.fechas.Elegir = 1;
+    }
+    if (!this.fechas.Seleccion) {
+        this.fechas.Seleccion = 3;
+    }
+    if (this.dateRange.value.end && this.dateRange.value.start) {
+        this.loading = true;
+        this.fechas.FechaInicio = this.datepipe.transform(
+            this.dateRange.value.start,
+            'yyyy-MM-dd'
+        );
+        this.fechas.FechaFin = this.datepipe.transform(
+            this.dateRange.value.end,
+            'yyyy-MM-dd'
+        );
+        console.log(this.fechas);
+        /* this.contabilidad.Volumen(this.fechas).subscribe((res: any) => {
+            if (!res.error) {
+                this.backupPersonas = res.personas;
+                console.log(this.backupPersonas)
+                this.filtrarPersona();
+                this.loading = false;
+            }
+        }); */
+    }
+  }
+  public filtrarPersona() {
+
+    const word = this.buscar.toLocaleLowerCase();
+    this.personas = this.backupPersonas;
+    let str;
+    this.personas = this.backupPersonas.filter((elem) => {
+        str = '';
+        ['Nombre_Colaborador'].forEach((field) => {
+            str += elem[field] + '';
+        });
+        if (str.toLocaleLowerCase().includes(word)) {
+            return true;
+        } else {
+            return false;
+        }
+    })
   }
   ObtenerCotizaciones(){
     this.reportes.Cotizaciones().subscribe((res:any) => {

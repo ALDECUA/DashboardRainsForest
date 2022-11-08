@@ -36,7 +36,7 @@ export class ReportesService {
   private urlCotizaciones = environment.api + 'crm_reportes/ReportesCotizaciones';
   private ulrReporteCotizaciones = environment.api + 'crm_reportes/ReportesCotizaciones/CRM';
   private urlparquesrainfores = environment.api + 'crm_reportes/parquesrainfores';
-  private urlobtenerparqueid = environment.api + 'crm_reportes/obtenerparqueid/';
+  private urlobtenerparqueid= environment.api+'crm_reportes/datosparque/';
   
   constructor(public http: HttpClient) { }
   
@@ -101,7 +101,7 @@ export class ReportesService {
   }
   public obtenerparqueid(id)
   {
-    return this.http.get(this.urlobtenerparqueid , id);
+    return this.http.get(this.urlobtenerparqueid + id);
   }
   
   public parquesrainfores()

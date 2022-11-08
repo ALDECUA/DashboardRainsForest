@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ReportepersonasComponent } from './consultas/reportepersonas/reportepersonas.component';
 
 
 
@@ -21,6 +22,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ConsultasComponent,
     EstadisticasComponent,
     ReporteComponent,
+    ReportepersonasComponent,
    
   ],
   imports: [

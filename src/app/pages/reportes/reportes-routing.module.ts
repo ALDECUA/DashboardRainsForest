@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HasGrantGuard } from 'src/app/guards/has-grant.guard';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { ReporteComponent } from './consultas/reporte_desglozado/reporte/reporte.component';
+import { ReportepersonasComponent } from './consultas/reportepersonas/reportepersonas.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,12 @@ const routes: Routes = [
   {
     path: 'reporte/:id',
     component: ReporteComponent,
+    canActivate: [HasGrantGuard],
+    data: { grant: 3 }
+  },
+  {
+    path: 'reportepersonas/:id',
+    component: ReportepersonasComponent,
     canActivate: [HasGrantGuard],
     data: { grant: 3 }
   }

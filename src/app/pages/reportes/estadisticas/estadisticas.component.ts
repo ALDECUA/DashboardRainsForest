@@ -321,7 +321,7 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy {
     public datepipe: DatePipe
   ) {
     this.app.currentModule = '';
-    this.app.currentSection = '  Estadisticas';
+    this.app.currentSection = '  Dashboard';
     /* this.downloadPDF(); */
   }
 

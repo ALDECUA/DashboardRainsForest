@@ -5,16 +5,50 @@
     sidebar_is_small: !app.sidebarState
   }"
 >
+<div  class="botones">
+  <button (click)="Descarga()"  class="btn btn-primary"><i class="fas fa-cloud-download-alt"></i></button>
+</div>
+
+
   <div class="main-content">
     <div class="row mb-3">
-      <div class="col">
-        <h2>{{ titulo }}</h2>
+      <div class="col-md-12">
+        <h2><a [routerLink]="['/Inicio/reportes/consultas']">  <img style="width: 2rem;" src="https://img.icons8.com/flat-round/64/null/circled-left-2--v1.png"/></a> Regresar</h2>
+        <h2 class="text-center">{{ titulo }}</h2>
       </div>
       <div class="col" style="text-align: end"></div>
     </div>
     <div class="row g-3 mb-5">
-      <div class="col-md-3" >
-        <label for="tipo" class="form-label">Tipo de orden</label>
+
+      
+      <div class="col-md-3" style="margin-top: 2.5rem;">
+        <mat-form-field style="width: 100%" appearance="legacy">
+          <mat-label>Escoge un rango</mat-label>
+          <mat-date-range-input
+            [rangePicker]="picker"
+            [formGroup]="dateRange"
+          >
+            <input
+              matStartDate
+              formControlName="start"
+              placeholder="Fecha Inicio"
+            />
+            <input
+              matEndDate
+              formControlName="end"
+              placeholder="Fecha Fin"
+              (dateChange)="dateRangeChange()"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3"  >
+        <label for="tipo" class="form-label">Seleccione un Tour</label>
         <select
           id="tipo"
           (change)="Filtros()"
@@ -28,34 +62,13 @@
           </option>
         </select>
       </div>
-      <div class="col-md-3" >
-        <label for="tipo" class="form-label">Nacionalidad</label>
-        <select
-          id="tipo"
-          (change)="Filtros()"
-          name="tipo"
-          [(ngModel)]="tipo"
-          class="form-select"
-        >
-          <option value="0">Todos</option>
-        <!--   <option value="1">Concepto</option>
-          <option value="2">Enganche</option>
-          <option value="3">Gasto Administrativo</option>
-          <option value="4">Mensualidad</option>
-          <option value="5">Pago generico</option>
-          <option value="6">Intereses</option>
-          <option value="7">Pago de contado</option> -->
-        </select>
+
+      <div class="d-grid col-md-6 gap-2 d-md-flex justify-content-md-end">
+        <a type="button" routerLink="/Inicio/reportes/reportepersonas/{{id}}"  style="height: 2.5rem;" (click)="Descarga()" class="btn btn-outline-dark">
+          Visualizar Personas
+        </a> 
       </div>
-   
- 
-      <div class="col-md-2 btnObtener">
-        <button type="button" (click)="Descarga()" class="btn btn-primary">
-          <i class="me-3 fas fa-download"></i> Descargar reporte
-        </button> 
-   
-      </div>
-    </div>
+  </div>
 
 
     <div >
@@ -64,19 +77,19 @@
           <thead>
             <tr>
               <th>Tour</th>
-              <th>Importe</th>
+              <th>  Numero de personas</th>
+              <th>  Tiempo de reserva</th>
+              <th>Fecha Registro</th>
               <th>Total</th>
-              <th>Tarifa</th>
-              <th>Niños</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of pagos">
-              <td>{{ item.Desarrollo }}</td>
-              <td>{{ item.nombre }}</td>
-              <td>{{ item.Concepto }}</td>
-              <td>{{ item.Importe }}</td>
-              <td>{{ item.FPago }}</td>
+            <tr *ngFor="let item of parques">
+              <td>{{ item.Tour}}</td>
+              <td>{{ item.Num_Pax }}</td>
+              <td>{{ item.Tiempo_Reserva}}</td>
+              <td>{{ item.Fch_Registro}}</td>
+              <td>{{ item.Total }} {{item.Divisa}}</td>
             </tr>
           </tbody>
         </table>
