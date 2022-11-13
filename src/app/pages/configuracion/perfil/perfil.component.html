@@ -23,12 +23,13 @@
     </div>
   </div>
   <div class="main-content">
-    <button type="button" id="add" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+    <button type="button" id="add" style="background: #687454; border: #687454" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
     (click)="actualizarfecha()">
     <i class="fas fa-plus-circle"></i> Crear nuevo perfil
   </button>
+  
     <app-datatable [dataList]="perfiles" [config]="configDataTable" [loading]="loading"></app-datatable>
-
+    
   </div>
   <!-- Content Wrapper END -->
 

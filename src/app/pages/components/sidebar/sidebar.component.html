@@ -7,21 +7,22 @@
       <img id="logo" src="assets/img/x-logo-dos.png" alt="" />
     </div>
     <ul id="menu">
+     
       <li [routerLink]="['/Inicio/']" routerLinkActive="page_active">
         <img src="https://greenpark.mx/img/iconos_inversionista/icon-resumen-activo.svg" alt="" /><a>Resumen</a>
       </li>
       <li [routerLink]="['/Inicio/configuracion/perfil']" routerLinkActive="page_active" *ngIf="renderMenus.includes(4)">
-        <i  class="fas fa-portrait"></i> &nbsp;
-        <a>Perfiles</a>
+        <i class="fas fa-wrench me-2"></i>
+        <a>Configuracion</a>
       </li>
       <li [routerLink]="['/Inicio/configuracion/usuario']" routerLinkActive="page_active"
         *ngIf="renderMenus.includes(1)">
-        <img src="https://greenpark.mx/img/iconos_inversionista/icon-pagos-on.svg" alt="" />
-        <a>Configuracion</a>
+        <i  class="fas fa-portrait me-2"></i> 
+        <a>Perfiles</a>
       </li>
       <li [routerLink]="['/Inicio/reportes/estadisticas']" routerLinkActive="page_active"
         *ngIf="renderMenus.includes(2)">
-        <img src="https://greenpark.mx/img/iconos_inversionista/icon-inversiones-on.svg" alt="" />
+        <i class="fas fa-chart-bar me-2"></i>
         <a>Dashboard</a>
       </li>
       <li [routerLink]="['/Inicio/reportes/consultas']" routerLinkActive="page_active" *ngIf="renderMenus.includes(3)">

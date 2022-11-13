@@ -1,10 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Console } from 'console';
+import html2canvas from 'html2canvas';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { AppService } from 'src/app/services/app.service';
 import { ReportesService } from 'src/app/services/reportes.service';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
 @Component({
   selector: 'app-consultas',
   templateUrl: './consultas.component.html',
@@ -13,6 +15,7 @@ import * as XLSX from 'xlsx';
 export class ConsultasComponent implements OnInit {
   @Input()
   nombre = 'DesarrolloWeb.com';
+  @ViewChild ('capture', {static:true}) el!: ElementRef<HTMLImageElement>
   public parques;
   public desde;
   public hasta;
@@ -80,7 +83,7 @@ export class ConsultasComponent implements OnInit {
      console.log(this.Volumen);
     });
   }
-  pdf() {
+  pdf() { 
     Swal.fire({
       title: 'Elige un reporte en PDF',
       showDenyButton: true,
@@ -91,7 +94,18 @@ export class ConsultasComponent implements OnInit {
      /*  denyButtonText: `Reporte Global`, */
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('entro pdf')
+        html2canvas(document.getElementById('capture')).then(canvas => {
+          const imgData = canvas.toDataURL('imge/jpeg')
+          const pdf = new jsPDF({
+            orientation:'portrait'
+          })
+          pdf.rect(17, 12, 180, 1, 'F')
+          const imagePros = pdf.getImageProperties(imgData)
+          const pdfw = pdf.internal.pageSize.getWidth()
+          const path = (imagePros.height * pdfw ) / imagePros.width
+          pdf.addImage(imgData, 'PNG', 0,0,pdfw, path)
+          pdf.save('reporte.pdf')
+      });
       } 
     });
   }

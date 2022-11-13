@@ -83,7 +83,7 @@ export class ReporteComponent implements OnInit {
     });
     this.reportes.obtenerparqueid( this.reporte).subscribe((res:any) => { 
       console.log(res)
-      this.titulo = res[0].Nombre ;
+      this.titulo = res[0].ParkeName;
       this.id = res[0].IdParque;
       this.parques = res
     })
@@ -164,7 +164,7 @@ export class ReporteComponent implements OnInit {
     }
   }
   Descarga() {
-    switch (this.reporte) {
+/*     switch (this.reporte) {
       case '2':
         this.ImprimirPagos();
         break;
@@ -178,7 +178,7 @@ export class ReporteComponent implements OnInit {
           this.ImprimirCotizaciones();
           break;
 
-    }
+    } */
   }
 
   ImprimirCotizaciones(){
