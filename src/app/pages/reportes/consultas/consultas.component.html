@@ -1,28 +1,32 @@
-<div
-  class="page-container"
-  [ngClass]="{
+<div class="page-container" [ngClass]="{
     sidebar_is_full: app.sidebarState,
     sidebar_is_small: !app.sidebarState
-  }"
-><div  class="botones">
-  <button id="escondete" class="btn btn-primary"><i class="fas fa-cloud-download-alt"></i></button>
-  <button  class="pdfbtn" (click)="pdf()"  style="color: #FF0000 ;" ><i class="far fa-file-pdf"></i></button>
-  <button class="excelbtn" (click)="excell()" style="color:  #1C6C40;" ><i class="far fa-file-excel"></i></button>
-  <button class="btn btn-primary"><i class="fas fa-cloud-download-alt"></i></button>
-</div>
+  }">
+  <div class="botones">
+    <button id="escondete" class="btn btn-primary"><i class="fas fa-cloud-download-alt"></i></button>
+    <button class="pdfbtn" (click)="pdf()" style="color: #FF0000 ;"><i class="far fa-file-pdf"></i></button>
+    <button class="excelbtn" (click)="excell()" style="color:  #1C6C40;"><i class="far fa-file-excel"></i></button>
+    <button class="btn btn-primary"><i class="fas fa-cloud-download-alt"></i></button>
+  </div>
   <!-- Content Wrapper START -->
-  
-    <div class="card" #capture >
-      <h2>Reportes</h2>
-      <div class="card-body">
-        <div class="row mt-4">
-          <div class="col-lg-12">   
+
+
+  <div class="card" #capture>
+    <h2>Reportes</h2>
+    
+    <div class="card-body">
+      <div class="row mt-4">
+        <div class="col-lg-12">
           <div class="col-lg-12">
             <div class="card cotizaciones ">
               <div class="card-body">
+                <h5>Reporte de General</h5><br><br>
+                <h6>Total ventas por parque</h6>
+                <div class="canvasChart">
+                  <canvas class="chart chartjs-render-monitor" #salesChart id="ReporteCiudades" style="display: block;"></canvas>
+                </div>
                 <div class="d-flex justify-content-between align-items-center ">
-                  <h5>Reporte de General</h5>
-
+        
                 </div>
                 <div class="mt-5">
                   <div class="table-responsive">
@@ -32,12 +36,15 @@
                           <th>Parques</th>
                         </tr>
                       </thead>
-                      <tbody >
+                      <tbody>
                         <ng-container *ngFor="let item of parques;let indice=index">
-                        <a   routerLink="/Inicio/reportes/reporte/{{item.IdParque}}" type="button" class="btn btn-outline-dark" style="width: 100%;"><tr  style="border-bottom-width: 0;">
-                         <td >{{item.Nombre}} </td>
-                        </tr></a> 
-                      </ng-container>
+                          <a routerLink="/Inicio/reportes/reporte/{{item.IdParque}}" type="button"
+                            class="btn btn-outline-dark" style="width: 100%;">
+                            <tr style="border-bottom-width: 0;">
+                              <td>{{item.Nombre}} </td>
+                            </tr>
+                          </a>
+                        </ng-container>
                       </tbody>
                     </table>
                   </div>
@@ -49,7 +56,3 @@
       </div>
     </div>
   </div>
-
-  <div class="canvasChart"  >
-    <canvas class="chart chartjs-render-monitor" #salesChart id="ReporteCiudades" style="display: block;"></canvas>
-</div>

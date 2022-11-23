@@ -23,13 +23,7 @@ export class ConsultasComponent implements OnInit {
   @ViewChild('salesChart') salesChart: ElementRef;
   public barChartCiudad: any;
   public parques;
-  public desde;
-  public hasta;
-  public tipo;
-  public pagos: any = [];
-  public lotes: any = [];
-  public lotesb;
-  public Volumen: any[];
+  public Volumen;
   public CotizacionesPorDesarrollo: any[];
   Desarrollodos: {};
 
@@ -42,10 +36,6 @@ export class ConsultasComponent implements OnInit {
   }
   ngOnInit() {
     this.obtenerparques();
-    /*  this.ObtenerPagos();
-    this.ObtenerLotes();
-    this.ObtenerVolumenHR();
-    this.ObtenerCotizaciones(); */
   }
   obtenerparques() {
     this.reportes.parquesrainfores().subscribe((res: any) => {
@@ -105,12 +95,9 @@ export class ConsultasComponent implements OnInit {
                 [
                   'Parque',
                   'Total venta',
-                  'Vendidos',
-                  'Apartados',
-                  'Niños',
-                
+                  'Regristros',
+    
                 ],
-                
               ],
               startY: 130,
               theme: 'striped', 
@@ -119,7 +106,13 @@ export class ConsultasComponent implements OnInit {
                 
             },
             
-              body: [['asdas', 'dasds'],[1212, 'd122121'],[2222, '2222']],
+              body: [
+                ['St Maarten', ' $ 110,407 USD','1,139' ],
+                ['Braulio Carrillo Costa Rica', ' $ 11,788.8 USD','222' ],
+                ['Jaco Beach Costa Rica', ' $ 5,613.63 USD','95' ],
+                ['Jamaica', ' $ 33,482.35 USD','804'  ],
+                ['St Lucia', ' $ 15,591.6 USD','278' ],
+              ],
             });
 
             // window.open(URL.createObjectURL(pdf.output("blob")));
@@ -145,9 +138,9 @@ export class ConsultasComponent implements OnInit {
   }
 
   public initChartCiudades() {
-    /* Chart de los estamos donde mas se compran */
+  
 
-    /* chart de lotes vendidos */
+
     const footer = (tooltipItems) => {
       let sum = 0;
 
@@ -156,32 +149,55 @@ export class ConsultasComponent implements OnInit {
       });
       return 'Total: ' + sum;
     };
-
+    let parque = [];
     let delayed;
+    let coloresrgba = [];
+    
+    for(let i = 0; i< 5; i++){
+      coloresrgba[i] = this.colorRGB();
+    }
+ 
 
     this.barChartCiudad = new Chart(this.salesChart.nativeElement, {
       type: 'line',
       data: {
         datasets: [
           {
-            label: 'GRAN MANTRA',
-            data: [7,0,0, 565, 45, 45, 645, 56],
-            borderColor: 'rgba(203,138,2,.5)',
-            backgroundColor: 'rgba(203,138,2,.5)',
+            label: 'St Maarten',
+            data: [18714.2,64552.55,27140.25],
+            borderColor: coloresrgba[0],
+            backgroundColor: coloresrgba[0],
           },
+          {
+            label: 'Braulio Carrillo Costa Rica',
+            data: [2406.56,7366.74,2015.5],
+            borderColor: coloresrgba[1],
+            backgroundColor: coloresrgba[1],
+          },
+          {
+            label: 'Jaco Beach Costa Rica',
+            data: [1154.83,2779.4,1679.4],
+            borderColor: coloresrgba[2],
+            backgroundColor: coloresrgba[2],
+          },
+          {
+            label: 'Jamaica',
+            data: [11679.55,28113.1,20901.4],
+            borderColor: coloresrgba[3],
+            backgroundColor: coloresrgba[3],
+          },
+          {
+            label: 'St Lucia',
+            data: [2266,6487.1,6838.5],
+            borderColor: coloresrgba[4],
+            backgroundColor: coloresrgba[4],
+          },
+          
         ],
         labels: [
-          'Enero',
-          'Febrero',
-          'Marzo',
-          'Abril',
-          'Mayo',
-          'Junio',
-          'Julio',
-          'Agosto',
-          'Septiembre',
-          'Octubre',
-          'Noviembre',
+          '2021 Octubre',
+          '2021 agosto',
+          '2022 agosto'
         ],
       },
       options: {
@@ -223,5 +239,13 @@ export class ConsultasComponent implements OnInit {
         },
       },
     });
+  }
+  public generarNumero(numero) {
+    return (Math.random() * numero).toFixed(0);
+  }
+  
+  public colorRGB() {
+    var coolor = "(" + this.generarNumero(255) + "," + this.generarNumero(255) + "," + this.generarNumero(255) + "," + ".5)";
+    return "rgba" + coolor;
   }
 }

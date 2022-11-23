@@ -61,17 +61,7 @@ export class ReporteComponent implements OnInit {
   onChangeObj():void{
    let Desarrollo = new Number(this.DesarrolloFiltro)
    let estapa = new Number(this.Etapa) 
-   this.reportes.FiltrarLotes({IdDesarrollo :Desarrollo,IdFase:estapa }).subscribe((res: any) => {
-    this.filtrolotes=res
-    for(let i=0;i <= this.filtrolotes.length; i++){
-      if(this.filtrolotes[i].Fecha_Registro == null || this.filtrolotes[i].Fecha_Registro == undefined || this.filtrolotes[i].Fecha_Registro == '' ){
-        this.filtrolotes[i].Fecha_Registro = "-"
-      }else{
-        let cadena = this.filtrolotes[i].Fecha_Registro.split('T')
-      this.filtrolotes[i].Fecha_Registro = cadena[0];
-    }
-  }
-   });
+  
   }
  
 
@@ -88,8 +78,8 @@ export class ReporteComponent implements OnInit {
       this.parques = res
     })
 
-    this.DescargaGeneral();
-    this.getDesarrollos();
+   
+  
   }
 
   dateRangeChange() {
@@ -139,30 +129,9 @@ export class ReporteComponent implements OnInit {
         }
     })
   }
-  ObtenerCotizaciones(){
-    this.reportes.Cotizaciones().subscribe((res:any) => {
-      this.CotizacionesPorDesarrollo= res
-      for(let i = 0 ; i < this.CotizacionesPorDesarrollo.length; i ++ ){
-        this.CotizacionesPorDesarrollo[i].Lotes_Informacion = JSON.parse(this.CotizacionesPorDesarrollo[i].Lotes_Informacion)
-        if(this.CotizacionesPorDesarrollo[i].IdHR == null){
-          this.CotizacionesPorDesarrollo[i].IdHR = 'No'
-        }else{
-          this.CotizacionesPorDesarrollo[i].IdHR = 'Si'
-        }   
-      }
-  })
-  }
+ 
 
-  Filtros() {
-    switch (this.reporte) {
-      case '2':
-        this.filtrarpagos();
-        break;
-      case '1':
-        this.ObtenerVolumenHR();
-        break;
-    }
-  }
+
   Descarga() {
 /*     switch (this.reporte) {
       case '2':
@@ -306,53 +275,10 @@ export class ReporteComponent implements OnInit {
         </tr><br>`
         ;
     }
-    console.log(this.CotizacionesPorDesarrollo)
-    this.reportes
-      .enviarReporte({
-        reporte: ' Cotización General',
-        campos_tabla: ` <tr>
-      <th>Nombre Interesado</th>
-      <th>Teléfono</th>
-      <th>Correo</th>
-      <th>HR</th>
-    </tr>`,
-        registros: datos,
-        detalles:'Fecha: ' +new Date().toLocaleDateString(),
-      })
-      .subscribe((res: any) => {
-        var blob = new Blob([res]);
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = 'reporte.pdf';
-        link.click();
-      });
+  
   }
 
-  DescargaGeneral(){
-    this.reportes.getDesarrolloslotes().subscribe((res: any) => {
-      console.log(res);
-      this.todolotes = res 
-      for(let i=0;i <= this.todolotes.length; i++){
-        if(this.todolotes[i].Fecha_Registro == null || this.todolotes[i].Fecha_Registro == undefined || this.todolotes[i].Fecha_Registro == '' ){
-          this.todolotes[i].Fecha_Registro = "-"
-        }else{
-          let cadena = this.todolotes[i].Fecha_Registro.split('T')
-        this.todolotes[i].Fecha_Registro = cadena[0];
-      }
-      }   
-      for(let i=0;i <= this.todolotes.length; i++){
-        if(this.todolotes[i].NombreInversionista == ''){
-          this.todolotes[i].NombreInversionista = "-"
-          console.log(this.todolotes[i].NombreInversionista)
-        }
-      }   
-      for(let i=0;i <= this.todolotes.length; i++){
-        if(this.todolotes[i].Precio_Final == null){
-          this.todolotes[i].Precio_Final = "-"
-        }
-      } 
-    });
-  }
+
   ImprimirLotes()
   {
     let detall = this.consultafecha();
@@ -381,62 +307,10 @@ export class ReporteComponent implements OnInit {
     </tr>`;
     }
     
-    this.reportes
-      .enviarReporte({
-        reporte: this.titulo,
-        campos_tabla: ` <tr>
-        <th>Desarrollo</th>
-        <th># total de lotes</th>
-        <th>Disponibles</th>
-        <th>Apartados</th>
-        <th>Vendidos</th>
-        <th>Secretos</th>
-    </tr>`,
-        registros: datos,
-        detalles: 'Fecha: ' +new Date().toLocaleDateString(),
-      })
-      .subscribe((res: any) => {
-        var blob = new Blob([res]);
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = 'reporte.pdf';
-        link.click();
-      });
+   
   }
-  ObtenerPagos() {
-    this.reportes.ReporteHR().subscribe((res: any) => {
-      this.pagos = res;
-      this.pagosb = res;
-      console.log(this.pagos);
-    });
-  }
-  ObtenerLotes() {
-    this.reportes.lotes().subscribe((res: any) => {
-      this.lotesb = res;
-      console.log(this.lotesb, 'asd');
-      for (let i = res.length - 3; i >= 0; i--) {
-        if (res[i][0].Desarrollo !== 'NA') {
-          this.lotes.push(res[i][0]);
-        }
-      }
-      console.log(this.lotes , 'este');
-    });
-  }
-  ObtenerVolumenHR() {
-    console.log(this.desde + ' ' + this.hasta);
-    if (this.desde == '') {
-      this.desde = null;
-    }
-    if (this.hasta == '') {
-      this.hasta = null;
-    }
-    this.reportes
-      .VolumenHR({ FechaInicio: this.desde, FechaFinal: this.hasta })
-      .subscribe((res: any) => {
-        this.Volumen = res;
-        console.log(this.Volumen);
-      });
-  }
+
+ 
   g_reporte() {}
   filtrarpagos() {
     console.log(this.desde + this.hasta);
@@ -488,12 +362,7 @@ export class ReporteComponent implements OnInit {
       } else return false;
     });
   }
-  getDesarrollos() {
-    this.reportes.getDesarrollos().subscribe((res: any) => {
-      this.des = res.desarrollos;
-      console.log(this.des ,'aqui' );
-    });
-  }
+
   ImprimirPagos() {
     let detall =
       'Desarrollo:' +
@@ -522,26 +391,6 @@ export class ReporteComponent implements OnInit {
     </tr>`;
     }
 
-    this.reportes
-      .enviarReporte({
-        reporte: this.titulo,
-        campos_tabla: ` <tr>
-      <th>Desarrollo</th>
-      <th>Lote</th>
-      <th>Concepto</th>
-      <th>Monto</th>
-      <th>Fecha pago</th>
-    </tr>`,
-        registros: datos,
-        detalles: detall,
-      })
-      .subscribe((res: any) => {
-        var blob = new Blob([res]);
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = 'reporte.pdf';
-        link.click();
-      });
   }
   ImprimirReporteGeneral(){
     let datos = '';
@@ -568,29 +417,6 @@ export class ReporteComponent implements OnInit {
         ` </td>
     </tr>`;
     }
-
-    this.reportes
-      .enviarReporte({
-        reporte: 'Reporte General',
-        campos_tabla: ` <tr>
-      <th>Desarrollo</th>
-      <th>Lote</th>
-      <th>Inversionista</th>
-      <th>Presio Venta</th>
-      <th>Fecha</th>
-      <th>Estatus</th>
-    </tr>`,
-        registros: datos,
-        detalles: 'Fecha: ' +new Date().toLocaleDateString(),
-      })
-      .subscribe((res: any) => {
-        var blob = new Blob([res]);
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = 'reporte.pdf';
-        link.click();
-      });
-
   }
   ImprimirReporteFiltrado(){
     let datos = '';
@@ -642,28 +468,6 @@ export class ReporteComponent implements OnInit {
     if(this.DesarrolloFiltro == 1){
       this.DesarrolloFiltro = 'BONAREA'
     }
-  
-    this.reportes
-      .enviarReporte({
-        reporte: ' Filtrado'+' ' + this.DesarrolloFiltro,
-        campos_tabla: ` <tr>
-      <th>Lote</th>
-      <th>Inversionista</th>
-      <th>Precio Venta</th>
-      <th>Fecha</th>
-      <th>Estatus</th>
-      
-    </tr>`,
-        registros: datos,
-        detalles:'Fecha: ' +new Date().toLocaleDateString(),
-      })
-      .subscribe((res: any) => {
-        var blob = new Blob([res]);
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = 'reporte.pdf';
-        link.click();
-      });
 
   }
 
@@ -697,25 +501,6 @@ export class ReporteComponent implements OnInit {
     </tr>`;
     }
 
-    this.reportes
-      .enviarReporte({
-        reporte: this.titulo,
-        campos_tabla: ` <tr>
-      <th>Desarrollo</th>
-      <th># de HRs</th>
-      <th>Volumen Enganche</th>
-      <th>Volumen Lotes</th>
-    </tr>`,
-        registros: datos,
-        detalles: detall,
-      })
-      .subscribe((res: any) => {
-        var blob = new Blob([res]);
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = 'reporte.pdf';
-        link.click();
-      });
   }
 
   consultardes() {
