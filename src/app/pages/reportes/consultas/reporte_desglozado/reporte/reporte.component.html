@@ -5,9 +5,9 @@
     sidebar_is_small: !app.sidebarState
   }"
 >
-<div  class="botones">
+<!-- <div  class="botones">
   <button (click)="Descarga()"  class="btn btn-primary"><i class="fas fa-cloud-download-alt"></i></button>
-</div>
+</div> -->
 
 
   <div class="main-content">
@@ -21,7 +21,7 @@
     <div class="row g-3 mb-5">
 
       
-      <div class="col-md-3" style="margin-top: 2.5rem;">
+    <!--   <div class="col-md-3" style="margin-top: 2.5rem;">
         <mat-form-field style="width: 100%" appearance="legacy">
           <mat-label>Escoge un rango</mat-label>
           <mat-date-range-input
@@ -46,7 +46,7 @@
           ></mat-datepicker-toggle>
           <mat-date-range-picker #picker></mat-date-range-picker>
         </mat-form-field>
-      </div>
+      </div> -->
       <div class="col-md-3"  >
         <label for="tipo" class="form-label">Seleccione un Tour</label>
         <select
@@ -55,16 +55,17 @@
           name="tipo"
           [(ngModel)]="Desarrollo"
           class="form-select"
+          (change)="SearchTour()"
         >
-          <option value="0">Todos</option>
-          <option *ngFor="let item of des" [value]="item.IdDesarrollo">
-            {{ item.Desarrollo }}
+          <option value="all">Todos</option>
+          <option  *ngFor="let item of des" [value]="item.Tour">
+            {{ item.Tour }}
           </option>
         </select>
       </div>
 
       <div class="d-grid col-md-6 gap-2 d-md-flex justify-content-md-end">
-        <a type="button" routerLink="/Inicio/reportes/reportepersonas/{{id}}"  style="height: 2.5rem;" (click)="Descarga()" class="btn btn-outline-dark">
+        <a type="button" routerLink="/Inicio/reportes/reportepersonas/{{id}}"  style="height: 2.5rem;"  class="btn btn-outline-dark">
           Visualizar Personas
         </a> 
       </div>

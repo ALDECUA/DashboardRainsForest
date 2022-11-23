@@ -20,9 +20,9 @@ export class ReportepersonasComponent implements OnInit {
       this.reporte = params.params.id;
     });
     this.reportes.obtenerparqueid( this.reporte).subscribe((res:any) => { 
-      console.log(res[0].IdParque)
-     this.id = res[0].IdParque
-      this.parques = res
+      console.log(res.datosparques[0].IdParque)
+     this.id = res.datosparques[0].IdParque
+      this.parques = res.datosparques
     })
   }
   Descarga() {
