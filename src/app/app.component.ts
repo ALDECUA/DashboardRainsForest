@@ -8,7 +8,7 @@ import { AppService } from './services/app.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'CRM Fibrax';
+  title = 'CRM ';
   constructor(
     public app: AppService,
     public router: Router

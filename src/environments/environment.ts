@@ -6,7 +6,7 @@ export const environment = {
   production: false,
  api: 'http://localhost:8081/',
     // api: 'https://apirainsforest.herokuapp.com/',
-  dominio: 'https://fibraxinversiones.mx/',
+  dominio: 'https://rainforest-dashboard.netlify.app.mx/',
 };
 
 /*
